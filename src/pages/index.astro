@@ -1,5 +1,6 @@
 ---
 import { css } from "../../styled-system/css";
+import { FakeComponent } from "../components/FakeComponent";
 ---
 
 <html lang="en">
@@ -12,5 +13,6 @@ import { css } from "../../styled-system/css";
   </head>
   <body>
     <h1 class={css({ color: "red" })}>Astro</h1>
+    <FakeComponent client:load />
   </body>
 </html>

@@ -22,6 +22,7 @@ pnpm-debug.log*
 
 # cache
 .yarn/cache
+.yarn/install-state.gz
 
 # codegen
 styled-system/
