@@ -1,6 +1,7 @@
 ---
 import { css } from "@/style/css";
 import { FakeComponent } from "@/components/FakeComponent";
+import { t } from "astro-i18n";
 ---
 
 <html lang="en">
@@ -14,5 +15,6 @@ import { FakeComponent } from "@/components/FakeComponent";
   <body>
     <h1 class={css({ color: "red" })}>Astro</h1>
     <FakeComponent client:load />
+    <p>Hey {t("your_common")}{t("they.can")}</p>
   </body>
 </html>

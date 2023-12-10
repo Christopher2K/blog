@@ -6,17 +6,22 @@
     "prepare": "panda codegen && husky install",
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "yarn i18n:sync && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "typecheck": "tsc --noEmit && astro check",
     "lint:check": "prettier . --check",
-    "lint:write": "prettier . --write"
+    "lint:write": "prettier . --write",
+    "i18n:extract": "astro-i18n extract",
+    "i18n:generate:pages": "astro-i18n generate:pages --purge",
+    "i18n:generate:types": "astro-i18n generate:types",
+    "i18n:sync": "yarn i18n:generate:pages && yarn run i18n:generate:types"
   },
   "dependencies": {
     "@astrojs/check": "~0.3.1",
     "@astrojs/solid-js": "~3.0.2",
     "astro": "~4.0.3",
+    "astro-i18n": "~2.1.18",
     "solid-js": "~1.8.0",
     "typescript": "~5.3.3"
   },
