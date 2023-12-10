@@ -8,6 +8,9 @@ type RouteParameters = { "/a-propos": undefined; "/": undefined };
 type Route = keyof RouteParameters;
 type TranslationVariables = {
   title: object | undefined;
+  "header.title": object | undefined;
+  "header.subtitle": object | undefined;
+  "lastPostSection.title": object | undefined;
   "nav.home": object | undefined;
   "nav.twitch": object | undefined;
   "nav.about": object | undefined;

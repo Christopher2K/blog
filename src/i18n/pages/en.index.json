@@ -1,3 +1,10 @@
 {
-  "title": "Christopher N. Katoyi Kaba | Software Engineer"
+  "title": "Christopher N. Katoyi Kaba | Software Engineer",
+  "header": {
+    "title": "Cool dev",
+    "subtitle": "I spent the past 8 years in tech as a software engineer, I've been streaming on Twitch for the past 2 years and I've been on Earth for the last 27 years. I might have like, two or three things to share, I think..."
+  },
+  "lastPostSection": {
+    "title": "Last posts"
+  }
 }

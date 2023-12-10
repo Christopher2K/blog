@@ -1,10 +1,21 @@
 ---
 import { t } from "astro-i18n";
 
-import { FakeComponent } from "@/components/FakeComponent";
+import { css } from "@/style/css";
 import Page from "@/layouts/Page.astro";
 ---
 
 <Page title={t("title")}>
-  <FakeComponent client:load />
+  <section class={css({ mb: "10" })}>
+    <h1 class={css({ textStyle: "h1", textAlign: "left" })}>
+      {t("header.title")}
+    </h1>
+    <p class={css({ textStyle: "h6", color: "neutral.500" })}>
+      {t("header.subtitle")}
+    </p>
+  </section>
+
+  <section class={css({ mb: "10" })}>
+    <h2 class={css({ textStyle: "h3" })}>{t("lastPostSection.title")}</h2>
+  </section>
 </Page>
