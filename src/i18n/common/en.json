@@ -1,6 +1,7 @@
 {
-  "your_common": "translations here",
-  "they": {
-    "can": "be nested"
+  "nav": {
+    "home": "Home",
+    "twitch": "Live coding channel",
+    "about": "About me"
   }
 }

@@ -1,6 +1,7 @@
 {
-  "your_common": "traductions ici",
-  "they": {
-    "can": "être imbriqué"
+  "nav": {
+    "home": "Accueil",
+    "twitch": "Chaîne live coding",
+    "about": "À propos"
   }
 }

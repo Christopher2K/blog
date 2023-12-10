@@ -26,3 +26,4 @@ pnpm-debug.log*
 
 # codegen
 styled-system/
+src/pages/en

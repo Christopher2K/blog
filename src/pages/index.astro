@@ -1,20 +1,10 @@
 ---
-import { css } from "@/style/css";
-import { FakeComponent } from "@/components/FakeComponent";
 import { t } from "astro-i18n";
+
+import { FakeComponent } from "@/components/FakeComponent";
+import Page from "@/layouts/Page.astro";
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
-  </head>
-  <body>
-    <h1 class={css({ color: "red" })}>Astro</h1>
-    <FakeComponent client:load />
-    <p>Hey {t("your_common")}{t("they.can")}</p>
-  </body>
-</html>
+<Page title={t("title")}>
+  <FakeComponent client:load />
+</Page>

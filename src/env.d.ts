@@ -4,11 +4,13 @@
 type PrimaryLocale = "fr";
 type SecondaryLocale = "en";
 type Locale = PrimaryLocale | SecondaryLocale;
-type RouteParameters = { "/": undefined };
+type RouteParameters = { "/a-propos": undefined; "/": undefined };
 type Route = keyof RouteParameters;
 type TranslationVariables = {
-  your_common: object | undefined;
-  "they.can": object | undefined;
+  title: object | undefined;
+  "nav.home": object | undefined;
+  "nav.twitch": object | undefined;
+  "nav.about": object | undefined;
 };
 type Translation = keyof TranslationVariables;
 type Environment = "none" | "node" | "browser";

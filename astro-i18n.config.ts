@@ -10,5 +10,9 @@ export default defineAstroI18nConfig({
   translationLoadingRules: [], // per page group loading
   translationDirectory: {}, // translation directory names
   translations: {}, // { [translation_group1]: { [locale1]: {}, ... } }
-  routes: {}, // { [secondary_locale1]: { about: "about-translated", ... } }
+  routes: {
+    en: {
+      "a-propos": "about",
+    },
+  }, // { [secondary_locale1]: { about: "about-translated", ... } }
 });

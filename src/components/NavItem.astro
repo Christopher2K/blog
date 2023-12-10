@@ -1,0 +1,23 @@
+---
+import { css } from "@/style/css";
+
+interface Props {
+  href: string;
+}
+
+const { href } = Astro.props;
+---
+
+<li
+  class={css({
+    backgroundColor: "neutral.50",
+    textStyle: "body",
+    _hover: {
+      backgroundColor: "neutral.200",
+    },
+  })}
+>
+  <a {href} class={css({ display: "block", px: 4, py: 4 })}>
+    <slot />
+  </a>
+</li>

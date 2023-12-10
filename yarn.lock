@@ -3772,6 +3772,7 @@ __metadata:
     astro-i18n: ~2.1.18
     husky: ~8.0.3
     lint-staged: ~15.2.0
+    lucide-solid: ~0.294.0
     prettier: ~3.1.0
     prettier-plugin-astro: ~0.12.2
     solid-js: ~1.8.0
@@ -3889,6 +3890,15 @@ __metadata:
   dependencies:
     yallist: ^4.0.0
   checksum: f97f499f898f23e4585742138a22f22526254fdba6d75d41a1c2526b3b6cc5747ef59c5612ba7375f42aca4f8461950e925ba08c991ead0651b4918b7c978297
+  languageName: node
+  linkType: hard
+
+"lucide-solid@npm:~0.294.0":
+  version: 0.294.0
+  resolution: "lucide-solid@npm:0.294.0"
+  peerDependencies:
+    solid-js: ^1.4.7
+  checksum: f45d9db0b4b9bf0e433c077f640242af9575c9fda7e3d283d9ed2e0446df13a9e270cf7f6746025cc8555c88d236c3d2dc6e14895d364b2f84f27c9cd5a1a452
   languageName: node
   linkType: hard
 
