@@ -6,16 +6,18 @@
     "prepare": "panda codegen",
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro check && astro build",
+    "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "format": "prettier ./src --write"
+    "typecheck": "tsc --noEmit && astro check",
+    "lint:check": "prettier . --check",
+    "lint:write": "prettier . --write"
   },
   "dependencies": {
     "@astrojs/check": "~0.3.1",
     "@astrojs/solid-js": "~3.0.2",
     "astro": "~4.0.3",
-    "solid-js": "~1.4.3",
+    "solid-js": "~1.8.0",
     "typescript": "~5.3.3"
   },
   "devDependencies": {
