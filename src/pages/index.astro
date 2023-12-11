@@ -1,13 +1,21 @@
 ---
-import { t } from "astro-i18n";
+import { getCollection } from "astro:content";
+import { astroI18n, t } from "astro-i18n";
 
+import Article from "@/components/Article.astro";
 import { css } from "@/style/css";
 import Page from "@/layouts/Page.astro";
+
+const lang = astroI18n.locale as unknown as string;
+const blogCollection = await getCollection(
+  "blog",
+  ({ data, id }) => id.startsWith(lang) && !data.draft,
+);
 ---
 
 <Page title={t("title")}>
-  <section class={css({ mb: "10" })}>
-    <h1 class={css({ textStyle: "h1", textAlign: "left" })}>
+  <section class={css({ py: 20 })}>
+    <h1 class={css({ textStyle: "h1", textAlign: "left", mb: 5 })}>
       {t("header.title")}
     </h1>
     <p class={css({ textStyle: "h6", color: "neutral.500" })}>
@@ -17,5 +25,14 @@ import Page from "@/layouts/Page.astro";
 
   <section class={css({ mb: "10" })}>
     <h2 class={css({ textStyle: "h3" })}>{t("lastPostSection.title")}</h2>
+    <ul>
+      {
+        blogCollection.map((entry) => (
+          <li>
+            <Article data={entry.data} id={entry.id} slug={entry.slug} />
+          </li>
+        ))
+      }
+    </ul>
   </section>
 </Page>

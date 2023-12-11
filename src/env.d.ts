@@ -1,10 +1,15 @@
+/// <reference path="../.astro/types.d.ts" />
 /// <reference types="astro/client" />
 
 // ###> astro-i18n/type-generation ###
 type PrimaryLocale = "fr";
 type SecondaryLocale = "en";
 type Locale = PrimaryLocale | SecondaryLocale;
-type RouteParameters = { "/a-propos": undefined; "/": undefined };
+type RouteParameters = {
+  "/a-propos": undefined;
+  "/": undefined;
+  "/blog/[slug]": { slug: unknown };
+};
 type Route = keyof RouteParameters;
 type TranslationVariables = {
   title: object | undefined;
