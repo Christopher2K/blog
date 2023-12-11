@@ -1,5 +1,6 @@
 import { format as fnsFormat } from "date-fns";
-import { enCA, frCA } from "date-fns/locale";
+import frCA from "date-fns/locale/fr-CA/index.js";
+import enCA from "date-fns/locale/en-CA/index.js";
 import { astroI18n } from "astro-i18n";
 
 export function format(date: Date | number, pattern: string) {
