@@ -1,6 +1,5 @@
 ---
 import { type CollectionEntry } from "astro:content";
-import { l } from "astro-i18n";
 
 import { css } from "@/style/css";
 import { vstack } from "@/style/patterns";
@@ -27,10 +26,11 @@ const url =
     py: 4,
     justifyContent: "flex-start",
     alignItems: "flex-start",
+    gap: 4,
   })}
 >
   <a href={url} class={css({ textDecoration: "underline" })}>
-    <h3 class={css({ textStyle: "h5" })}>
+    <h3 class={css({ textStyle: "h4" })}>
       {title}
     </h3>
   </a>

@@ -11,6 +11,7 @@ const textStyles = defineTextStyles({
     value: {
       fontSize: "3.815rem",
       fontWeight: "700",
+      lineHeight: "1.30",
     },
   },
 
@@ -18,6 +19,7 @@ const textStyles = defineTextStyles({
     value: {
       fontSize: "3.052rem",
       fontWeight: "700",
+      lineHeight: "1.30",
     },
   },
 
@@ -25,6 +27,7 @@ const textStyles = defineTextStyles({
     value: {
       fontSize: "2.441rem",
       fontWeight: "500",
+      lineHeight: "1.40",
     },
   },
 
@@ -32,6 +35,7 @@ const textStyles = defineTextStyles({
     value: {
       fontSize: "1.953rem",
       fontWeight: "500",
+      lineHeight: "1.40",
     },
   },
 
@@ -39,6 +43,7 @@ const textStyles = defineTextStyles({
     value: {
       fontSize: "1.563rem",
       fontWeight: "500",
+      lineHeight: "1.40",
     },
   },
 
@@ -46,20 +51,23 @@ const textStyles = defineTextStyles({
     value: {
       fontSize: "1.25rem",
       fontWeight: "500",
+      lineHeight: "1.6",
     },
   },
 
   body: {
     value: {
-      fontSize: "1rem",
+      fontSize: "1.25rem",
       fontWeight: "500",
+      lineHeight: "1.6",
     },
   },
 
   small: {
     value: {
-      fontSize: "0.8rem",
+      fontSize: "1rem",
       fontWeight: "400",
+      lineHeight: "1.6",
     },
   },
 });
