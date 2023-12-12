@@ -7,8 +7,6 @@ import {
 } from "lucide-solid";
 import { t } from "astro-i18n";
 
-import LocaleSwitcher from "./LocaleSwitcher.astro";
-
 import { css } from "@/style/css";
 import { hstack, vstack } from "@/style/patterns";
 import { linkedin, twitch, twitter, github } from "@/utils/link";
@@ -23,9 +21,23 @@ import { linkedin, twitch, twitter, github } from "@/utils/link";
     gap: 0,
     justifyContent: "center",
     alignItems: "center",
+    lg: {
+      maxWidth: "site",
+      mx: "auto",
+    },
   })}
 >
-  <hr class={css({ w: "full", mb: 10, borderWidth: 0.5, borderRadius: 999 })} />
+  <hr
+    class={css({
+      w: "full",
+      mb: 10,
+      borderWidth: 0.5,
+      borderRadius: 999,
+      md: { maxWidth: "1/2" },
+
+      lg: { maxWidth: 500 },
+    })}
+  />
   <div
     class={vstack({
       width: "full",

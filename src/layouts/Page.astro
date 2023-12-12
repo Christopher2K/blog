@@ -1,13 +1,7 @@
 ---
-import { MenuIcon } from "lucide-solid";
-import { t, l } from "astro-i18n";
-
-import { css } from "@/style/css";
-import { hstack, vstack } from "@/style/patterns";
-import { ButtonIcon } from "@/components/ButtonIcon";
-import NavItem from "@/components/NavItem.astro";
+import { vstack } from "@/style/patterns";
+import Navigation from "@/components/Navigation.astro";
 import Footer from "@/components/Footer.astro";
-import { twitch } from "@/utils/link";
 
 import Base from "./Base.astro";
 
@@ -19,71 +13,21 @@ const { title } = Astro.props;
 ---
 
 <Base title={title}>
-  <div class={css({ width: "full" })}>
-    <nav
-      class={hstack({
-        position: "relative",
-        w: "full",
-        h: "nav",
-        px: 4,
-        justifyContent: "space-between",
-      })}
-    >
-      <a class={css({ cursor: "pointer", textStyle: "h5" })} href={l("/")}
-        >Christopher K.</a
-      >
-      <ButtonIcon id="nav-button">
-        <MenuIcon />
-      </ButtonIcon>
-      <ul
-        id="nav-list"
-        class={css({
-          position: "absolute",
-          display: "block",
-          top: "100%",
-          left: 0,
-          height: "calc(100vh - 4rem)",
-          zIndex: "99",
-          width: "full",
-          backgroundColor: "neutral.50",
-          visibility: "hidden",
-        })}
-      >
-        <NavItem href={l("/")}>
-          {t("nav.home")}
-        </NavItem>
-        <NavItem href={l("a-propos")}>
-          {t("nav.about")}
-        </NavItem>
-        <NavItem href={twitch}>
-          {t("nav.twitch")}
-        </NavItem>
-      </ul>
-    </nav>
-  </div>
+  <Navigation />
   <main
     class={vstack({
+      flex: "1",
       w: "full",
       px: "4",
       justifyContent: "flex-start",
       alignItems: "flex-start",
+      lg: {
+        maxWidth: "content",
+        mx: "auto",
+      },
     })}
   >
     <slot />
   </main>
   <Footer />
-  <style>
-    .nav-open {
-      visibility: visible;
-    }
-  </style>
-
-  <script>
-    const navbarButton = document.querySelector("#nav-button");
-    const navItems = document.querySelector("#nav-list");
-    navbarButton?.addEventListener("click", () => {
-      if (!navItems) return;
-      navItems.classList.toggle("nav-open");
-    });
-  </script>
 </Base>

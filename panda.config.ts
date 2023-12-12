@@ -90,6 +90,14 @@ export default defineConfig({
       textStyles,
       tokens: {
         sizes: {
+          site: {
+            value: "1000px",
+            description: "Site max width",
+          },
+          content: {
+            value: "800px",
+            description: "Content max width",
+          },
           nav: {
             value: "4rem",
             description: "Navigation bar height",

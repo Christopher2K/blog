@@ -1,24 +1,31 @@
 import { type ParentProps, type JSX } from "solid-js";
 
-import { css } from "@/style/css";
+import { css, cx } from "@/style/css";
 
 export type ButtonIconProps = ParentProps<
   JSX.HTMLAttributes<HTMLButtonElement>
 >;
 
-export const ButtonIcon = ({ children, ...props }: ButtonIconProps) => {
+export const ButtonIcon = ({
+  children,
+  class: _class = "",
+  ...props
+}: ButtonIconProps) => {
   return (
     <button
       {...props}
-      class={css({
-        padding: 2,
-        borderRadius: "md",
+      class={cx(
+        css({
+          padding: 2,
+          borderRadius: "md",
 
-        _hover: {
-          cursor: "pointer",
-          backgroundColor: "neutral.200",
-        },
-      })}
+          _hover: {
+            cursor: "pointer",
+            backgroundColor: "neutral.200",
+          },
+        }),
+        _class,
+      )}
     >
       {children}
     </button>

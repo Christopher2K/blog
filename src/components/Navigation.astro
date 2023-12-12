@@ -1,0 +1,89 @@
+---
+import { MenuIcon } from "lucide-solid";
+import { t, l } from "astro-i18n";
+
+import { css } from "@/style/css";
+import { hstack } from "@/style/patterns";
+import { ButtonIcon } from "@/components/ButtonIcon";
+import NavItem from "@/components/NavItem.astro";
+import { twitch } from "@/utils/link";
+---
+
+<script>
+  const navbarButton = document.querySelector("#nav-button");
+  const navItems = document.querySelector("#nav-list");
+  navbarButton?.addEventListener("click", () => {
+    if (!navItems) return;
+    navItems.classList.toggle("nav-open");
+  });
+</script>
+
+<style>
+  .nav-open {
+    visibility: visible;
+  }
+</style>
+
+<div
+  class={css({
+    width: "full",
+    lg: {
+      maxWidth: "site",
+      mx: "auto",
+    },
+  })}
+>
+  <nav
+    class={hstack({
+      position: "relative",
+      w: "full",
+      h: "nav",
+      px: 4,
+      justifyContent: "space-between",
+    })}
+  >
+    <a class={css({ cursor: "pointer", textStyle: "h5" })} href={l("/")}
+      >Christopher K.</a
+    >
+    <ButtonIcon id="nav-button" class={css({ md: { display: "none" } })}>
+      <MenuIcon />
+    </ButtonIcon>
+    <ul
+      id="nav-list"
+      class={css({
+        position: "absolute",
+        display: "block",
+        top: "100%",
+        left: 0,
+        height: "calc(100vh - 4rem)",
+        zIndex: "99",
+        width: "full",
+        backgroundColor: "neutral.50",
+        visibility: "hidden",
+        md: {
+          position: "relative",
+          top: "initial",
+          left: "initial",
+          visibility: "visible",
+          backgroundColor: "transparent",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "flex-start",
+          alignItems: "center",
+          h: "fit",
+          w: "fit",
+        },
+      })}
+    >
+      <NavItem href={l("/")}>
+        {t("nav.home")}
+      </NavItem>
+      <NavItem href={l("a-propos")}>
+        {t("nav.about")}
+      </NavItem>
+      <NavItem href={twitch}>
+        {t("nav.twitch")}
+      </NavItem>
+    </ul>
+  </nav>
+</div>
