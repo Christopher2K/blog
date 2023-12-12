@@ -19,6 +19,11 @@ type TranslationVariables = {
   "nav.home": object | undefined;
   "nav.twitch": object | undefined;
   "nav.about": object | undefined;
+  "footer.twitter": object | undefined;
+  "footer.linkedin": object | undefined;
+  "footer.github": object | undefined;
+  "footer.twitch": object | undefined;
+  "footer.credits": object | undefined;
 };
 type Translation = keyof TranslationVariables;
 type Environment = "none" | "node" | "browser";

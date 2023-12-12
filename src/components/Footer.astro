@@ -1,0 +1,67 @@
+---
+import {
+  TwitterIcon,
+  TwitchIcon,
+  LinkedinIcon,
+  GithubIcon,
+} from "lucide-solid";
+import { t } from "astro-i18n";
+
+import LocaleSwitcher from "./LocaleSwitcher.astro";
+
+import { css } from "@/style/css";
+import { hstack, vstack } from "@/style/patterns";
+import { linkedin, twitch, twitter, github } from "@/utils/link";
+---
+
+<footer
+  class={vstack({
+    width: "full",
+    flexDirection: "column",
+    px: 4,
+    py: 10,
+    gap: 0,
+    justifyContent: "center",
+    alignItems: "center",
+  })}
+>
+  <hr class={css({ w: "full", mb: 10, borderWidth: 0.5, borderRadius: 999 })} />
+  <div
+    class={vstack({
+      width: "full",
+      gap: 10,
+      justifyContent: "center",
+      alignItems: "center",
+    })}
+  >
+    <ul
+      class={hstack({ justifyContent: "center", alignItems: "center", gap: 4 })}
+    >
+      <li>
+        <a href={github} target="_blank" aria-label={t("footer.github")}>
+          <GithubIcon />
+        </a>
+      </li>
+      <li>
+        <a href={twitter} target="_blank" aria-label={t("footer.twitter")}>
+          <TwitterIcon />
+        </a>
+      </li>
+
+      <li>
+        <a href={twitch} target="_blank" aria-label={t("footer.twitch")}>
+          <TwitchIcon />
+        </a>
+      </li>
+
+      <li>
+        <a href={linkedin} target="_blank" aria-label={t("footer.linkedin")}>
+          <LinkedinIcon />
+        </a>
+      </li>
+    </ul>
+    <p class={css({ width: "full", textStyle: "small", textAlign: "center" })}>
+      {t("footer.credits")}
+    </p>
+  </div>
+</footer>
