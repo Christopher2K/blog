@@ -4,7 +4,11 @@ import {
   defineGlobalStyles,
 } from "@pandacss/dev";
 
-const globalCss = defineGlobalStyles({});
+const globalCss = defineGlobalStyles({
+  "html, body": {
+    scrollbarGutter: "stable",
+  },
+});
 
 const textStyles = defineTextStyles({
   h1: {
