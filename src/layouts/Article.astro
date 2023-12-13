@@ -1,0 +1,89 @@
+---
+import { css } from "@/style/css";
+import Navigation from "@/components/Navigation.astro";
+import Footer from "@/components/Footer.astro";
+
+import Base from "./Base.astro";
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<Base title={title}>
+  <Navigation />
+  <main
+    class={css({
+      flex: "1",
+      px: "8",
+      lg: {
+        maxWidth: "content",
+        mx: "auto",
+        px: "8",
+      },
+
+      // Content styling
+      // HEADINGS
+      "& h1, & h2, & h3, & h4": {
+        w: "full",
+      },
+      "& h1": {
+        textStyle: "h1",
+        textAlign: "center",
+        my: 14,
+      },
+      "& h2": {
+        textStyle: "h2",
+        mt: 10,
+        mb: 8,
+      },
+      "& h3": {
+        textStyle: "h3",
+        mt: 8,
+        mb: 6,
+      },
+      "& h4": {
+        textStyle: "h4",
+        mt: 6,
+        mb: 4,
+      },
+
+      // TEXT
+      "& p, & a, & li": {
+        textStyle: "body",
+      },
+
+      "& a": {
+        textDecoration: "underline",
+      },
+
+      // OTHERS
+      "& pre": {
+        fontSize: "1.125rem",
+        p: 4,
+        borderRadius: "md",
+      },
+
+      "& ul, & ol": {
+        px: "4",
+      },
+
+      "& ul": {
+        listStyle: "inside disc",
+      },
+
+      "& ol": {
+        listStyle: "inside decimal",
+      },
+
+      "& p, & ul, & ol, & pre, & img, & picture": {
+        my: 4,
+      },
+    })}
+  >
+    <slot />
+  </main>
+  <Footer />
+</Base>

@@ -1,8 +1,8 @@
 ---
-import { getCollection, getEntryBySlug } from "astro:content";
+import { getCollection } from "astro:content";
 import { astroI18n } from "astro-i18n";
 
-import Page from "@/layouts/Page.astro";
+import Article from "@/layouts/Article.astro";
 
 export async function getStaticPaths() {
   const lang = astroI18n.locale as unknown as string;
@@ -12,15 +12,18 @@ export async function getStaticPaths() {
     ({ data, id }) => id.startsWith(lang) && !data.draft,
   );
 
-  return blogCollection.map(({ slug }) => {
+  return blogCollection.map((entry) => {
     return {
-      params: { slug },
+      params: { slug: entry.slug },
+      props: { entry },
     };
   });
 }
 
-const { slug } = Astro.params;
-const article = await getEntryBySlug("blog", slug);
+const { entry } = Astro.props;
+const { Content } = await entry.render();
 ---
 
-<Page title={article!.data.title}>TDB</Page>
+<Article title={entry.data.title}>
+  <Content />
+</Article>

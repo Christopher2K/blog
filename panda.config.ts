@@ -58,7 +58,7 @@ const textStyles = defineTextStyles({
   body: {
     value: {
       fontSize: "1.25rem",
-      fontWeight: "500",
+      fontWeight: "400",
       lineHeight: "1.6",
     },
   },
