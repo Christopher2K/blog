@@ -1,0 +1,127 @@
+---
+title: Fais ton propre 'X'
+description: CodeCrafter est une plateforme qui donne aux devs la possibilité de tenter de re-coder des produits connus comme Docker ou un serveur DNS... Retour d'expérience
+tags: []
+publishingDate: 2023-12-10
+draft: false
+slug: fais-ton-propre-x
+---
+
+import { Image } from "astro:assets";
+
+import codeCrafterLanding from "@/assets/build-your-own-x/code-crafters-landing.png";
+import terminalOutput from "@/assets/build-your-own-x/terminal-output.png";
+import trackDetails from "@/assets/build-your-own-x/track-details.png";
+import trackDiversity from "@/assets/build-your-own-x/track-diversity.png";
+
+# CodeCrafters - Construit ton propre ‘X’
+
+Bon faut avouer que j’me sens saucé: CodeCrafters est mon premier “vrai”
+partenariat en tant que streamer. Mais, étant un homme construit différemment,
+je met un point d’honneur à ne m’associer qu’avec des projets et des concepts
+que je trouve cool, et que je pourrais, à titre personnel, utiliser.
+CodeCrafters est ce genre de produit. C’est simple, c’est cool et ça me STIMULE.
+Retour d’expérience sur cette plateforme de challenge de code!
+
+## Une plateforme de challenge de code??
+
+CodeWars. CodeInGames. LeetCode. HackerRank. Ça te parle peut-être. Si ça ne te
+parle pas, ce sont des sites, qui permettent aux devs de s’exercer à pratiquer
+leur art. Les thématiques abordées vont du simple sujet d’algorithme un peu
+gamifié, à la résolution de problèmes complexes. Certain(e)s y vont par
+curiosité, d’autres voient ces sites comme un moyen de prouver à quel point ils
+ou elles sont des devs incroyables.
+
+<Image
+  src={codeCrafterLanding}
+  alt="Message de la landing page de codecrafters:
+Practice Writing Complex Software. Recreate Redis, Git, Docker — with your own
+hands. Gain expert-level confidence by taking action and diving deep, learning
+from the world's best."
+/>
+
+CodeCrafters s’ajoute à ces nombreuses plateformes avec une curieuse
+spécificité: on va s’exercer sur de **vrais** produits; et on va se challenger
+sur des mission du type `Build your own <quelque chose>`. Par **de vrais
+produits**, j'entend des choses comme:
+
+- Docker,
+- SQLite,
+- BitTorrent,
+- Redis,
+- et d’autres à venir…
+
+<Image
+  src={trackDiversity}
+  alt="Screenshot des challenges disponibles:
+BitTorrent, Redis, Serveur HTTP, Serveur DNS, Grep, Docker, Git, SQLite"
+/>
+
+Ouais, c’est super intimidant. Là comme ça, j’ai aucune foutue idée de comment
+des produits comme Docker peuvent fonctionner en interne et, c'est évident que
+recoder ce truc _from scratch_ me serait impossible.
+
+Pour rendre l’expérience agréable, CodeCrafters va briller par son approche
+itérative: ton challenge va être découpé en sous-challenges beaucoup plus
+abordables.
+
+<Image
+  src={trackDetails}
+  alt="Détail des sous-challenges: Introduction,
+Repository setup, Decode bencoded strings - integers - lists - objects, Parse
+torrent files, Calculate info hash, Piece hashes, Peer handshake, Download a
+piece, Download the whole file."
+/>
+
+Tu vas aussi avoir la possibilité de tester ton code à chaque étape, afin d’être
+sur que tu vas dans la bonne direction.
+
+L’expérience est plaisante: il y a un discord pour le support (si jamais!) et
+les mainteneurs ajoutent des nouveaux challenge régulièrement!
+
+## Mon utilisation
+
+J’ai commencé par le challenge Redis en Elixir et ma première tentative s’est
+soldée par un échec.
+
+<Image
+  src={terminalOutput}
+  alt="Erreur 503 quand j'ai tenté de soumettre
+l'exercice"
+/>
+
+Aucun rapport avec mes skills issues, la plateforme était down pendant quelques
+minutes. Ce sont des choses qui arrivent, combien d’entre nous ont déjà
+assassiné un serveur de prod hein?
+
+J’ai laissé une seconde chance en allant tenter un autre challenge, le `Build
+your own BitTorrent client`. Familier avec le produit mais pas le protocole,
+j'ai pu en apprendre pas mal en réalisant le challenge. Extrait de ce que je
+retiens:
+
+- La technique d'encoding **Bencode,**
+- Comment se compose un fichier torrent,
+- Comment le fichier derrière le torrent est téléchargé.
+
+Comme tu peux le voir, l’impact sur ma culture IT est vraiment positif, parfait
+pour briller en société (si la société en question était remplie de geeks, ce
+qui est loin d’être le cas).
+
+Au moment de l’écriture je suis à l’étape 9 du challenge et environ 8 heures
+investis jusqu’ici. J’adore vraiment le concept et je pense en faire plus en
+[stream sur Twitch](https://twitch.tv/LLCoolChris_), en utilisant différents
+langages de programmation!
+
+## Affiliation
+
+Bon t’as capté, je suis partenaire CodeCrafters. Si jamais l’article t’as donné
+envie de tester le truc, je te donne deux choses:
+
+- Tu peux tester gratuitement le challenge DNS. [Utilise mon lien (sponso héhé
+  🤑💰) pour t’inscrire](https://app.codecrafters.io/join?via=Christopher2K). Si
+  jamais tu décides de passer sur la version payante, t'aura un discount de
+  **40%**!
+- Tips: y’a environ 50% de chances que ta boite te paie ton abonnement dans le
+  cadre de ta formation continue! Renseigne toi à ton taf!
+
+Amuse-toi bien!

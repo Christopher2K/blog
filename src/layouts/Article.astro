@@ -20,7 +20,7 @@ const { title } = Astro.props;
       px: "8",
       w: "full",
       lg: {
-        maxWidth: "content",
+        maxWidth: "site",
         mx: "auto",
       },
 
@@ -36,17 +36,17 @@ const { title } = Astro.props;
       },
       "& h2": {
         textStyle: "h2",
-        mt: 10,
+        mt: 12,
         mb: 8,
       },
       "& h3": {
         textStyle: "h3",
-        mt: 8,
+        mt: 10,
         mb: 6,
       },
       "& h4": {
         textStyle: "h4",
-        mt: 6,
+        mt: 8,
         mb: 4,
       },
 
@@ -60,6 +60,14 @@ const { title } = Astro.props;
       },
 
       // OTHERS
+      "& img": {
+        my: 10,
+        mx: "auto",
+        md: {
+          maxWidth: "80%",
+        },
+      },
+
       "& pre": {
         fontSize: "1.125rem",
         p: 4,
@@ -78,8 +86,15 @@ const { title } = Astro.props;
         listStyle: "inside decimal",
       },
 
-      "& p, & ul, & ol, & pre, & img, & picture": {
+      "& p, & ul, & ol, & pre": {
         my: 4,
+      },
+
+      "& code": {
+        display: "inline-block",
+        backgroundColor: "neutral.200",
+        px: 2,
+        borderRadius: "md",
       },
     })}
   >
