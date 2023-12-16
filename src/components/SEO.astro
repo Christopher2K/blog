@@ -1,0 +1,63 @@
+---
+import { t, astroI18n } from "astro-i18n";
+import { LOCALE_FULL_NAME, type SupportedLanguage } from "@/utils/i18n";
+
+interface Props {
+  title?: string;
+  description?: string;
+  forceUseDefaultOgTitle?: boolean;
+  ogType?: "website" | "article";
+}
+
+const {
+  title = t("seo.defaultTitle"),
+  description = t("seo.defaultDescription"),
+  forceUseDefaultOgTitle,
+  ogType = "website",
+} = Astro.props;
+
+const ogTitle = forceUseDefaultOgTitle
+  ? (t("seo.defaultOgTitle") as string)
+  : title;
+
+const { locale } = astroI18n;
+
+const currentLocaleFullName =
+  LOCALE_FULL_NAME[locale as unknown as SupportedLanguage] ??
+  LOCALE_FULL_NAME.en;
+// const currentUrl = $page.url.toString();
+
+// const ogImage = getPageMetadataImage(ogTitle);
+// const ogImageAlt = t("seo:defaultOgImageAlt", {});
+---
+
+<title>{t("seo.titleTemplate", { title })}</title>
+
+<meta name="robots" content="index, follow" />
+<meta name="description" content={description} />
+
+<meta property="og:type" content={ogType} />
+<meta property="og:title" content={ogTitle} />
+<meta property="og:description" content={description} />
+<!-- <meta property="og:image" content={ogImage} /> -->
+<!-- <meta property="og:url" content={currentUrl} /> -->
+
+<meta property="og:locale" content={currentLocaleFullName} />
+<!-- {#each Object.values(LOCALE_FULL_NAME) as localeFullName}
+    <meta property="og:locale:alternate" content={localeFullName} />
+  {/each}
+-->
+
+<!-- <meta property="og:image:url" content={ogImage} /> -->
+
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="627" />
+<!-- <meta property="og:image:alt" content={ogImageAlt} /> -->
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@llcoolchris_" />
+<meta name="twitter:creator" content="@llcoolchris_" />
+<meta name="twitter:title" content={ogTitle} />
+<!-- <meta name="twitter:image" content={ogImage} /> -->
+<!-- <meta name="twitter:image:alt" content={ogImageAlt} /> -->
+<meta name="twitter:description" content={description} />

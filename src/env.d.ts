@@ -5,11 +5,7 @@
 type PrimaryLocale = "fr";
 type SecondaryLocale = "en";
 type Locale = PrimaryLocale | SecondaryLocale;
-type RouteParameters = {
-  "/a-propos": undefined;
-  "/": undefined;
-  "/blog/[slug]": { slug: unknown };
-};
+type RouteParameters = { "/": undefined; "/blog/[slug]": { slug: unknown } };
 type Route = keyof RouteParameters;
 type TranslationVariables = {
   title: object | undefined;
@@ -24,6 +20,11 @@ type TranslationVariables = {
   "footer.github": object | undefined;
   "footer.twitch": object | undefined;
   "footer.credits": object | undefined;
+  "seo.titleTemplate": { title?: unknown } | undefined;
+  "seo.defaultTitle": object | undefined;
+  "seo.defaultDescription": object | undefined;
+  "seo.defaultOgTitle": object | undefined;
+  "seo.defaultOgImageAlt": { title?: unknown } | undefined;
 };
 type Translation = keyof TranslationVariables;
 type Environment = "none" | "node" | "browser";

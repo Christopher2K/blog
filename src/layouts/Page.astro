@@ -7,12 +7,15 @@ import Base from "./Base.astro";
 
 interface Props {
   title: string;
+  description?: string;
+  forceUseDefaultOgTitle?: boolean;
+  ogType?: "website" | "article";
 }
 
-const { title } = Astro.props;
+const { title, description, forceUseDefaultOgTitle, ogType } = Astro.props;
 ---
 
-<Base title={title}>
+<Base {title} {description} {forceUseDefaultOgTitle} {ogType}>
   <Navigation />
   <main
     class={vstack({
