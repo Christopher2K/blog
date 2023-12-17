@@ -11,6 +11,7 @@ type TranslationVariables = {
   title: object | undefined;
   "header.title": object | undefined;
   "header.subtitle": object | undefined;
+  "streamSection.title": object | undefined;
   "lastPostSection.title": object | undefined;
   publishedOn: { date?: unknown } | undefined;
   alternateLangLink: object | undefined;

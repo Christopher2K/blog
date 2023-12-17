@@ -5,6 +5,7 @@ import { astroI18n, t } from "astro-i18n";
 import Article from "@/components/Article.astro";
 import { css } from "@/style/css";
 import Page from "@/layouts/Page.astro";
+import { vstack } from "@/style/patterns";
 
 const lang = astroI18n.locale as unknown as string;
 const blogCollection = await getCollection("blog", ({ data, id }) => {
@@ -30,6 +31,24 @@ const blogCollection = await getCollection("blog", ({ data, id }) => {
     <p class={css({ textStyle: "h6", color: "neutral.500" })}>
       {t("header.subtitle")}
     </p>
+  </section>
+
+  <section
+    class={vstack({
+      mb: "10",
+      w: "full",
+      justifyContent: "center",
+      alignItems: "center",
+    })}
+  >
+    <h2 class={css({ textStyle: "h2", w: "full" })}>
+      {t("streamSection.title")}
+    </h2>
+    <iframe
+      title="Twitch"
+      class={css({ w: "full", aspectRatio: "16 / 9" })}
+      src="https://player.twitch.tv?channel=llcoolchris_&parent=localhost&parent=christopher2k.dev"
+      allowfullscreen></iframe>
   </section>
 
   <section class={css({ mb: "10" })}>
