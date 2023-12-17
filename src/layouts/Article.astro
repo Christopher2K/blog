@@ -18,89 +18,99 @@ const { title, description, forceUseDefaultOgTitle } = Astro.props;
   <Navigation />
   <main
     class={css({
-      flex: "1",
-      px: "8",
-      w: "full",
-      lg: {
-        maxWidth: "site",
-        mx: "auto",
-      },
-
-      // Content styling
-      // HEADINGS
-      "& h1, & h2, & h3, & h4": {
-        w: "full",
-      },
-      "& h1": {
-        textStyle: "h1",
-        textAlign: "center",
-        my: 14,
-      },
-      "& h2": {
-        textStyle: "h2",
-        mt: 12,
-        mb: 8,
-      },
-      "& h3": {
-        textStyle: "h3",
-        mt: 10,
-        mb: 6,
-      },
-      "& h4": {
-        textStyle: "h4",
-        mt: 8,
-        mb: 4,
-      },
-
-      // TEXT
-      "& p, & a, & li": {
-        textStyle: "body",
-      },
-
-      "& a": {
-        textDecoration: "underline",
-      },
-
-      // OTHERS
-      "& img": {
-        my: 10,
-        mx: "auto",
-        md: {
-          maxWidth: "80%",
-        },
-      },
-
-      "& pre": {
-        fontSize: "1.125rem",
-        p: 4,
-        borderRadius: "md",
-      },
-
-      "& ul, & ol": {
-        px: "4",
-      },
-
-      "& ul": {
-        listStyle: "inside disc",
-      },
-
-      "& ol": {
-        listStyle: "inside decimal",
-      },
-
-      "& p, & ul, & ol, & pre": {
-        my: 4,
-      },
-
-      "& code": {
-        display: "inline-block",
-        backgroundColor: "neutral.200",
-        px: 2,
-        borderRadius: "md",
-      },
+      px: 8,
+      maxWidth: "site",
     })}
   >
-    <slot />
+    <header class={css({ w: "full" })}>
+      <slot name="header" />
+    </header>
+
+    <div
+      class={css({
+        flex: "1",
+        w: "full",
+        maxWidth: "content",
+        lg: {
+          mx: "auto",
+        },
+
+        // Content styling
+        // HEADINGS
+        "& h1, & h2, & h3, & h4": {
+          w: "full",
+        },
+        "& h1": {
+          textStyle: "h1",
+          textAlign: "center",
+          my: 14,
+        },
+        "& h2": {
+          textStyle: "h2",
+          mt: 12,
+          mb: 8,
+        },
+        "& h3": {
+          textStyle: "h3",
+          mt: 10,
+          mb: 6,
+        },
+        "& h4": {
+          textStyle: "h4",
+          mt: 8,
+          mb: 4,
+        },
+
+        // TEXT
+        "& p, & a, & li": {
+          textStyle: "body",
+        },
+
+        "& a": {
+          textDecoration: "underline",
+        },
+
+        // OTHERS
+        "& img": {
+          my: 10,
+          mx: "auto",
+          md: {
+            maxWidth: "80%",
+          },
+        },
+
+        "& pre": {
+          fontSize: "1.125rem",
+          p: 4,
+          borderRadius: "md",
+        },
+
+        "& ul, & ol": {
+          px: "4",
+        },
+
+        "& ul": {
+          listStyle: "inside disc",
+        },
+
+        "& ol": {
+          listStyle: "inside decimal",
+        },
+
+        "& p, & ul, & ol, & pre": {
+          my: 4,
+        },
+
+        "& code": {
+          display: "inline-block",
+          backgroundColor: "neutral.200",
+          px: 2,
+          borderRadius: "md",
+        },
+      })}
+    >
+      <slot />
+    </div>
   </main>
   <Footer />
 </Base>

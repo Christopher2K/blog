@@ -1,29 +1,102 @@
 ---
-import { getCollection } from "astro:content";
-import { astroI18n } from "astro-i18n";
+import { getCollection, getEntry } from "astro:content";
+import { astroI18n, t } from "astro-i18n";
 
+import { css } from "@/style/css";
 import Article from "@/layouts/Article.astro";
+import { vstack } from "@/style/patterns";
+import { format } from "@/utils/date";
 
 export async function getStaticPaths() {
   const lang = astroI18n.locale as unknown as string;
+  const alternateLang = lang === "fr" ? "en" : "fr";
 
   const blogCollection = await getCollection(
     "blog",
     ({ data, id }) => id.startsWith(lang) && !data.draft,
   );
 
-  return blogCollection.map((entry) => {
-    return {
-      params: { slug: entry.slug },
-      props: { entry },
-    };
-  });
+  console.log(blogCollection);
+
+  const paths = await Promise.all(
+    blogCollection.map(async (entry) => {
+      const alternateEntry = entry.data?.translation
+        ? await getEntry("blog", entry.data.translation)
+        : await Promise.resolve(undefined);
+
+      return {
+        params: { slug: entry.slug },
+        props: {
+          entry,
+          alternateLang,
+          alternateEntry,
+        },
+      };
+    }),
+  );
+
+  return paths;
 }
 
-const { entry } = Astro.props;
+const { entry, alternateLang, alternateEntry } = Astro.props;
 const { Content } = await entry.render();
+const alternateLangLink = ["", alternateLang, "blog", alternateEntry?.slug]
+  .filter((chunk) => chunk !== "fr")
+  .join("/");
 ---
 
 <Article title={entry.data.title} description={entry.data.description}>
+  <divvstack
+    class={vstack({
+      my: "14",
+      textAlign: "center",
+      width: "full",
+      gap: 5,
+    })}
+    slot="header"
+  >
+    <h1 class={css({ textStyle: "h1" })}>
+      {entry.data.title}
+    </h1>
+    <div
+      class={css({
+        textStyle: "small",
+        fontWeight: "medium",
+        color: "neutral.600",
+      })}
+    >
+      <p>
+        {t("publishedOn", { date: format(entry.data.publishingDate, "PPPP") })}
+      </p>
+      {
+        Boolean(alternateEntry) && (
+          <p>
+            <a
+              class={css({ textDecoration: "underline" })}
+              href={alternateLangLink}
+            >
+              {t("alternateLangLink")}
+            </a>
+          </p>
+        )
+      }
+    </div>
+
+    <hr class={css({ w: 10 })} />
+    <p
+      class={css({
+        textAlign: "center",
+        textStyle: "h6",
+        color: "neutral.600",
+        lg: {
+          maxWidth: "70%",
+          mx: "auto",
+        },
+      })}
+    >
+      {entry.data.description}
+    </p>
+  </divvstack>
+
   <Content />
 </Article>
