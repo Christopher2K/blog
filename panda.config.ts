@@ -13,7 +13,7 @@ const globalCss = defineGlobalStyles({
 const textStyles = defineTextStyles({
   h1: {
     value: {
-      fontSize: "3.815rem",
+      fontSize: "2.986rem",
       fontWeight: "700",
       lineHeight: "1.30",
     },
@@ -21,7 +21,7 @@ const textStyles = defineTextStyles({
 
   h2: {
     value: {
-      fontSize: "3.052rem",
+      fontSize: "2.488rem",
       fontWeight: "700",
       lineHeight: "1.30",
     },
@@ -29,7 +29,7 @@ const textStyles = defineTextStyles({
 
   h3: {
     value: {
-      fontSize: "2.441rem",
+      fontSize: "2.074rem",
       fontWeight: "500",
       lineHeight: "1.40",
     },
@@ -37,7 +37,7 @@ const textStyles = defineTextStyles({
 
   h4: {
     value: {
-      fontSize: "1.953rem",
+      fontSize: "1.728rem",
       fontWeight: "500",
       lineHeight: "1.40",
     },
@@ -45,7 +45,7 @@ const textStyles = defineTextStyles({
 
   h5: {
     value: {
-      fontSize: "1.563rem",
+      fontSize: "1.44rem",
       fontWeight: "500",
       lineHeight: "1.40",
     },
@@ -53,7 +53,7 @@ const textStyles = defineTextStyles({
 
   h6: {
     value: {
-      fontSize: "1.25rem",
+      fontSize: "1.2rem",
       fontWeight: "500",
       lineHeight: "1.6",
     },
@@ -61,7 +61,7 @@ const textStyles = defineTextStyles({
 
   body: {
     value: {
-      fontSize: "1.25rem",
+      fontSize: "1rem",
       fontWeight: "400",
       lineHeight: "1.6",
     },
@@ -69,7 +69,7 @@ const textStyles = defineTextStyles({
 
   small: {
     value: {
-      fontSize: "1rem",
+      fontSize: "0.833rem",
       fontWeight: "400",
       lineHeight: "1.6",
     },
