@@ -29,6 +29,7 @@
     "typescript": "~5.3.3"
   },
   "devDependencies": {
+    "@cloudinary/url-gen": "~1.10.1",
     "@pandacss/astro": "~0.20.1",
     "@pandacss/dev": "~0.20.1",
     "husky": "~8.0.3",

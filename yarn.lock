@@ -614,6 +614,33 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@cloudinary/transformation-builder-sdk@npm:^1.2.7, @cloudinary/transformation-builder-sdk@npm:^1.9.0":
+  version: 1.9.0
+  resolution: "@cloudinary/transformation-builder-sdk@npm:1.9.0"
+  dependencies:
+    "@cloudinary/url-gen": ^1.7.0
+  checksum: fc4e1f71055334d1e4d71a9cf136da1ae3b486c314297ed897e05c6f8001fd95bfa5790d7449db747dae657014755b579a048b3015fc2eed48c0fdeeb6a42d3c
+  languageName: node
+  linkType: hard
+
+"@cloudinary/url-gen@npm:^1.7.0":
+  version: 1.14.0
+  resolution: "@cloudinary/url-gen@npm:1.14.0"
+  dependencies:
+    "@cloudinary/transformation-builder-sdk": ^1.9.0
+  checksum: 057b7a5d9ea72c129fbb912d4db16a8caa5c54d732d62471d8c8b1b1afd2c455a5e61a547b40502b62dbed8ab8b3617713dbffdee20846d6bb76dce3f40fdfc6
+  languageName: node
+  linkType: hard
+
+"@cloudinary/url-gen@npm:~1.10.1":
+  version: 1.10.2
+  resolution: "@cloudinary/url-gen@npm:1.10.2"
+  dependencies:
+    "@cloudinary/transformation-builder-sdk": ^1.2.7
+  checksum: a69b63fb98b4db773f531726999d89159d4369800754955abd9e2713711193790643f0a7835e5fb5751978fa1089614e58b39312937cee41d0d2272d550723c3
+  languageName: node
+  linkType: hard
+
 "@emmetio/abbreviation@npm:^2.3.3":
   version: 2.3.3
   resolution: "@emmetio/abbreviation@npm:2.3.3"
@@ -4070,6 +4097,7 @@ __metadata:
     "@astrojs/check": ~0.3.1
     "@astrojs/mdx": ~2.0.1
     "@astrojs/solid-js": ~3.0.2
+    "@cloudinary/url-gen": ~1.10.1
     "@pandacss/astro": ~0.20.1
     "@pandacss/dev": ~0.20.1
     astro: ~4.0.3
