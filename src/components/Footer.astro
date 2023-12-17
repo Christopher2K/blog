@@ -5,11 +5,14 @@ import {
   LinkedinIcon,
   GithubIcon,
 } from "lucide-solid";
-import { t } from "astro-i18n";
+import { t, l, astroI18n } from "astro-i18n";
 
 import { css } from "@/style/css";
 import { hstack, vstack } from "@/style/patterns";
 import { linkedin, twitch, twitter, github } from "@/utils/link";
+
+const lang = astroI18n.locale as unknown as string;
+const alternateLang = lang === "fr" ? "en" : "fr";
 ---
 
 <footer
@@ -46,6 +49,11 @@ import { linkedin, twitch, twitter, github } from "@/utils/link";
       alignItems: "center",
     })}
   >
+    <a
+      href={l("", {}, { targetLocale: alternateLang })}
+      class={css({ textDecoration: "underline" })}
+      >{t("footer.alternateLangLink")}</a
+    >
     <ul
       class={hstack({ justifyContent: "center", alignItems: "center", gap: 4 })}
     >

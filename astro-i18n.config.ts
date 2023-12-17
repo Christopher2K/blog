@@ -12,7 +12,7 @@ export default defineAstroI18nConfig({
   translations: {}, // { [translation_group1]: { [locale1]: {}, ... } }
   routes: {
     en: {
-      "a-propos": "about",
+      "blog/fais-ton-propre-x": "blog/build-your-own-x",
     },
   }, // { [secondary_locale1]: { about: "about-translated", ... } }
 });

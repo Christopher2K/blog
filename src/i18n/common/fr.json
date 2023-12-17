@@ -9,7 +9,8 @@
     "linkedin": "Mon profil Linkedin",
     "github": "Mon compte Github",
     "twitch": "Ma chaine Twitch",
-    "credits": "Tous droits réservés © Christopher N. Katoyi Kaba - 2023"
+    "credits": "Tous droits réservés © Christopher N. Katoyi Kaba - 2023",
+    "alternateLangLink": "🇬🇧 Check the english website"
   },
   "seo": {
     "titleTemplate": "{# title #} | Christopher N. Katoyi Kaba",

@@ -38,7 +38,7 @@ import { twitch } from "@/utils/link";
       position: "relative",
       w: "full",
       h: "nav",
-      px: 4,
+      px: 6,
       justifyContent: "space-between",
     })}
   >
@@ -75,9 +75,6 @@ import { twitch } from "@/utils/link";
         },
       })}
     >
-      <NavItem href={l("/")}>
-        {t("nav.home")}
-      </NavItem>
       <NavItem href={twitch}>
         {t("nav.twitch")}
       </NavItem>

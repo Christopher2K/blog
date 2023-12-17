@@ -16,8 +16,6 @@ export async function getStaticPaths() {
     ({ data, id }) => id.startsWith(lang) && !data.draft,
   );
 
-  console.log(blogCollection);
-
   const paths = await Promise.all(
     blogCollection.map(async (entry) => {
       const alternateEntry = entry.data?.translation

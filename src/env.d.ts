@@ -22,6 +22,7 @@ type TranslationVariables = {
   "footer.github": object | undefined;
   "footer.twitch": object | undefined;
   "footer.credits": object | undefined;
+  "footer.alternateLangLink": object | undefined;
   "seo.titleTemplate": { title?: unknown } | undefined;
   "seo.defaultTitle": object | undefined;
   "seo.defaultDescription": object | undefined;
