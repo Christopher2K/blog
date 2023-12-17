@@ -7,9 +7,18 @@ import { css } from "@/style/css";
 import Page from "@/layouts/Page.astro";
 
 const lang = astroI18n.locale as unknown as string;
-const blogCollection = await getCollection(
-  "blog",
-  ({ data, id }) => id.startsWith(lang) && !data.draft,
+const blogCollection = await getCollection("blog", ({ data, id }) => {
+  return id.startsWith(lang) && Boolean(import.meta.env.DEV || !data.draft);
+}).then((data) =>
+  data.toSorted((a, b) => {
+    if (a.data.publishingDate > b.data.publishingDate) {
+      return -1;
+    } else if (a.data.publishingDate < b.data.publishingDate) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }),
 );
 ---
 

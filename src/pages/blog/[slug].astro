@@ -13,7 +13,8 @@ export async function getStaticPaths() {
 
   const blogCollection = await getCollection(
     "blog",
-    ({ data, id }) => id.startsWith(lang) && !data.draft,
+    ({ data, id }) =>
+      id.startsWith(lang) && Boolean(import.meta.env.DEV || !data.draft),
   );
 
   const paths = await Promise.all(

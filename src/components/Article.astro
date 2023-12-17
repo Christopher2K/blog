@@ -2,7 +2,7 @@
 import { type CollectionEntry } from "astro:content";
 
 import { css } from "@/style/css";
-import { vstack } from "@/style/patterns";
+import { vstack, hstack } from "@/style/patterns";
 import { format } from "@/utils/date";
 
 type Data = CollectionEntry<"blog">["data"];
@@ -35,17 +35,33 @@ const url =
     </h3>
   </a>
 
-  {
-    tags.length > 0 && (
-      <ul>
-        {tags.map((tag) => (
-          <li>{tag}</li>
-        ))}
-      </ul>
-    )
-  }
   <p class={css({ textStyle: "body", fontWeight: 400 })}>{description}</p>
   <p class={css({ textStyle: "small", color: "neutral.600" })}>
     {format(publishingDate, "PPP")}
   </p>
+  {
+    tags.length > 0 && (
+      <ul
+        class={hstack({
+          w: "full",
+          flexWrap: "wrap",
+        })}
+      >
+        {tags.map((tag) => (
+          <li
+            class={css({
+              backgroundColor: "neutral.500",
+              color: "neutral.50",
+              borderRadius: "sm",
+              py: 1,
+              px: 2,
+              textStyle: "small",
+            })}
+          >
+            {tag}
+          </li>
+        ))}
+      </ul>
+    )
+  }
 </article>
