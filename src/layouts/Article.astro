@@ -20,6 +20,7 @@ const { title, description, forceUseDefaultOgTitle } = Astro.props;
     class={css({
       px: 8,
       maxWidth: "site",
+      w: "full",
     })}
   >
     <header class={css({ w: "full" })}>
@@ -83,6 +84,7 @@ const { title, description, forceUseDefaultOgTitle } = Astro.props;
           fontSize: "1.125rem",
           p: 4,
           borderRadius: "md",
+          overflow: "auto",
         },
 
         "& ul, & ol": {
