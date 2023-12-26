@@ -14,11 +14,9 @@ import badResults from "@/assets/lucide-icons-with-vite-dev-server/bad-results.p
 import goodResults from "@/assets/lucide-icons-with-vite-dev-server/good-results.png";
 import meal from "@/assets/lucide-icons-with-vite-dev-server/meal.png";
 
-> Another story about Javascript bundlers…
-
 This will be a super short post. It will be like a little story, followed by an analysis, followed by a conclusion. I will try to keep my frustration to myself and stick to the facts, okay? Let's get started.
 
-## Contexte
+## Context
 
 I'm working on a new project. For this project, I decide to finally use [SolidStart](https://start.solidjs.com/getting-started/what-is-solidstart), the meta framework using the famous [SolidJS](https://www.solidjs.com/). Everything is going well, I really appreciate the technology. I’m brilliantly integrating my Figma designs, showing extraordinary skill for the day after Christmas dinner.
 
@@ -50,13 +48,13 @@ The frustration is growing, so I decide to stop what I'm doing to conduct a litt
 
 **A THOUSAND FOUR HUNDRED AND NINETY REQUESTS!!!!!!!!!!!!** Importing a SINGLE icon makes Vite also include ALL of the icons from Lucide library.
 
-# But, why?
+## But, why?
 
 Big question, huh? [Some people have already reproduced this issue](https://github.com/solidjs/solid-start/issues/1048).
 
 The answer is quite simple: Vite does not perform tree-shaking in development mode and people are not very happy with this design decision [as you can see here](https://github.com/vitejs/vite/issues/8237). I'm not going to go into the details of why there is no tree-shaking and the relevance of barrel files (files where you export a bunch of things). I will just say that ESM is supposed to simplify all of this, but it seems like it's still too early.
 
-# Fixing this
+## Fixing this
 
 In three steps:
 
