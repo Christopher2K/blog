@@ -1,0 +1,118 @@
+---
+title: Lucide-Icon 💔 Vite dev server
+description: Encore une histoire de bundle Javascript…
+tags: [typescript, javascript, solid, lucide, vite, bundlers]
+publishingDate: 2023-12-26
+draft: false
+slug: lucide-icons-avec-vite-dev-server
+translation: lucide-icons-with-vite-dev-server
+---
+
+import { Image } from "astro:assets";
+
+import badResults from "@/assets/lucide-icons-with-vite-dev-server/bad-results.png";
+import goodResults from "@/assets/lucide-icons-with-vite-dev-server/good-results.png";
+import meal from "@/assets/lucide-icons-with-vite-dev-server/meal.png";
+
+> Encore une histoire de bundle Javascript…
+
+On est sur un article super court. Ca sera genre, une petite histoire, suivie d’un fix, suivie d’une conclusion. Je vais essayer de garder ma frustration pour moi et m’en tenir aux faits ok? C’est pati.
+
+## Contexte
+
+Je bosse sur un nouveau projet. Pour ce projet je décide d’enfin utiliser [SolidStart](https://start.solidjs.com/getting-started/what-is-solidstart), le méta framework utilisant le très fameux [SolidJS](https://www.solidjs.com/). Tout se passe pour le mieux, j’apprécie fortement la techno. J’intègre mes designs avec brio, faisant preuve d’un compétence hors-normes pour un lendemain de repas de Noël.
+
+<Image
+  src={meal}
+  alt="Repas de noel sur une table basse, riz, foie gras, saumon, crevettes"
+/>
+
+Arrive le moment où, je dois passer quelques minutes à intégrer des icônes. Je suis un dev moyen mais un très médiocre designer, et donc comme toujours, je fais appels aux excellentes icônes de [Lucide](https://lucide.dev/icons/). Je choppe le package compatible avec Solid et j’importe ma première icône:
+
+```typescript
+import { Twitch } from 'lucide-solid'
+
+const MyComponent = () => {
+  return <Button leftIcon={<Twitch />} />
+}
+```
+
+Je sauvegarde mon fichier, j’ouvre mon navigateur et là, il se passe…. bah rien genre. Enfin rien pendant 30 bonnes secondes, et puis ma page apparait. Je ne fais pas gaffe, je continue de bosser mais à chaque fois que je reviens sur cette page en particulier, rien pour 30 secondes et ensuite mon contenu apparaît.
+
+Pour tester, je compile mon app, et tout est ok sur la version de prod, mais la version de dev est toujours SUPER lente.
+
+La frustration devient palpable, je décide donc de stopper ce que je fais pour mener une petite enquête. J’ouvre mon onglet `Network`, je charge ma page et voici ce que je vois:
+
+<Image
+  src={badResults}
+  alt="Screenshot de ChromeDevTools qui me montre que 1490 requêtes ont été faites"
+/>
+
+**MILLE QUATRE CENT QUATRE-VINGT DIX REQUÊTES!!!!!!!!!!!!** Le simple fait d’importer une SEUL icône foutait TOUTES les icônes de la librarie Lucide dans mon bundle de dev.
+
+## Pourquoi?
+
+Grosse question hein? [Des gens ont déjà rencontré le problème.](https://github.com/solidjs/solid-start/issues/1048)
+
+La réponse est plutot simple: le bundler Vite ne fait pas de tree-shaking en mode développement et les gens ne sont pas super ok sur cette décision de design [comme tu peux le voir ici](https://github.com/vitejs/vite/issues/8237). Je ne vais pas rentrer dans les détails du pourquoi du comment du non tree-shaking et de la pertinence des barrels files (les fichiers ou t’exporte tout un tas de choses). Je vais juste dire que ESM est sensé simplifier tout ça, mais faut croire que c'est encore trop tôt.
+
+## Le fix
+
+En trois étapes:
+
+**Première étape**: Fait un alias entre un dossier virtuel au choix, et les sources de la lib lucide dans ton `vite.config.js`
+
+```typescript
+import { fileURLToPath, URL } from "node:url";
+import { defineConfig } from "@solidjs/start/config";
+
+export default defineConfig({
+  resolve: {
+    alias: {
+      "lucide-solid/icons": fileURLToPath(
+        new URL(
+          "./node_modules/lucide-solid/dist/source/icons",
+          import.meta.url,
+        ),
+      ),
+    },
+  },
+});
+```
+
+**Deuxième étape**: Fait comprendre à typescript, dans `src/@types/lucide.d.ts`, qu’on va faire des choses bizarres et qu’il faut qu’il type tout ce qui est sous notre chemin virtuel en composant Solid.
+
+```typescript
+declare module "lucide-solid/icons/*" {
+  import { LucideProps } from "lucide-solid/dist/types/types";
+  import { Component } from "solid-js";
+  const cmp: Component<LucideProps>;
+
+  export = cmp;
+}
+```
+
+**Troisième étape**: Remplace les imports.
+
+```typescript
+import Twitch from 'lucide-solid/icon/twitch'
+
+const MyComponent = () => {
+  return <Button leftIcon={<Twitch />} />
+}
+```
+
+**Quatrième étape**: Soit fièr(e) du dur labeur accompli.
+
+<Image
+  src={goodResults}
+  alt="Screenshot de ChromeDevTools qui me montre que 124 requêtes sont maintenant faîtes pour la même page."
+/>
+
+# Pour finir
+
+Quelques leçons:
+
+- Les performances de ton environnement de développement sont importantes. Si quelque chose ne fonctionne pas comme prévu, fix le, tu gagneras du temps!
+- Les arcanes du bunbling Javscript ne sont pas aussi simple qu’on peut le penser (en vrai personne ne pense que c’est simple).
+- Vite n’est pas forcément parfait. C’est une alternative à Webpack et ça fait les choses d’une manière différente. On peut parfois être surpris!
