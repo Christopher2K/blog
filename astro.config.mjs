@@ -6,5 +6,5 @@ import mdx from "@astrojs/mdx";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [pandacss(), solidJs(), mdx()]
+  integrations: [pandacss(), solidJs(), mdx()],
 });
