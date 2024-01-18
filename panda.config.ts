@@ -7,12 +7,14 @@ import {
 const globalCss = defineGlobalStyles({
   "html, body": {
     scrollbarGutter: "stable",
+    fontFamily: "body",
   },
 });
 
 const textStyles = defineTextStyles({
   h1: {
     value: {
+      fontFamily: "title",
       fontSize: "2.027rem",
       fontWeight: "700",
       lineHeight: "1.30",
@@ -21,6 +23,7 @@ const textStyles = defineTextStyles({
 
   h2: {
     value: {
+      fontFamily: "title",
       fontSize: "1.802rem",
       fontWeight: "700",
       lineHeight: "1.30",
@@ -29,39 +32,43 @@ const textStyles = defineTextStyles({
 
   h3: {
     value: {
+      fontFamily: "title",
       fontSize: "1.602rem",
-      fontWeight: "500",
+      fontWeight: "700",
       lineHeight: "1.40",
     },
   },
 
   h4: {
     value: {
+      fontFamily: "title",
       fontSize: "1.424rem",
-      fontWeight: "500",
+      fontWeight: "700",
       lineHeight: "1.40",
     },
   },
 
   h5: {
     value: {
+      fontFamily: "title",
       fontSize: "1.266rem",
-      fontWeight: "500",
+      fontWeight: "700",
       lineHeight: "1.40",
     },
   },
 
   h6: {
     value: {
+      fontFamily: "title",
       fontSize: "1.125rem",
-      fontWeight: "500",
+      fontWeight: "700",
       lineHeight: "1.6",
     },
   },
 
   body: {
     value: {
-      fontSize: "1rem",
+      fontSize: "1.125rem",
       fontWeight: "400",
       lineHeight: "1.6",
     },
@@ -106,6 +113,10 @@ export default defineConfig({
             value: "4rem",
             description: "Navigation bar height",
           },
+        },
+        fonts: {
+          body: { value: "var(--font-body)" },
+          title: { value: "var(--font-title)" },
         },
       },
     },

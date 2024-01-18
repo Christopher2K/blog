@@ -1,0 +1,44 @@
+@font-face {
+  font-family: "Space Mono";
+  src:
+    url("/fonts/SpaceMono-Regular.woff2") format("woff2"),
+    url("/fonts/SpaceMono-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Space Mono";
+  src:
+    url("/fonts/SpaceMono-Bold.woff2") format("woff2"),
+    url("/fonts/SpaceMono-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Oxygen";
+  src:
+    url("/fonts/Oxygen-Regular.woff2") format("woff2"),
+    url("/fonts/Oxygen-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Oxygen";
+  src:
+    url("/fonts/Oxygen-Bold.woff2") format("woff2"),
+    url("/fonts/Oxygen-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-title: "Oxygen", monospace;
+  --font-body: "Space Mono", monospace;
+}
