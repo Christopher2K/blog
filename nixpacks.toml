@@ -18,10 +18,20 @@ providers = ["node"]
         'chmod +x caddy' # enable file execution for caddy, needed to execute downloaded files
     ]
 
+[phases.codegen]
+    dependsOn = ['install']
+    cmds = [
+        'yarn run prepare'
+    ]
+
+[phases.build]
+    dependsOn = ["...", "codegen"]
+
 # format the Caddyfile with fmt
 [phases.fmt]
     dependsOn = ['caddy'] # make sure this phase runs after the 'caddy' phase so that we know we have caddy downloaded
     cmds = ['caddy fmt --overwrite Caddyfile'] # format the Caddyfile to fix any formatting inconsistencies
+
 
 [start]
     runImage = 'ubuntu:20.04' # use a new ubuntu image to run the caddy server in

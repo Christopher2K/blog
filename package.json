@@ -25,6 +25,7 @@
     "astro-i18n": "~2.1.18",
     "date-fns": "~2.30.0",
     "lucide-solid": "~0.294.0",
+    "sharp": "~0.33.2",
     "solid-js": "~1.8.0",
     "typescript": "~5.3.3"
   },
@@ -35,7 +36,7 @@
     "husky": "~8.0.3",
     "lint-staged": "~15.2.0",
     "prettier": "~3.1.0",
-    "prettier-plugin-astro": "~0.12.2",
-    "sharp": "~0.33.2"
-  }
+    "prettier-plugin-astro": "~0.12.2"
+  },
+  "packageManager": "yarn@3.6.2"
 }
