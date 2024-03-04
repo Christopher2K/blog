@@ -19,6 +19,34 @@ const { title, description, forceUseDefaultOgTitle } = Astro.props;
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="stylesheet" href="/app.css" />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/SpaceMono-Regular.woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/SpaceMono-Bold.woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/Oxygen-Regular.woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/Oxygen-Bold.woff2"
+      crossorigin
+    />
 
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
