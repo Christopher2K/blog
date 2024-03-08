@@ -2110,14 +2110,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"astro-i18n@npm:~2.1.18":
-  version: 2.1.18
-  resolution: "astro-i18n@npm:2.1.18"
+"astro-i18n@npm:~2.2.4":
+  version: 2.2.4
+  resolution: "astro-i18n@npm:2.2.4"
   peerDependencies:
     esbuild: 0.x
   bin:
     astro-i18n: dist/src/bin.cjs
-  checksum: 9ade7bbda643ce5844ba71104b1055240ba1a890d69ae823a4ff4ca429cb3ea9667bd66441a843fdd49b6f857803402f479427a98e845d690e249a126e365dda
+  checksum: d134a249059e6a45a22e569794895ce2fc7da0e4e098a32bc51bc82832c74483f98ac9af36cf76868d8eb75eae417761617ab5389be28037c93410ba4b6249ba
   languageName: node
   linkType: hard
 
@@ -4285,7 +4285,7 @@ __metadata:
     "@pandacss/astro": ~0.20.1
     "@pandacss/dev": ~0.20.1
     astro: ~4.0.3
-    astro-i18n: ~2.1.18
+    astro-i18n: ~2.2.4
     date-fns: ~2.30.0
     husky: ~8.0.3
     lint-staged: ~15.2.0

@@ -22,7 +22,7 @@
     "@astrojs/mdx": "~2.0.1",
     "@astrojs/solid-js": "~3.0.2",
     "astro": "~4.0.3",
-    "astro-i18n": "~2.1.18",
+    "astro-i18n": "~2.2.4",
     "date-fns": "~2.30.0",
     "lucide-solid": "~0.294.0",
     "sharp": "~0.33.2",

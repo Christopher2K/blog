@@ -64,6 +64,7 @@ declare module "astro-i18n" {
     translationLoadingRules: TranslationLoadingRules;
     translationDirectory: TranslationDirectory;
     routes: SegmentTranslations;
+    srcDir: string;
   }
   /** Typed astro-i18n config definition. */
   export function defineAstroI18nConfig(
