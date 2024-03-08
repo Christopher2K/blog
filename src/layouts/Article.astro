@@ -109,6 +109,15 @@ const { title, description, forceUseDefaultOgTitle } = Astro.props;
           px: 2,
           borderRadius: "md",
         },
+
+        "& blockquote": {
+          borderLeft: "6px solid #000",
+          backgroundColor: "gray.100",
+          color: "gray.800",
+          pl: "4",
+          py: "4",
+          my: 8,
+        },
       })}
     >
       <slot />
