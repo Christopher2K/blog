@@ -49,10 +49,10 @@ const currentLocaleFullName =
   LOCALE_FULL_NAME[locale as unknown as SupportedLang] ?? LOCALE_FULL_NAME.en;
 
 const ogImage = getPageMetadataImage(ogTitle);
-const ogImageAlt = t("seo:defaultOgImageAlt", { title: ogTitle });
+const ogImageAlt = t("common:seo.defaultOgImageAlt", { title: ogTitle });
 ---
 
-<title>{t("seo.titleTemplate", { title })}</title>
+<title>{t("common:seo.titleTemplate", { title })}</title>
 
 <meta name="robots" content="index, follow" />
 <meta name="description" content={description} />
