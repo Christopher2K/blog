@@ -7,10 +7,11 @@ import { css } from "@/style/css";
 import Page from "@/layouts/Page.astro";
 import { vstack } from "@/style/patterns";
 
-const lang = Astro.currentLocale ?? "fr";
-
 const blogCollection = await getCollection("blog", ({ data, id }) => {
-  return id.startsWith(lang) && Boolean(import.meta.env.DEV || !data.draft);
+  return (
+    id.startsWith(Astro.currentLocale ?? "fr") &&
+    Boolean(import.meta.env.DEV || !data.draft)
+  );
 }).then((data) =>
   data.toSorted((a, b) => {
     if (a.data.publishingDate > b.data.publishingDate) {

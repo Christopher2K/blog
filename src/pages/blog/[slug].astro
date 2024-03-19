@@ -1,6 +1,6 @@
 ---
 import { getCollection, getEntry } from "astro:content";
-import { changeLanguage, t } from "@/i18n";
+import { t } from "@/i18n";
 
 import { css } from "@/style/css";
 import Article from "@/layouts/Article.astro";
@@ -37,8 +37,7 @@ export async function getStaticPaths({ lang = "fr" }: { lang?: string }) {
   return paths;
 }
 
-const { entry, alternateLang, alternateEntry, lang } = Astro.props;
-changeLanguage(lang);
+const { entry, alternateLang, alternateEntry } = Astro.props;
 const { Content } = await entry.render();
 const alternateLangLink = ["", alternateLang, "blog", alternateEntry?.slug]
   .filter((chunk) => chunk !== "fr")

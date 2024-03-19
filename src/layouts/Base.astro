@@ -1,5 +1,4 @@
 ---
-import { changeLanguage } from "@/i18n";
 import SEO from "@/components/SEO.astro";
 
 export interface Props {
@@ -9,13 +8,10 @@ export interface Props {
   ogType?: "website" | "article";
 }
 
-const lang = Astro.currentLocale ?? "fr";
-changeLanguage(lang);
-
 const { title, description, forceUseDefaultOgTitle } = Astro.props;
 ---
 
-<html lang="en">
+<html lang={Astro.currentLocale}>
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />

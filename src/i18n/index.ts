@@ -30,12 +30,14 @@ const resources: Record<SupportedLang, Resource> = {
   },
 };
 
-i18next.init({
-  lng: "fr", // if you're using a language detector, do not define the lng option
-  debug: true,
-  ns: ["common", "home", "blog"],
-  resources,
-});
+export async function init() {
+  await i18next.init({
+    lng: "fr", // if you're using a language detector, do not define the lng option
+    debug: true,
+    ns: ["common", "home", "blog"],
+    resources,
+  });
+}
 
 /**
  * Localize navigation path
