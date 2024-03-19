@@ -1,14 +1,13 @@
 ---
 import { getCollection, getEntry } from "astro:content";
-import { astroI18n, t } from "astro-i18n";
+import { changeLanguage, t } from "@/i18n";
 
 import { css } from "@/style/css";
 import Article from "@/layouts/Article.astro";
 import { vstack } from "@/style/patterns";
 import { format } from "@/utils/date";
 
-export async function getStaticPaths() {
-  const lang = astroI18n.locale as unknown as string;
+export async function getStaticPaths({ lang = "fr" }: { lang?: string }) {
   const alternateLang = lang === "fr" ? "en" : "fr";
 
   const blogCollection = await getCollection(
@@ -27,6 +26,7 @@ export async function getStaticPaths() {
         params: { slug: entry.slug },
         props: {
           entry,
+          lang,
           alternateLang,
           alternateEntry,
         },
@@ -37,7 +37,8 @@ export async function getStaticPaths() {
   return paths;
 }
 
-const { entry, alternateLang, alternateEntry } = Astro.props;
+const { entry, alternateLang, alternateEntry, lang } = Astro.props;
+changeLanguage(lang);
 const { Content } = await entry.render();
 const alternateLangLink = ["", alternateLang, "blog", alternateEntry?.slug]
   .filter((chunk) => chunk !== "fr")
@@ -65,7 +66,11 @@ const alternateLangLink = ["", alternateLang, "blog", alternateEntry?.slug]
       })}
     >
       <p>
-        {t("publishedOn", { date: format(entry.data.publishingDate, "PPPP") })}
+        {
+          t("blog:publishedOn", {
+            date: format(entry.data.publishingDate, "PPPP"),
+          })
+        }
       </p>
       {
         Boolean(alternateEntry) && (
@@ -74,7 +79,7 @@ const alternateLangLink = ["", alternateLang, "blog", alternateEntry?.slug]
               class={css({ textDecoration: "underline" })}
               href={alternateLangLink}
             >
-              {t("alternateLangLink")}
+              {t("blog:alternateLangLink")}
             </a>
           </p>
         )

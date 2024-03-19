@@ -552,6 +552,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.23.2":
+  version: 7.24.0
+  resolution: "@babel/runtime@npm:7.24.0"
+  dependencies:
+    regenerator-runtime: ^0.14.0
+  checksum: 7a6a5d40fbdd68491ec183ba2e631c07415119960083b4fd76564cce3751e9acd2f12ab89575e38496fa389fa06d458732776e69ee1858e366cc3fbdb049f847
+  languageName: node
+  linkType: hard
+
 "@babel/template@npm:^7.22.15":
   version: 7.22.15
   resolution: "@babel/template@npm:7.22.15"
@@ -2107,17 +2116,6 @@ __metadata:
   bin:
     astring: bin/astring
   checksum: 6f034d2acef1dac8bb231e7cc26c573d3c14e1975ea6e04f20312b43d4f462f963209bc64187d25d477a182dc3c33277959a0156ab7a3617aa79b1eac4d88e1f
-  languageName: node
-  linkType: hard
-
-"astro-i18n@npm:~2.2.4":
-  version: 2.2.4
-  resolution: "astro-i18n@npm:2.2.4"
-  peerDependencies:
-    esbuild: 0.x
-  bin:
-    astro-i18n: dist/src/bin.cjs
-  checksum: d134a249059e6a45a22e569794895ce2fc7da0e4e098a32bc51bc82832c74483f98ac9af36cf76868d8eb75eae417761617ab5389be28037c93410ba4b6249ba
   languageName: node
   linkType: hard
 
@@ -3803,6 +3801,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"i18next@npm:~23.10.1":
+  version: 23.10.1
+  resolution: "i18next@npm:23.10.1"
+  dependencies:
+    "@babel/runtime": ^7.23.2
+  checksum: 4aec10ddb0bb841f15b9b023daa59977052bc706ca4e94643b12b17640731862bde596c9797491638f6d9e7f125722ea9b1e87394c7aebbb72f45c20396f79d9
+  languageName: node
+  linkType: hard
+
 "iconv-lite@npm:^0.4.4":
   version: 0.4.24
   resolution: "iconv-lite@npm:0.4.24"
@@ -4285,9 +4292,9 @@ __metadata:
     "@pandacss/astro": ~0.20.1
     "@pandacss/dev": ~0.20.1
     astro: ~4.0.3
-    astro-i18n: ~2.2.4
     date-fns: ~2.30.0
     husky: ~8.0.3
+    i18next: ~23.10.1
     lint-staged: ~15.2.0
     lucide-solid: ~0.294.0
     prettier: ~3.1.0

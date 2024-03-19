@@ -1,4 +1,4 @@
 {
-  "publishedOn": "Publié le {# date #}",
+  "publishedOn": "Publié le {{ date }}",
   "alternateLangLink": "🇬🇧 Article available in english"
 }

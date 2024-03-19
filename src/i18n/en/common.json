@@ -1,7 +1,7 @@
 {
   "nav": {
     "home": "Home",
-    "twitch": "Live coding channel",
+    "twitch": "Live coding",
     "about": "About me"
   },
   "footer": {
@@ -13,10 +13,10 @@
     "alternateLangLink": "🇫🇷 Voir le site en français"
   },
   "seo": {
-    "titleTemplate": "{# title #} | Christopher N. Katoyi Kaba",
+    "titleTemplate": "{{ title }} | Christopher N. Katoyi Kaba",
     "defaultTitle": "Christopher N. Katoyi Kaba",
     "defaultDescription": "Come check out Christopher Katoyi Kaba's articles about web development, indie dev, SASS and project management",
     "defaultOgTitle": "The blog where I tell how I'm trying or failing to build quality software",
-    "defaultOgImageAlt": "{# title #}, Christopher Katoyi Kaba's photo, Software Engineer living in Toronto, handwring of a split keyboard"
+    "defaultOgImageAlt": "{{ title }}, Christopher Katoyi Kaba's photo, Software Engineer living in Toronto, handwring of a split keyboard"
   }
 }

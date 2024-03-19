@@ -1,0 +1,14 @@
+---
+// @ts-nocheck
+import Page, {
+  getStaticPaths as proxyGetStaticPaths,
+} from "../../blog/[slug].astro";
+
+export function getStaticPaths() {
+  return proxyGetStaticPaths({ lang: "en" });
+}
+
+const props = Astro.props;
+---
+
+<Page {...props} />

@@ -1,7 +1,7 @@
 ---
 import { MenuIcon } from "lucide-solid";
-import { t, l } from "astro-i18n";
 
+import { t, l } from "@/i18n";
 import { css } from "@/style/css";
 import { hstack } from "@/style/patterns";
 import { ButtonIcon } from "@/components/ButtonIcon";
@@ -76,7 +76,7 @@ import { twitch } from "@/utils/link";
       })}
     >
       <NavItem href={twitch}>
-        {t("nav.twitch")}
+        {t("common:nav.twitch")}
       </NavItem>
     </ul>
   </nav>

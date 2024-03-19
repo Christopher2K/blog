@@ -5,14 +5,13 @@ import {
   LinkedinIcon,
   GithubIcon,
 } from "lucide-solid";
-import { t, l, astroI18n } from "astro-i18n";
 
+import { t, l } from "@/i18n";
 import { css } from "@/style/css";
 import { hstack, vstack } from "@/style/patterns";
 import { linkedin, twitch, twitter, github } from "@/utils/link";
 
-const lang = astroI18n.locale as unknown as string;
-const alternateLang = lang === "fr" ? "en" : "fr";
+const alternateLang = Astro.currentLocale === "fr" ? "en" : "fr";
 ---
 
 <footer
@@ -50,38 +49,46 @@ const alternateLang = lang === "fr" ? "en" : "fr";
     })}
   >
     <a
-      href={l("", {}, { targetLocale: alternateLang })}
+      href={l("", { targetLocale: alternateLang })}
       class={css({ textDecoration: "underline" })}
-      >{t("footer.alternateLangLink")}</a
+      >{t("common:footer.alternateLangLink")}</a
     >
     <ul
       class={hstack({ justifyContent: "center", alignItems: "center", gap: 4 })}
     >
       <li>
-        <a href={github} target="_blank" aria-label={t("footer.github")}>
+        <a href={github} target="_blank" aria-label={t("common:footer.github")}>
           <GithubIcon />
         </a>
       </li>
       <li>
-        <a href={twitter} target="_blank" aria-label={t("footer.twitter")}>
+        <a
+          href={twitter}
+          target="_blank"
+          aria-label={t("common:footer.twitter")}
+        >
           <TwitterIcon />
         </a>
       </li>
 
       <li>
-        <a href={twitch} target="_blank" aria-label={t("footer.twitch")}>
+        <a href={twitch} target="_blank" aria-label={t("common:footer.twitch")}>
           <TwitchIcon />
         </a>
       </li>
 
       <li>
-        <a href={linkedin} target="_blank" aria-label={t("footer.linkedin")}>
+        <a
+          href={linkedin}
+          target="_blank"
+          aria-label={t("common:footer.linkedin")}
+        >
           <LinkedinIcon />
         </a>
       </li>
     </ul>
     <p class={css({ width: "full", textStyle: "small", textAlign: "center" })}>
-      {t("footer.credits")}
+      {t("common:footer.credits")}
     </p>
   </div>
 </footer>

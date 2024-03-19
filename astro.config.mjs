@@ -7,4 +7,11 @@ import mdx from "@astrojs/mdx";
 // https://astro.build/config
 export default defineConfig({
   integrations: [pandacss(), solidJs(), mdx()],
+  i18n: {
+    defaultLocale: "fr",
+    locales: ["en", "fr"],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
 });

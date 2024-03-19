@@ -1,6 +1,5 @@
 ---
-import { t, astroI18n } from "astro-i18n";
-import { LOCALE_FULL_NAME, type SupportedLanguage } from "@/utils/i18n";
+import { t, LOCALE_FULL_NAME, type SupportedLang } from "@/i18n";
 
 import { Cloudinary, Transformation } from "@cloudinary/url-gen";
 import { TextStyle } from "@cloudinary/url-gen/qualifiers/textStyle";
@@ -37,21 +36,17 @@ interface Props {
 }
 
 const {
-  title = t("seo.defaultTitle"),
-  description = t("seo.defaultDescription"),
+  title = t("common:seo.defaultTitle"),
+  description = t("common:seo.defaultDescription"),
   forceUseDefaultOgTitle,
   ogType = "website",
 } = Astro.props;
 
-const ogTitle = forceUseDefaultOgTitle
-  ? (t("seo.defaultOgTitle") as string)
-  : title;
+const ogTitle = forceUseDefaultOgTitle ? t("common:seo.defaultOgTitle") : title;
 
-const { locale } = astroI18n;
-
+const locale = Astro.currentLocale;
 const currentLocaleFullName =
-  LOCALE_FULL_NAME[locale as unknown as SupportedLanguage] ??
-  LOCALE_FULL_NAME.en;
+  LOCALE_FULL_NAME[locale as unknown as SupportedLang] ?? LOCALE_FULL_NAME.en;
 
 const ogImage = getPageMetadataImage(ogTitle);
 const ogImageAlt = t("seo:defaultOgImageAlt", { title: ogTitle });
