@@ -1,68 +1,28 @@
-/* @font-face { */
-/*   font-family: "Space Mono"; */
-/*   src: url("/fonts/SpaceMono-Regular.woff2") format("woff2"); */
-/*   font-weight: normal; */
-/*   font-style: normal; */
-/*   font-display: swap; */
-/* } */
-/**/
-/* @font-face { */
-/*   font-family: "Space Mono"; */
-/*   src: url("/fonts/SpaceMono-Bold.woff2") format("woff2"); */
-/*   font-weight: bold; */
-/*   font-style: normal; */
-/*   font-display: swap; */
-/* } */
-/**/
-/* @font-face { */
-/*   font-family: "Oxygen"; */
-/*   src: url("/fonts/Oxygen-Regular.woff2") format("woff2"); */
-/*   font-weight: normal; */
-/*   font-style: normal; */
-/*   font-display: swap; */
-/* } */
-/**/
-/* @font-face { */
-/*   font-family: "Oxygen"; */
-/*   src: url("/fonts/Oxygen-Bold.woff2") format("woff2"); */
-/*   font-weight: bold; */
-/*   font-style: normal; */
-/*   font-display: swap; */
-/* } */
-
 :root {
-  --font-title: "Source Code Pro", monospace;
-  --font-body: "Source Code Pro", monospace;
+  --font-title: "IBM Plex Mono", monospace;
+  --font-body: "IBM Plex Mono", monospace;
 }
 
 @font-face {
-  font-family: "Source Code Pro";
-  src: url("SourceCodePro-Regular.woff2") format("woff2");
+  font-family: "IBM Plex Mono";
+  src: url("IBMPlexMono-Regular.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Source Code Pro";
-  src: url("/fonts/SourceCodePro-Medium.woff2") format("woff2");
+  font-family: "IBM Plex Mono";
+  src: url("/fonts/IBMPlexMono-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Source Code Pro";
-  src: url("/fonts/SourceCodePro-Bold.woff2") format("woff2");
+  font-family: "IBM Plex Mono";
+  src: url("/fonts/IBMPlexMono-Bold.woff2") format("woff2");
   font-weight: bold;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Source Code Pro";
-  src: url("/fonts/SourceCodePro-ExtraBold.woff2") format("woff2");
-  font-weight: 900;
   font-style: normal;
   font-display: swap;
 }

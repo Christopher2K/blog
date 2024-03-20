@@ -16,7 +16,7 @@ const textStyles = defineTextStyles({
     value: {
       fontFamily: "title",
       fontSize: "2.027rem",
-      fontWeight: "900",
+      fontWeight: "bold",
       lineHeight: "1.6",
     },
   },
@@ -69,7 +69,7 @@ const textStyles = defineTextStyles({
   body: {
     value: {
       fontSize: "1.266rem",
-      fontWeight: "500",
+      fontWeight: "400",
       lineHeight: "1.8",
     },
   },
@@ -77,7 +77,7 @@ const textStyles = defineTextStyles({
   small: {
     value: {
       fontSize: "0.9rem",
-      fontWeight: "500",
+      fontWeight: "400",
       lineHeight: "1.8",
     },
   },
