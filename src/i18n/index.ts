@@ -33,9 +33,12 @@ const resources: Record<SupportedLang, Resource> = {
 export async function init() {
   await i18next.init({
     lng: "fr", // if you're using a language detector, do not define the lng option
-    debug: true,
+    debug: false,
     ns: ["common", "home", "blog"],
     resources,
+    interpolation: {
+      escapeValue: false,
+    },
   });
 }
 
@@ -51,6 +54,15 @@ function l(path: string, { targetLocale }: { targetLocale?: string } = {}) {
   return getRelativeLocaleUrl(lang, path);
 }
 
+function extractUnlocalizedPath(path: string): string {
+  const [_empty, ...splittedPath] = path.split("/");
+  if (splittedPath.at(0) === "en") {
+    return ["", ...splittedPath.slice(1)].join("/");
+  } else {
+    return path;
+  }
+}
+
 export const LOCALE_FULL_NAME: Record<SupportedLang, string> = {
   en: "en_US",
   fr: "fr_FR",
@@ -58,5 +70,5 @@ export const LOCALE_FULL_NAME: Record<SupportedLang, string> = {
 
 const { changeLanguage, t } = i18next;
 
-export { t, changeLanguage, l };
+export { t, changeLanguage, l, extractUnlocalizedPath };
 export default i18next;

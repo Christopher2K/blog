@@ -1,8 +1,9 @@
 {
   "nav": {
+    "intro": "Plus 8 ans dans la tech et le développement, 2 ans sur Twitch, 27 ans sur Terre. J'ai surement deux ou trois trucs à partager, je pense...",
     "home": "Accueil",
     "twitch": "Live coding",
-    "about": "À propos"
+    "lang": "Langue"
   },
   "footer": {
     "twitter": "Mon profil Twitter",

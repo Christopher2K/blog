@@ -9,27 +9,24 @@ interface Props {
   title: string;
   description?: string;
   ogType?: "website" | "article";
+  frUrl: string;
+  enUrl: string;
 }
 
-const { title, description, ogType } = Astro.props;
+const { title, description, ogType, frUrl, enUrl } = Astro.props;
 ---
 
 <Base {title} {description} forceUseDefaultOgTitle {ogType}>
-  <Navigation />
+  <Navigation {frUrl} {enUrl} />
   <main
     class={vstack({
-      flex: "1",
       w: "full",
-      px: "6",
+      p: "6",
       justifyContent: "flex-start",
       alignItems: "flex-start",
-      lg: {
-        maxWidth: "content",
-        mx: "auto",
-      },
     })}
   >
     <slot />
+    <Footer />
   </main>
-  <Footer />
 </Base>

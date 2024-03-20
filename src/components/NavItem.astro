@@ -10,17 +10,16 @@ const { href } = Astro.props;
 
 <li
   class={css({
-    backgroundColor: "neutral.50",
+    background: "neutral.50",
+    borderRadius: "sm",
     textStyle: "body",
+    w: "full",
     _hover: {
       backgroundColor: "neutral.200",
     },
-    md: {
-      backgroundColor: "transparent",
-    },
   })}
 >
-  <a {href} class={css({ display: "block", px: 4, py: 4 })}>
+  <a {href} class={css({ display: "block", px: 4, py: 3 })}>
     <slot />
   </a>
 </li>

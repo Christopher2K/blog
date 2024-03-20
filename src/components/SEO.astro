@@ -50,6 +50,8 @@ const currentLocaleFullName =
 
 const ogImage = getPageMetadataImage(ogTitle);
 const ogImageAlt = t("common:seo.defaultOgImageAlt", { title: ogTitle });
+console.log({ title });
+console.log(t("common:seo.titleTemplate", { title }));
 ---
 
 <title>{t("common:seo.titleTemplate", { title })}</title>

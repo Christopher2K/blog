@@ -26,7 +26,7 @@ const textStyles = defineTextStyles({
       fontFamily: "title",
       fontSize: "1.802rem",
       fontWeight: "bold",
-      lineHeight: "1.8",
+      lineHeight: "1.6",
     },
   },
 
@@ -35,7 +35,7 @@ const textStyles = defineTextStyles({
       fontFamily: "title",
       fontSize: "1.602rem",
       fontWeight: "bold",
-      lineHeight: "1.8",
+      lineHeight: "1.6",
     },
   },
 
@@ -44,7 +44,7 @@ const textStyles = defineTextStyles({
       fontFamily: "title",
       fontSize: "1.424rem",
       fontWeight: "bold",
-      lineHeight: "1.8",
+      lineHeight: "1.6",
     },
   },
 
@@ -53,7 +53,7 @@ const textStyles = defineTextStyles({
       fontFamily: "title",
       fontSize: "1.266rem",
       fontWeight: "bold",
-      lineHeight: "1.8",
+      lineHeight: "1.6",
     },
   },
 
@@ -62,15 +62,15 @@ const textStyles = defineTextStyles({
       fontFamily: "title",
       fontSize: "1.125rem",
       fontWeight: "bold",
-      lineHeight: "1.8",
+      lineHeight: "1.6",
     },
   },
 
   body: {
     value: {
-      fontSize: "1.266rem",
+      fontSize: "1rem",
       fontWeight: "400",
-      lineHeight: "1.8",
+      lineHeight: "1.6",
     },
   },
 
@@ -78,7 +78,7 @@ const textStyles = defineTextStyles({
     value: {
       fontSize: "0.9rem",
       fontWeight: "400",
-      lineHeight: "1.8",
+      lineHeight: "1.6",
     },
   },
 });
@@ -101,17 +101,13 @@ export default defineConfig({
       textStyles,
       tokens: {
         sizes: {
-          site: {
-            value: "1000px",
-            description: "Site max width",
-          },
           content: {
-            value: "800px",
+            value: "960px",
             description: "Content max width",
           },
-          nav: {
-            value: "4rem",
-            description: "Navigation bar height",
+          navWidth: {
+            value: "340px",
+            description: "Navigation bar size",
           },
         },
         fonts: {

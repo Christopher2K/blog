@@ -1,4 +1,5 @@
 ---
+import { css } from "@/style/css";
 import SEO from "@/components/SEO.astro";
 
 export interface Props {
@@ -49,22 +50,19 @@ const { title, description, forceUseDefaultOgTitle } = Astro.props;
       src="https://plausible.io/js/script.js"></script>
   </head>
 
-  <body>
+  <body
+    class={css({
+      position: "relative",
+      width: "full",
+      minHeight: "100svh",
+      mx: "auto",
+      lg: {
+        display: "grid",
+        gridTemplateColumns:
+          "var(--sizes-nav-width) minmax(0, var(--sizes-content))",
+      },
+    })}
+  >
     <slot />
-
-    <style>
-      html,
-      body {
-        min-height: 100svh;
-        width: 100%;
-      }
-
-      body {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-      }
-    </style>
   </body>
 </html>

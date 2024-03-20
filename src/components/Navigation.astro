@@ -1,21 +1,37 @@
 ---
-import { MenuIcon } from "lucide-solid";
+import { Image } from "astro:assets";
 
-import { t, l } from "@/i18n";
+import chris from "@/assets/common/chris.jpg";
+import { l, t } from "@/i18n";
 import { css } from "@/style/css";
-import { hstack } from "@/style/patterns";
-import { ButtonIcon } from "@/components/ButtonIcon";
+import { hstack, vstack } from "@/style/patterns";
 import NavItem from "@/components/NavItem.astro";
+import Socials from "@/components/Socials.astro";
 import { twitch } from "@/utils/link";
+
+type Props = {
+  frUrl: string;
+  enUrl: string;
+};
+const { frUrl, enUrl } = Astro.props;
 ---
 
 <script>
   const navbarButton = document.querySelector("#nav-button");
-  const navItems = document.querySelector("#nav-list");
+  const navDrawer = document.querySelector("#nav-drawer");
   navbarButton?.addEventListener("click", () => {
-    if (!navItems) return;
-    navItems.classList.toggle("nav-open");
+    if (!navDrawer) return;
+    navDrawer.classList.toggle("nav-open");
   });
+
+  document
+    .querySelector("#lang-select")
+    ?.addEventListener("change", (event) => {
+      const target = event.target as unknown as HTMLSelectElement;
+      const frURL = target.dataset.frurl ?? "";
+      const enURL = target.dataset.enurl ?? "";
+      window.location.replace(target.value === "fr" ? frURL : enURL);
+    });
 </script>
 
 <style>
@@ -24,60 +40,142 @@ import { twitch } from "@/utils/link";
   }
 </style>
 
-<div
+<nav
   class={css({
-    width: "full",
+    position: "sticky",
+    top: "0",
+    w: "full",
+
     lg: {
-      maxWidth: "site",
-      mx: "auto",
+      position: "sticky",
+      top: "0",
+      h: "100svh",
+      borderBottom: "none",
     },
   })}
 >
-  <nav
+  <div
     class={hstack({
-      position: "relative",
       w: "full",
-      h: "nav",
-      px: 6,
+      h: "80px",
+      background: "white",
+      borderBottom: "1px solid",
+      borderBottomColor: "neutral.300",
       justifyContent: "space-between",
+      px: "6",
+      lg: {
+        display: "none",
+      },
     })}
   >
-    <a class={css({ cursor: "pointer", textStyle: "h5" })} href={l("/")}
-      >Christopher K.</a
-    >
-    <ButtonIcon id="nav-button" class={css({ md: { display: "none" } })}>
-      <MenuIcon />
-    </ButtonIcon>
-    <ul
-      id="nav-list"
+    <button
+      id="nav-button"
+      type="button"
       class={css({
-        position: "absolute",
-        display: "block",
-        top: "100%",
-        left: 0,
-        height: "calc(100vh - 4rem)",
-        zIndex: "99",
-        width: "full",
-        backgroundColor: "neutral.50",
-        visibility: "hidden",
-        md: {
-          position: "relative",
-          top: "initial",
-          left: "initial",
-          visibility: "visible",
-          backgroundColor: "transparent",
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "flex-start",
-          alignItems: "center",
-          h: "fit",
-          w: "fit",
+        backgroundColor: "neutral.200",
+        borderRadius: "sm",
+        px: "2",
+        py: "1",
+        cursor: "pointer",
+        _hover: {
+          backgroundColor: "neutral.300",
         },
       })}
     >
-      <NavItem href={twitch}>
-        {t("common:nav.twitch")}
-      </NavItem>
+      <p class={css({ textStyle: "body" })}>Menu</p>
+    </button>
+
+    <p class={css({ textStyle: "h4", fontWeight: "bold" })}>Christopher K.</p>
+  </div>
+
+  <div
+    id="nav-drawer"
+    class={vstack({
+      position: "fixed",
+      visibility: "hidden",
+      background: "white",
+      w: "full",
+      h: "100svh",
+      p: "6",
+      gap: "10",
+      lg: {
+        position: "relative",
+        visibility: "visible",
+      },
+    })}
+  >
+    <div
+      class={hstack({
+        w: "full",
+        gap: "4",
+        alignItems: "center",
+        justifyContent: "center",
+      })}
+    >
+      <Image
+        src={chris}
+        alt="Christopher smiling photo"
+        class={css({
+          rounded: "full",
+          w: "100px",
+          h: "auto",
+        })}
+      />
+
+      <div class={css({ flex: 1 })}>
+        <div class={css({ w: "full" })}>
+          <p class={css({ textStyle: "h5", fontWeight: "bold" })}>
+            Christopher K.
+          </p>
+          <p class={css({ textStyle: "small" })}>Software Engineer</p>
+          <p class={css({ textStyle: "small" })}>Twitch Streamer</p>
+
+          <div class={css({ py: "1" })}>
+            <Socials />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class={css({ w: "100%" })}>
+      <p class={css({ textStyle: "body", color: "neutral.600" })}>
+        {t("common:nav.intro")}
+      </p>
+    </div>
+
+    <ul
+      id="nav-list"
+      class={vstack({
+        w: "full",
+      })}
+    >
+      <NavItem href={l("/")}>{t("common:nav.home")}</NavItem>
+      <NavItem href={twitch}>{t("common:nav.twitch")}</NavItem>
     </ul>
-  </nav>
-</div>
+
+    <fieldset class={vstack({ w: "full", alignItems: "flex-start" })}>
+      <label for="lang-select">{t("common:nav.lang")}</label>
+      <select
+        data-frurl={frUrl}
+        data-enurl={enUrl}
+        class={css({
+          appearance: "none",
+          borderRadius: "sm",
+          border: "1px solid",
+          borderColor: "neutral.300",
+          w: "full",
+          p: "2",
+          cursor: "pointer",
+        })}
+        id="lang-select"
+      >
+        <option value="en" selected={Astro.currentLocale === "en"}
+          >English</option
+        >
+        <option value="fr" selected={Astro.currentLocale === "fr"}
+          >Français</option
+        >
+      </select>
+    </fieldset>
+  </div>
+</nav>

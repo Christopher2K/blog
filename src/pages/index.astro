@@ -25,34 +25,7 @@ const blogCollection = await getCollection("blog", ({ data, id }) => {
 );
 ---
 
-<Page title={t("home:title")}>
-  <section class={css({ py: 20 })}>
-    <h1 class={css({ textStyle: "h1", textAlign: "left", mb: 5 })}>
-      {t("home:header.title")}
-    </h1>
-    <p class={css({ textStyle: "body", color: "neutral.500" })}>
-      {t("home:header.subtitle")}
-    </p>
-  </section>
-
-  <section
-    class={vstack({
-      mb: "10",
-      w: "full",
-      justifyContent: "center",
-      alignItems: "center",
-    })}
-  >
-    <h2 class={css({ textStyle: "h2", w: "full" })}>
-      {t("home:streamSection.title")}
-    </h2>
-    <iframe
-      title="Twitch"
-      class={css({ w: "full", aspectRatio: "16 / 9" })}
-      src="https://player.twitch.tv?channel=llcoolchris_&parent=localhost&parent=christopher.engineering"
-      allowfullscreen></iframe>
-  </section>
-
+<Page title={t("home:title")} frUrl="/" enUrl="/en">
   <section class={css({ mb: "10" })}>
     <h2 class={css({ textStyle: "h2" })}>{t("home:lastPostSection.title")}</h2>
     <ul class={vstack({ w: "full", gap: "10" })}>

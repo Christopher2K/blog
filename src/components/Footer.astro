@@ -1,32 +1,18 @@
 ---
-import {
-  TwitterIcon,
-  TwitchIcon,
-  LinkedinIcon,
-  GithubIcon,
-} from "lucide-solid";
-
-import { t, l } from "@/i18n";
+import { t } from "@/i18n";
 import { css } from "@/style/css";
-import { hstack, vstack } from "@/style/patterns";
-import { linkedin, twitch, twitter, github } from "@/utils/link";
-
-const alternateLang = Astro.currentLocale === "fr" ? "en" : "fr";
+import { vstack } from "@/style/patterns";
 ---
 
 <footer
   class={vstack({
     width: "full",
     flexDirection: "column",
-    px: 4,
     py: 10,
     gap: 0,
     justifyContent: "center",
     alignItems: "center",
-    lg: {
-      maxWidth: "site",
-      mx: "auto",
-    },
+    mx: "auto",
   })}
 >
   <hr
@@ -48,45 +34,6 @@ const alternateLang = Astro.currentLocale === "fr" ? "en" : "fr";
       alignItems: "center",
     })}
   >
-    <a
-      href={l("", { targetLocale: alternateLang })}
-      class={css({ textDecoration: "underline" })}
-      >{t("common:footer.alternateLangLink")}</a
-    >
-    <ul
-      class={hstack({ justifyContent: "center", alignItems: "center", gap: 4 })}
-    >
-      <li>
-        <a href={github} target="_blank" aria-label={t("common:footer.github")}>
-          <GithubIcon />
-        </a>
-      </li>
-      <li>
-        <a
-          href={twitter}
-          target="_blank"
-          aria-label={t("common:footer.twitter")}
-        >
-          <TwitterIcon />
-        </a>
-      </li>
-
-      <li>
-        <a href={twitch} target="_blank" aria-label={t("common:footer.twitch")}>
-          <TwitchIcon />
-        </a>
-      </li>
-
-      <li>
-        <a
-          href={linkedin}
-          target="_blank"
-          aria-label={t("common:footer.linkedin")}
-        >
-          <LinkedinIcon />
-        </a>
-      </li>
-    </ul>
     <p class={css({ width: "full", textStyle: "small", textAlign: "center" })}>
       {t("common:footer.credits")}
     </p>

@@ -1,0 +1,43 @@
+---
+import {
+  TwitterIcon,
+  TwitchIcon,
+  LinkedinIcon,
+  GithubIcon,
+} from "lucide-solid";
+
+import { t } from "@/i18n";
+import { hstack } from "@/style/patterns";
+import { linkedin, twitch, twitter, github } from "@/utils/link";
+---
+
+<ul
+  class={hstack({
+    justifyContent: "flex-start",
+    alignItems: "center",
+    gap: 4,
+  })}
+>
+  <li>
+    <a href={github} target="_blank" aria-label={t("common:footer.github")}>
+      <GithubIcon strokeWidth="1" />
+    </a>
+  </li>
+  <li>
+    <a href={twitter} target="_blank" aria-label={t("common:footer.twitter")}>
+      <TwitterIcon strokeWidth="1" />
+    </a>
+  </li>
+
+  <li>
+    <a href={twitch} target="_blank" aria-label={t("common:footer.twitch")}>
+      <TwitchIcon strokeWidth="1" />
+    </a>
+  </li>
+
+  <li>
+    <a href={linkedin} target="_blank" aria-label={t("common:footer.linkedin")}>
+      <LinkedinIcon strokeWidth="1" />
+    </a>
+  </li>
+</ul>

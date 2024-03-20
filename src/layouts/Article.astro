@@ -9,17 +9,19 @@ interface Props {
   title: string;
   description?: string;
   forceUseDefaultOgTitle?: boolean;
+  frUrl: string;
+  enUrl: string;
 }
 
-const { title, description, forceUseDefaultOgTitle } = Astro.props;
+const { title, description, forceUseDefaultOgTitle, frUrl, enUrl } =
+  Astro.props;
 ---
 
 <Base {title} {description} {forceUseDefaultOgTitle} ogType="article">
-  <Navigation />
+  <Navigation {frUrl} {enUrl} />
   <main
     class={css({
-      px: 8,
-      maxWidth: "site",
+      px: "6",
       w: "full",
     })}
   >
@@ -31,7 +33,6 @@ const { title, description, forceUseDefaultOgTitle } = Astro.props;
       class={css({
         flex: "1",
         w: "full",
-        maxWidth: "content",
         mx: "auto",
 
         // Content styling
@@ -120,6 +121,6 @@ const { title, description, forceUseDefaultOgTitle } = Astro.props;
     >
       <slot />
     </div>
+    <Footer />
   </main>
-  <Footer />
 </Base>
