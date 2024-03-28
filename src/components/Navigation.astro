@@ -90,96 +90,103 @@ const { frUrl, enUrl } = Astro.props;
 
   <div
     id="nav-drawer"
-    class={vstack({
+    class={css({
       position: "fixed",
       top: "80px",
       left: 0,
       visibility: "hidden",
       background: "white",
       w: "full",
-      h: "100svh",
+      h: "calc(100vh - 80px)",
       p: "6",
-      gap: "10",
+      overflow: "auto",
       lg: {
         position: "relative",
         visibility: "visible",
         top: "initial",
         left: "initial",
+        height: "100svh",
       },
     })}
   >
     <div
-      class={hstack({
-        w: "full",
-        gap: "4",
-        alignItems: "center",
-        justifyContent: "center",
+      class={vstack({
+        gap: "10",
       })}
     >
-      <Image
-        src={chris}
-        alt="Christopher smiling photo"
-        class={css({
-          rounded: "full",
-          w: "100px",
-          h: "auto",
+      <div
+        class={hstack({
+          w: "full",
+          gap: "4",
+          alignItems: "center",
+          justifyContent: "center",
         })}
-      />
+      >
+        <Image
+          src={chris}
+          alt="Christopher smiling photo"
+          class={css({
+            rounded: "full",
+            w: "100px",
+            h: "auto",
+          })}
+        />
 
-      <div class={css({ flex: 1 })}>
-        <div class={css({ w: "full" })}>
-          <p class={css({ textStyle: "h5", fontWeight: "bold" })}>
-            Christopher K.
-          </p>
-          <p class={css({ textStyle: "small" })}>Software Engineer</p>
-          <p class={css({ textStyle: "small" })}>Twitch Streamer</p>
+        <div class={css({ flex: 1 })}>
+          <div class={css({ w: "full" })}>
+            <p class={css({ textStyle: "h5", fontWeight: "bold" })}>
+              Christopher K.
+            </p>
+            <p class={css({ textStyle: "small" })}>Software Engineer</p>
+            <p class={css({ textStyle: "small" })}>Twitch Streamer</p>
 
-          <div class={css({ py: "1" })}>
-            <Socials />
+            <div class={css({ py: "1" })}>
+              <Socials />
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class={css({ w: "100%" })}>
-      <p class={css({ textStyle: "body", color: "neutral.600" })}>
-        {t("common:nav.intro")}
-      </p>
-    </div>
+      <div class={css({ w: "100%" })}>
+        <p class={css({ textStyle: "body", color: "neutral.600" })}>
+          {t("common:nav.intro")}
+        </p>
+      </div>
 
-    <ul
-      id="nav-list"
-      class={vstack({
-        w: "full",
-      })}
-    >
-      <NavItem href={l("/")}>{t("common:nav.home")}</NavItem>
-      <NavItem href={twitch}>{t("common:nav.twitch")}</NavItem>
-    </ul>
-
-    <fieldset class={vstack({ w: "full", alignItems: "flex-start" })}>
-      <label for="lang-select">{t("common:nav.lang")}</label>
-      <select
-        data-frurl={frUrl}
-        data-enurl={enUrl}
-        class={css({
-          appearance: "none",
-          borderRadius: "sm",
-          border: "1px solid",
-          borderColor: "neutral.300",
+      <ul
+        id="nav-list"
+        class={vstack({
           w: "full",
-          p: "2",
-          cursor: "pointer",
         })}
-        id="lang-select"
       >
-        <option value="en" selected={Astro.currentLocale === "en"}
-          >English</option
+        <NavItem href={l("/")}>{t("common:nav.home")}</NavItem>
+        <NavItem href={twitch}>{t("common:nav.twitch")}</NavItem>
+      </ul>
+
+      <fieldset class={vstack({ w: "full", alignItems: "flex-start" })}>
+        <label for="lang-select">{t("common:nav.lang")}</label>
+        <select
+          data-frurl={frUrl}
+          data-enurl={enUrl}
+          class={css({
+            appearance: "none",
+            borderRadius: "sm",
+            border: "1px solid",
+            borderColor: "neutral.300",
+            w: "full",
+            p: "2",
+            cursor: "pointer",
+          })}
+          id="lang-select"
         >
-        <option value="fr" selected={Astro.currentLocale === "fr"}
-          >Français</option
-        >
-      </select>
-    </fieldset>
+          <option value="en" selected={Astro.currentLocale === "en"}
+            >English</option
+          >
+          <option value="fr" selected={Astro.currentLocale === "fr"}
+            >Français</option
+          >
+        </select>
+      </fieldset>
+    </div>
   </div>
 </nav>
