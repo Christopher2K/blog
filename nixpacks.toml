@@ -7,7 +7,6 @@ providers = ["node"]
     NPM_CONFIG_PRODUCTION = 'false'
     CADDY_VERSION = '2.7.4' # specify the caddy version to use here, without a 'v' prefix. https://github.com/caddyserver/caddy/releases
     NIXPACKS_NODE_VERSION = '20'
-    PORT = '3000'
 
 
 # download and untar caddy
