@@ -2,6 +2,7 @@ import {
   defineConfig,
   defineTextStyles,
   defineGlobalStyles,
+  defineRecipe,
 } from "@pandacss/dev";
 
 const globalCss = defineGlobalStyles({
@@ -88,7 +89,7 @@ export default defineConfig({
   preflight: true,
 
   // Where to look for your css declarations
-  include: ["./src/**/*.{ts,tsx,html,astro}"],
+  include: ["./src/**/*.{ts,tsx,html,astro,md,mdx}"],
 
   // Files to exclude
   exclude: [],

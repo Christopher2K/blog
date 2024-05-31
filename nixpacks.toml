@@ -21,7 +21,7 @@ providers = ["node"]
 [phases.codegen]
     dependsOn = ['install']
     cmds = [
-        'yarn run prepare'
+        'pnpm run prepare'
     ]
 
 [phases.build]

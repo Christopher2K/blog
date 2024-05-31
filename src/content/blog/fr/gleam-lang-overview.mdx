@@ -1,11 +1,490 @@
 ---
 title: Découverte de Gleam, un langage type-safe sur la BEAM!
-description: De Elixir, à Erlang et maintenant GLEAM?!
-tags: []
-publishingDate: 2024-03-13
+description: De Erlang, à Elixir et maintenant GLEAM?!
+tags: [gleam, beam, programmation, functional]
+publishingDate: 2024-06-01
 draft: true
 slug: introduction-gleam
-translation: gleam-overview
 ---
 
-TDB
+import { Image } from "astro:assets";
+
+import gleamBanner from "@/assets/gleam-overview/gleam-banner.png";
+import thingsToLearn from "@/assets/gleam-overview/things-to-learn.png";
+import lspExample1 from "@/assets/gleam-overview/lsp-example-1.png";
+import lspExample2 from "@/assets/gleam-overview/lsp-example-2.png";
+import lspExample3 from "@/assets/gleam-overview/lsp-example-3.png";
+import bigBrainOtpMeme from "@/assets/gleam-overview/big-brain-opt-meme.jpeg";
+import gleamJs from "@/assets/gleam-overview/gleam-js.svg";
+
+Si tu me connais déjà, tu vas me dire "Mais Chris, ENCORE un nouveau langage ?".
+Le truc c'est que, c'est la seule manière que j'ai trouvé pour garder de
+l'intérêt dans cette industrie. Pour moi, un nouveau language indique, une
+nouvelle manière de réfléchir, puis de conçevoir. J'essaie de garder l'esprit
+ouvert, et de récupérer les meilleures choses de cette expérience. Dans ce post
+je vais te parler de Gleam, comment je suis tombé dessus, et pourquoi je trouve
+ce langage HYPER intéréssant.
+
+<Image
+  src={gleamBanner}
+  alt="Étoile rose qui représente le logo de Gleam, suivit du texte 'Gleam'"
+/>
+
+## Comment je suis tombé sur Gleam?
+
+Gleam est passé officiellement en V1 le 4 Mars 2024. Mais, étant un mec
+[construit d'une manière différente](https://youtu.be/0sxXyLJe2N8?si=0ExH3E5ViqdEGlMM&t=12),
+je l'ai découvert aux alentours de **Novembre 2023**, quand je commençais à
+sérieusement me questionner quant à Elixir.
+
+Le truc, qui m'a toujours freiné dans mon apprentissage d'Elixir, c'est le
+typage dynamique. Je suis un fan du typage statique, qui selon moi, donne de
+très nombreux avantages comme:
+
+- moins d'erreur au runtime, parce que ton compilateur est capable de voir de
+  possible gaps dans ton code,
+- plus de confiance en ce que tu mets en production, lorsque ton compilateur ne
+  te chie pas à la gueule,
+- le code, avec des indications de types, est souvent (pas tout le temps oui je
+  sais, mais souvent) plus simple à comprendre, on dépend moins d'une éventuelle
+  documentation, et les nouveaux développeurs(euses) sont plus rapidement en
+  confiance pour contribuer,
+- développer en pensant à la structure des données puis ensuite à
+  l'implémentation, est ce qui fonctionne le mieux avec la manière dont je
+  réflechis en général...
+
+Bref, tu l'auras compris, je suis un mec qui aime les types.
+
+Donc, en recherchant sur Google "Static typing elixir", je suis tombé sur
+[Gleam](https://gleam.run) et... j'ai passé mon chemin...
+
+**POURQUOI ?**
+
+Par discipline. J'ai regardé l'adoption, les usages courants, le versionning (le
+bail était en v0.x), et je n'ai pas été convaincu. Je me suis dis que le délire
+était super early, limite expérimental. C'est resté dans ma tête, dans la
+catégorie des choses potentiellement cools, mais pas prioritaires...
+
+<Image
+  src={thingsToLearn}
+  alt="Image qui représenter le classement des choses sur lesquelles j'aimerais garder un oeil, et Gleam est catégorisé non pas comme urgent mais comme potentiellement intéréssant."
+/>
+
+## Ce que Gleam propose
+
+Ok donc, fast forward,
+[Gleam passe en V1 en Mars 2024](https://gleam.run/news/gleam-version-1/). Je
+lis le changelog, je télécharge le SDK par curiosité et... purée j'aime bien ce
+que je vois. J'ai le regret (idiot) où je me dis que j'aurais du check ce truc
+beaucoup plus tôt, mais comme tout, mieux vaut tard que jamais.
+
+Je vais te passer en revue les features qui ont retenues mon attention, en
+parlant de ce que j'aime et ce que j'aime moins!
+
+### Les types et les structures
+
+C'est de toute beauté, genre:
+
+```gleam
+type Vehicule {
+  Car(make: String, brand: String)
+  Skateboard(brand: String)
+  Spaceship(year: Int)
+}
+```
+
+Ce que tu vois ici, c'est un `custom type` (ou alors `Record`) de Gleam.
+`Vehicule` est le nom du type, `Car`, `Skateboard` et `Spaceship` sont des
+constructeurs disponibles pour ce type. Pour t'aider, tu peux voir `Vehicule`
+comme une énumération, dont les membres peuvent avoir leur propre set de
+propriétés. En pratique, ça s'utilise comme ça:
+
+```gleam
+let my_car = Car("Honda", "Civic")
+```
+
+et ça donne des usages assez stylés, comme ce petit pattern matching:
+
+```gleam
+fn get_driving_requirements(vehicule: Vehicule) -> String {
+  case vehicule {
+    Car(make, brand) ->
+      "To drive the car "
+      <> make
+      <> " "
+      <> brand
+      <> ", your need a driver licence."
+    Skateboard(brand) -> "Anybody can ride a " <> brand <> " skateboard!"
+    Spaceship(_) -> "You need to be a NASA astronaut for that!"
+  }
+}
+```
+
+Analysons un peu la fonction précédente:
+
+1. `get_driving_requirements` prend en paramètre un seul argument de type
+   `Vehicule` et retourne un `String`. Le compiler (et le LSP) de Gleam feront
+   en sorte que ces conditions soient respectées. Le type de retour est
+   optionnel, dans le sens où, si tu ne le mets pas, Gleam saura quand même ce
+   que tu retournes.
+2. Dans le corps de la fonction, on voit la structure `case`, connue sous le nom
+   de **pattern maching**. Cette structure de contrôle va te permettre de tester
+   TOUTES les possibilités de valeur pour `vehicule` avec un niveau assez fou de
+   précision. Il est possible par exemple de matcher sur des valeur de propriété
+   super précise. Dans cet exemple, on prend en compte tous les cas possibles de
+   type de véhicule à savoir `Car`, `Spaceship`, et `Skateboard`. Le compilateur
+   va faire en sorte que tous les cas soient pris en compte, sinon, tu auras un
+   message d'erreur (safety first!).
+
+Super expressif, concis et plutot élégant (100% subjectif).
+
+### Le tooling...
+
+... est incroyable. Genre, vraiment incroyable. J'ai passé tellement de temps
+dans Javascript et son écosystème cursed, que j'ai oublié ce que les autres
+langages font en dehors de JS. La seule chose que tu dois installer est la
+commande `gleam`. Je l'ai fait via [asdf](https://asdf-vm.com/), mais tu peux te
+débrouiller avec n'importe quel autre package manager. Tu te demandes sûrement
+ce que fait cette commande non? Regarde ça:
+
+```bash
+❯ gleam
+gleam 1.2.0-rc1
+
+Usage: gleam <COMMAND>
+
+Commands:
+  add      Add new project dependencies
+  build    Build the project
+  check    Type check the project
+  clean    Clean build artifacts
+  deps     Work with dependency packages
+  docs     Render HTML documentation
+  export   Export something useful from the Gleam project
+  fix      Rewrite deprecated Gleam code
+  format   Format source code
+  help     Print this message or the help of the given subcommand(s)
+  hex      Work with the Hex package manager
+  lsp      Run the language server, to be used by editors
+  new      Create a new project
+  publish  Publish the project to the Hex package manager
+  remove   Remove project dependencies
+  run      Run the project
+  shell    Start an Erlang shell
+  test     Run the project tests
+  update   Update dependency packages to their latest versions
+
+Options:
+  -h, --help     Print help
+  -V, --version  Print version
+```
+
+- package manager ➡️ `gleam add`
+- repl ➡️ `gleam shell`
+- test runner ➡️ `gleam test`
+- formatter ➡️ `gleam format`
+- lsp ➡️ `gleam lsp`
+- et j'en passe....
+
+Tout ce dont tu as besoin pour commençer avec Gleam est déjà fourni! Pas de
+prises de tête, pas de décisions à prendre! Et c'est ça qu'on veut, pour un
+langage moderne. Rien de plus chiant que d'entrer dans un écosystème et de
+devoir, dès les premiers instants, comprendre les différences entre les 46
+formatters ou packages managers (coucou Node) différents.
+
+Autre point assez cool: chaque version du langage vient avec son tooling
+embarqué. Tu n'as pas à deal avec d'éventuelles incompabilités entre les
+différents outils pour travailler.
+
+Tiens, une petite démo en reprenant l'example précédent.
+
+```gleam
+import gleam/io
+
+/// This is some type related to type Vehicule
+type Vehicule {
+  /// Car type used for... a car I guess...
+  Car(make: String, brand: String)
+  Skateboard(brand: String)
+  Spaceship(year: Int)
+}
+
+fn get_driving_requirements(vehicule: Vehicule) -> String {
+  case vehicule {
+    Car(make, brand) ->
+      "To drive the car "
+      <> make
+      <> " "
+      <> brand
+      <> ", your need a driver licence."
+    Spaceship(_) -> "You need to be a NASA astronaut for that!"
+    Skateboard(brand) -> "Anybody can ride a " <> brand <> " skateboard!"
+  }
+}
+
+pub fn main() {
+  get_driving_requirements(Car(make: "Hyundai", brand: "Kona"))
+  io.println("Hello from gl_playground!")
+}
+```
+
+Si je passe ma souris (hover action) sur la variable `vehicule` dans le corps de
+ma fonction, je vois:
+
+<Image
+  src={lspExample1}
+  alt="Screenshot qui montre que lorsqu'on passe la souris sur la variable vehicule, l'editeur de code est capable de montrer la documentation et le type relatif à la variable, grâce au LSP."
+/>
+
+Le LSP est totalement capable d'aller récuperer le type et la documentation
+associée à la variable. Un autre exemple, lorsque je repasse ma souris sur le
+constructeur `Car`:
+
+<Image
+  src={lspExample2}
+  alt="Screenshot qui montre que lorsqu'on passe la souris sur le construteur Car, le LSP est capable d'aller récuperer le nom du custom type ainsi que la documentation liée au constructeur"
+/>
+
+Dans cette situation, le LSP te montre le nom du custom type parent, ainsi que
+la documentation associée au constructeur lui-même.
+
+Dernier exemple, lorsque je passe la souris sur la variable `brand`, pour le
+bloc qui correspond au constructeur `Skateboard` dans la structure du pattern
+matching:
+
+<Image
+  src={lspExample3}
+  alt="Screenshot qui montre que lorsqu'on passe la souris sur la variable brand du constructeur Skateboard, le LSP arrive bien a faire le lien avec le type String que l'on a déclaré dans le type"
+/>
+
+Le LSP ici arrive à faire le lien avec la première propriété déclarée pour le
+construteur `Skateboard` dans la déclaration de type tout en haut.
+
+Ce genre d'attention particulière à l'outillage, qui doit nornmalement t'aider à
+produire du code de qualité, est **inestimable** pour le confort de
+développement mais aussi pour l'adoption. Un peu de backseatting ne peut pas
+faire de mal, surtout au début.
+
+### Implémentation d'OTP
+
+Qui dit Gleam dit
+[BEAM](<https://en.wikipedia.org/wiki/BEAM_(Erlang_virtual_machine)>), qui dit
+BEAM dit Erlang, et qui dit Erlang dit
+[OTP](https://learnyousomeerlang.com/what-is-otp). Je ne vais pas rentrer très
+deep dans les détails de ce que représente OTP mais voilà ma tentative
+(médiocre) de vulgarisation du concept.
+
+> OTP (Open Telecom Platform), c'est une architecture logicielle (et une
+> philosophie également) qui permet a des programmes informatiques
+> concurrentiels une très haute tolérance à la panne. Le principe réside en la
+> division d'un programme en plusieurs unités d'éxecution appelés _processus_
+> qui communiquent entre eux par messages. Ces processus peuvent planter à
+> n'importe quel moment, donc OTP préconise également la mise en place de
+> **superviseurs** dont le rôle sera de redémarrer les processus tombés au
+> combat. Erlang / Elixir et Gleam fournissent les abstractions nécéssaires pour
+> construire selon ces principes en utilisant la puissance de la BEAM (Erlang
+> Virtual Machine), qui elle permet d'avoir plusieurs milliers (millions) de
+> processus actifs
+
+<Image
+  src={bigBrainOtpMeme}
+  alt="Meme big brain avec comme légende 'Moi qui explique OTP'"
+/>
+
+Je me suis surpassé sur ce coup là, tu devrais avoir une idée de ce qu'est OTP.
+Bah Gleam a aussi ses primitives qui aident à développer sur OTP via
+[son package associé](https://github.com/gleam-lang/otp). Celle que j'ai le plus
+utilisé jusqu'ici est l'implémentation des `actors` (check le modèle d'acteurs,
+c'est GÉ-NI-AL). Regarde l'exemple suivant, une petite task assez simple qui
+démontre comment le système fonctionne.
+
+```gleam
+import gleam/io
+import gleam/int
+import gleam/erlang/process.{type Subject}
+import gleam/otp/actor
+
+type AsyncTaskMessage {
+  Increment(reply_to: Subject(Int))
+  Decrement(reply_to: Subject(Int))
+}
+
+fn handle_async_task(message: AsyncTaskMessage, state: Int) {
+  case message {
+    Increment(client) -> {
+      let new_value = state + 1
+      process.send(client, new_value)
+      actor.continue(new_value)
+    }
+    Decrement(client) -> {
+      let new_value = state - 1
+      process.send(client, new_value)
+      actor.continue(new_value)
+    }
+  }
+}
+
+fn start_async_task(state: Int) {
+  actor.start(state, handle_async_task)
+}
+
+fn main() {
+  let assert Ok(actor) = start_async_task(0)
+  let response = actor.call(actor, fn(subject) { Increment(subject) }, 10_000)
+  io.println("New value: " <> int.to_string(response))
+}
+```
+
+Pour un acteur Gleam, t'as besoin de plusieurs choses:
+
+1. un custom type qui représente les différents messages que ton acteur peut
+   traiter, `AsyncTaskMessage` dans cet exemple,
+2. une fonction qui prend un message et un état (pouvant être n'importe quoi) et
+   qui retourne un soit un nouvel état, soit un élement qui indique que la tâche
+   est terminée si besoin, `handle_async_task` ici,
+3. une fonction qui démarre un nouvel acteur, `start_async_task` ici.
+
+Avec tout ça, tu te retrouves avec un nouveau process, stateful, a qui tu peux
+envoyer des messages pour qu'il fasse ses trucs, dans son coin. C'est une démo
+super nulle comparée à tout ce que OTP permet, mais elle a l'avantage d'être
+typée à la sauce Gleam! Je ne peux pas envoyer n'importe quel message à mon
+acteur et ceci dès l'IDE! Pas juste au runtime!
+
+Un truc moins cool, tourne autour du fait que OTP n'est pas complètement porté
+pour le moment. Des fonctionnalités comme les
+[Registry](https://medium.com/@StevenLeiva1/elixir-process-registries-a27f813d94e3)
+manquent à l'appel...
+
+### Lustre, un framework web très prometteur
+
+**OUI JE SAIS** ENCORE un web framework. Après je comprends, nouveau langage, ce
+sont des choses que certain(e)s attendent from the get go. Le truc c'est que
+[Lustre](https://hexdocs.pm/lustre/4.2.4/) est assez "mature" dans le contexte
+de Gleam, le framework est là depuis un moment.
+
+Je ne l'ai pas encore testé (et, ça fera l'objet d'un prochain article), mais on
+parle d'une technologie qui se veut:
+
+- isomorphique, elle fonctionne coté front ET coté back,
+- basée sur [Elm](https://elm-lang.org/), ce truc qui fait peur (mais hyper
+  cool), pondu par les génies sous Haskell et trois fois filtré
+- opinionée, d'une application à une autre, rien ne devrait vraiment changer.
+
+Je te laisse regarder [la documentation](https://hexdocs.pm/lustre/4.2.4/) pour
+voir si c'est quelque chose qui peut te parler ou non.
+
+### Interopérabilité avec le Javascript
+
+<Image
+  class="image-square"
+  src={gleamJs}
+  alt="Logo de Gleam avec un petit montage qui fait apparaître le logo JS"
+/>
+
+Je viens de te dire que Gleam a un framework qui fonctionne aussi coté front.
+Donc si tu fais gaffe, tu t'attendais à un truc du genre: Gleam TRANSPILE en
+Javascript! Je trouve cette stratégie assez intéréssante. Tout plein de
+développeurs et développeuses Javascript / Typescript sont à la recherche d'un
+type system plus simple, plus robuste. Gleam a les outils pour fit dans cet
+espace, de la même manière que le font [ReasonML](https://reasonml.github.io/)
+et [ReScript](https://rescript-lang.org/).
+
+Reprenons le code suivant:
+
+```gleam
+import gleam/io
+
+type Vehicule {
+  Car(make: String, brand: String)
+  Skateboard(brand: String)
+  Spaceship(year: Int)
+}
+
+fn get_driving_requirements(vehicule: Vehicule) -> String {
+  case vehicule {
+    Car(make, brand) ->
+      "To drive the car "
+      <> make
+      <> " "
+      <> brand
+      <> ", your need a driver licence."
+    Spaceship(_) -> "You need to be a NASA astronaut for that!"
+    Skateboard(brand) -> "Anybody can ride a " <> brand <> " skateboard!"
+  }
+}
+
+pub fn main() {
+  Car(make: "Hyundai", brand: "Kona")
+  |> get_driving_requirements()
+  |> io.println()
+}
+```
+
+Il est assez bon pour ce que l'on va faire, parce qu'on a des types, du pattern
+matching, du pipe, enfin du Gleam quoi. Ci-dessous, le output Javascript que tu
+peux obtenir après un `gleam build --target javascript`:
+
+```javascript
+import * as $io from "../gleam_stdlib/gleam/io.mjs";
+import { CustomType as $CustomType } from "./gleam.mjs";
+
+class Car extends $CustomType {
+  constructor(make, brand) {
+    super();
+    this.make = make;
+    this.brand = brand;
+  }
+}
+
+class Skateboard extends $CustomType {
+  constructor(brand) {
+    super();
+    this.brand = brand;
+  }
+}
+
+class Spaceship extends $CustomType {
+  constructor(year) {
+    super();
+    this.year = year;
+  }
+}
+
+function get_driving_requirements(vehicule) {
+  if (vehicule instanceof Car) {
+    let make = vehicule.make;
+    let brand = vehicule.brand;
+    return (
+      "To drive the car " + make + " " + brand + ", your need a driver licence."
+    );
+  } else if (vehicule instanceof Spaceship) {
+    return "You need to be a NASA astronaut for that!";
+  } else {
+    let brand = vehicule.brand;
+    return "Anybody can ride a " + brand + " skateboard!";
+  }
+}
+
+export function main() {
+  let _pipe = new Car("Hyundai", "Kona");
+  let _pipe$1 = get_driving_requirements(_pipe);
+  return $io.println(_pipe$1);
+}
+```
+
+Le Javascript obtenu est super compréhensible. Tu peux le lire, le debug, et
+comprendre la manière dont le compiler Gleam va transformer ton code pour en
+faire du JS. Tu peux noter deux imports:
+
+1. `$io`, qui est une librarie qui va matcher l'import de la std lib `gleam/io`
+2. `CustomType`, qui est une classe importée depuis un fichier `prelude.mjs`,
+   contenant pleins de choses essentielles au bon fonctionnement d'un programme
+   Gleam dans un contexte JS
+
+## La suite avec Gleam
+
+On a parlé rapidement de tout ce qui me semble intéréssant sur Gleam. Je
+continue doucement ma découverte du language sur
+[Codecrafter](https://app.codecrafters.io/join?via=Christopher2K) (lien
+sponsorisé) en recodant une implémentation de Redis! Attrape-moi sur Twitter ou
+sur Twitch si jamais tu souhaites en parler!

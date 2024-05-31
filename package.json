@@ -14,10 +14,10 @@
     "lint:write": "prettier . --write"
   },
   "dependencies": {
-    "@astrojs/check": "~0.3.1",
-    "@astrojs/mdx": "~2.0.1",
-    "@astrojs/solid-js": "~3.0.2",
-    "astro": "~4.0.3",
+    "@astrojs/check": "~0.7.0",
+    "@astrojs/mdx": "~3.0.1",
+    "@astrojs/solid-js": "~4.2.0",
+    "astro": "~4.9.2",
     "date-fns": "~2.30.0",
     "i18next": "~23.10.1",
     "lucide-solid": "~0.294.0",
@@ -27,12 +27,12 @@
   },
   "devDependencies": {
     "@cloudinary/url-gen": "~1.10.1",
-    "@pandacss/astro": "~0.20.1",
-    "@pandacss/dev": "~0.20.1",
+    "@pandacss/astro": "~0.25.0",
+    "@pandacss/dev": "~0.40.1",
     "husky": "~8.0.3",
     "lint-staged": "~15.2.0",
     "prettier": "~3.1.0",
     "prettier-plugin-astro": "~0.12.2"
   },
-  "packageManager": "yarn@3.6.2"
+  "packageManager": "pnpm@9.1.0"
 }
