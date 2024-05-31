@@ -68,7 +68,13 @@ const enUrl =
     })}
     slot="header"
   >
-    <h1 class={css({ textStyle: "h1" })}>
+    <h1
+      class={css({
+        textStyle: "h1",
+        textAlign: "center",
+        w: "full",
+      })}
+    >
       {entry.data.title}
     </h1>
     <div
