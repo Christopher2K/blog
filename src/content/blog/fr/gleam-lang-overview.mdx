@@ -1,10 +1,11 @@
 ---
 title: Découverte de Gleam, un langage type-safe sur la BEAM!
 description: De Erlang, à Elixir et maintenant GLEAM?!
-tags: [gleam, beam, programmation, functional]
+tags: [gleam, beam, fp]
 publishingDate: 2024-06-01
 draft: false
 slug: introduction-gleam
+translation: gleam-overview
 ---
 
 import { Image } from "astro:assets";
@@ -27,7 +28,7 @@ ce langage HYPER intéréssant.
 
 <Image
   src={gleamBanner}
-  alt="Étoile rose qui représente le logo de Gleam, suivit du texte 'Gleam'"
+  alt="Étoile rose qui représente le logo de Gleam, suivi du texte 'Gleam'"
 />
 
 ## Comment je suis tombé sur Gleam?
@@ -67,7 +68,7 @@ catégorie des choses potentiellement cools, mais pas prioritaires...
 
 <Image
   src={thingsToLearn}
-  alt="Image qui représenter le classement des choses sur lesquelles j'aimerais garder un oeil, et Gleam est catégorisé non pas comme urgent mais comme potentiellement intéréssant."
+  alt="Schéma qui représente le classement des choses sur lesquelles j'aimerais garder un oeil, et Gleam est catégorisé non pas comme urgent mais comme potentiellement intéréssant."
 />
 
 ## Ce que Gleam propose
@@ -86,7 +87,7 @@ parlant de ce que j'aime et ce que j'aime moins!
 C'est de toute beauté, genre:
 
 ```gleam
-type Vehicule {
+type Vehicle {
   Car(make: String, brand: String)
   Skateboard(brand: String)
   Spaceship(year: Int)
@@ -94,8 +95,8 @@ type Vehicule {
 ```
 
 Ce que tu vois ici, c'est un `custom type` (ou alors `Record`) de Gleam.
-`Vehicule` est le nom du type, `Car`, `Skateboard` et `Spaceship` sont des
-constructeurs disponibles pour ce type. Pour t'aider, tu peux voir `Vehicule`
+`Vehicle` est le nom du type, `Car`, `Skateboard` et `Spaceship` sont des
+constructeurs disponibles pour ce type. Pour t'aider, tu peux voir `Vehicle`
 comme une énumération, dont les membres peuvent avoir leur propre set de
 propriétés. En pratique, ça s'utilise comme ça:
 
@@ -106,8 +107,8 @@ let my_car = Car("Honda", "Civic")
 et ça donne des usages assez stylés, comme ce petit pattern matching:
 
 ```gleam
-fn get_driving_requirements(vehicule: Vehicule) -> String {
-  case vehicule {
+fn get_driving_requirements(vehicle: Vehicle) -> String {
+  case vehicle {
     Car(make, brand) ->
       "To drive the car "
       <> make
@@ -123,13 +124,13 @@ fn get_driving_requirements(vehicule: Vehicule) -> String {
 Analysons un peu la fonction précédente:
 
 1. `get_driving_requirements` prend en paramètre un seul argument de type
-   `Vehicule` et retourne un `String`. Le compiler (et le LSP) de Gleam feront
-   en sorte que ces conditions soient respectées. Le type de retour est
-   optionnel, dans le sens où, si tu ne le mets pas, Gleam saura quand même ce
-   que tu retournes.
+   `Vehicle` et retourne un `String`. Le compiler (et le LSP) de Gleam feront en
+   sorte que ces conditions soient respectées. Le type de retour est optionnel,
+   dans le sens où, si tu ne le mets pas, Gleam saura quand même ce que tu
+   retournes.
 2. Dans le corps de la fonction, on voit la structure `case`, connue sous le nom
    de **pattern maching**. Cette structure de contrôle va te permettre de tester
-   TOUTES les possibilités de valeur pour `vehicule` avec un niveau assez fou de
+   TOUTES les possibilités de valeur pour `vehicle` avec un niveau assez fou de
    précision. Il est possible par exemple de matcher sur des valeur de propriété
    super précise. Dans cet exemple, on prend en compte tous les cas possibles de
    type de véhicule à savoir `Car`, `Spaceship`, et `Skateboard`. Le compilateur
@@ -140,7 +141,7 @@ Super expressif, concis et plutot élégant (100% subjectif).
 
 ### Le tooling...
 
-... est incroyable. Genre, vraiment incroyable. J'ai passé tellement de temps
+...est incroyable. Genre, vraiment incroyable. J'ai passé tellement de temps
 dans Javascript et son écosystème cursed, que j'ai oublié ce que les autres
 langages font en dehors de JS. La seule chose que tu dois installer est la
 commande `gleam`. Je l'ai fait via [asdf](https://asdf-vm.com/), mais tu peux te
@@ -201,16 +202,16 @@ Tiens, une petite démo en reprenant l'example précédent.
 ```gleam
 import gleam/io
 
-/// This is some type related to type Vehicule
-type Vehicule {
+/// This is some type related to type Vehicle
+type Vehicle {
   /// Car type used for... a car I guess...
   Car(make: String, brand: String)
   Skateboard(brand: String)
   Spaceship(year: Int)
 }
 
-fn get_driving_requirements(vehicule: Vehicule) -> String {
-  case vehicule {
+fn get_driving_requirements(vehicle: Vehicle) -> String {
+  case vehicle {
     Car(make, brand) ->
       "To drive the car "
       <> make
@@ -228,12 +229,12 @@ pub fn main() {
 }
 ```
 
-Si je passe ma souris (hover action) sur la variable `vehicule` dans le corps de
+Si je passe ma souris (hover action) sur la variable `vehicle` dans le corps de
 ma fonction, je vois:
 
 <Image
   src={lspExample1}
-  alt="Screenshot qui montre que lorsqu'on passe la souris sur la variable vehicule, l'editeur de code est capable de montrer la documentation et le type relatif à la variable, grâce au LSP."
+  alt="Screenshot qui montre que lorsqu'on passe la souris sur la variable vehicle, l'editeur de code est capable de montrer la documentation et le type relatif à la variable, grâce au LSP."
 />
 
 Le LSP est totalement capable d'aller récuperer le type et la documentation
@@ -394,14 +395,14 @@ Reprenons le code suivant:
 ```gleam
 import gleam/io
 
-type Vehicule {
+type Vehicle {
   Car(make: String, brand: String)
   Skateboard(brand: String)
   Spaceship(year: Int)
 }
 
-fn get_driving_requirements(vehicule: Vehicule) -> String {
-  case vehicule {
+fn get_driving_requirements(vehicle: Vehicle) -> String {
+  case vehicle {
     Car(make, brand) ->
       "To drive the car "
       <> make
@@ -450,17 +451,17 @@ class Spaceship extends $CustomType {
   }
 }
 
-function get_driving_requirements(vehicule) {
-  if (vehicule instanceof Car) {
-    let make = vehicule.make;
-    let brand = vehicule.brand;
+function get_driving_requirements(vehicle) {
+  if (vehicle instanceof Car) {
+    let make = vehicle.make;
+    let brand = vehicle.brand;
     return (
       "To drive the car " + make + " " + brand + ", your need a driver licence."
     );
-  } else if (vehicule instanceof Spaceship) {
+  } else if (vehicle instanceof Spaceship) {
     return "You need to be a NASA astronaut for that!";
   } else {
-    let brand = vehicule.brand;
+    let brand = vehicle.brand;
     return "Anybody can ride a " + brand + " skateboard!";
   }
 }
