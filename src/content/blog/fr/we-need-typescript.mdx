@@ -1,0 +1,331 @@
+---
+title: La nécessité de Typescript et ses limites
+description:
+  Typescript c'est cool, mais c'est pas assez, et c'est chiant parfois.
+tags: [javascript, typescript, types, type system]
+publishingDate: 2024-07-08
+draft: true
+slug: typescript-est-necessaire
+translation: we-need-typescript
+---
+
+import { Image } from "astro:assets";
+import turnoverMeme from "@/assets/we-need-typescript/turnover-meme.jpg";
+import typescriptError from "@/assets/we-need-typescript/typescript-error.png";
+import userInputMeme from "@/assets/we-need-typescript/user-input-meme.jpeg";
+
+Certain(e)s sont déjà convaincu(e)s par Typescript. Cet article ne va donc rien
+vous apprendre, mais beaucoup ici sont aussi à la recherche de réponses. De
+réponses à la question:
+
+> Je suis dev web et je viens juste de m'en sortir avec Javascript. Pourquoi on
+> me casse les pieds avec Typescript?
+
+Je vais tenter, très humblement, d'apporter des éléments de réponse, basés sur
+de véritables situations. Je vais même aller un peu plus loin et parler des
+quelques moment où même Typescript ne pourra RIEN pour toi. C'est parti!
+
+## Posons un contexte
+
+Développeur ou développeuse junior dans une ESN qui te paie 28 000 (vingt huit
+mille) euros brut dans le centre de Paris, tu tentes malgré tout de joindre les
+deux bouts. Tu travailles sur une application e-commerce avec beaucoup de code
+existant, code étant le fruit du travail de 59 développeurs ou développeuses qui
+ont travaillé sur ce projet avant toi (ton ESN a un turnover de fou, mais les
+managers ne comprennent pas pourquoi!).
+
+<Image
+  src={turnoverMeme}
+  alt="Meme qui indique: 'Si tu traitais tes employés correctement, peut-être que le turnover ne serait pas si élevé'"
+/>
+
+Un nouveau sprint démarre (vous faîtes de "l'agile scrum"), et tu choisis de
+démarrrer ce nouveau cycle de deux semaines en choisissant une tâche où tu dois
+restaurer le panier sauvegardé d'un utilisateur.
+
+Tout se passe bien. À un moment, tu décides de coder une fonction qui permet
+d'afficher le total du rabais de tous les élements du panier qui a été
+sauvegardé, genre:
+
+```javascript
+function getDiscountFromSavedCart(cart) {
+  const discountTotalValue = cart.cartItems.reduce((sum, cartItem) => {
+    return sum + cartItem.pricing.discount;
+  }, 0);
+
+  return discountTotalValue;
+}
+```
+
+Tu t'apprêtes à écrire les tests unitaires et d'intégration pour ton code, mais
+ton PM (Product Manager) t'indique que tu dois envoyer ton code en production au
+plus vite! Donc, tu les négliges et hop, ça part!
+
+> Classique.
+
+Le temps passe et un jour, ton équipe reçoit un rapport alarmant concernant une
+alerte sur Datadog. Une erreur Javascript a été détectée plus de 15000 fois sur
+le site en production! Cette erreur est due au fait que le discount de certain
+panier affiche `NaN` (Not A Number), ce qui est très frustrant pour les clients.
+
+Après investigation, tu te rends compte que certains éléments du catalogue
+d'articles ont une valeur `null` sur le discount. Comme tu es un 10x engineer,
+tu envoies un fix super rapidement après la détection.
+
+```javascript
+function getDiscountFromSavedCart(cart) {
+  const discountTotalValue = cart.cartItems.reduce((sum, cartItem) => {
+    if (cartItem.pricing.discount) {
+      return sum + cartItem.pricing.discount;
+    } else {
+      return sum;
+    }
+  }, 0);
+
+  return discountTotalValue;
+}
+```
+
+Tout est carré. Le code part en prod. Sauf que maintenant, ton équipe reçoit un
+type différent d'alertes :
+
+```text
+Uncaught TypeError: Cannot read properties of undefined (reading 'discount')
+```
+
+Pour une raison obscure de compatibilité avec un ancien système, certains
+élements du catalogue n'ont pas d'objet `pricing` (une information que personne
+ne t'a communiqué, même le client avait oublié).
+
+Tu envoies donc un deuxième patch:
+
+```javascript
+function getDiscountFromSavedCart(cart) {
+  const discountTotalValue = cart.cartItems.reduce((sum, cartItem) => {
+    if (cartItem.pricing?.discount) {
+      return sum + cartItem.pricing.discount;
+    } else if (cartItem.pricing) {
+      return sum + cartItem.discount;
+    } else {
+      return sum;
+    }
+  }, 0);
+
+  return discountTotalValue;
+}
+```
+
+Mais cette fois, tu fais deux nouveaux trucs:
+
+1. Tu écris des tests unitaires, qui vont vérifier que ta fonction a le
+   comportement attendu pour les possibles valeurs de l'objet `cart`.
+2. Tu commentes ton code, pour expliquer que un `cartItem` contient ou non un
+   objet `pricing` avec ou non une valeur `discount`.
+
+> Oui, il y a un milliard de manières pour résoudre ce problème, manières qui ne
+> passent pas forcément par du code, mais laissez moi faire un exemple -
+> merdique - en paix pour prouver mon point.
+
+Typescript va te permettre de vérifier le point 1 et le point 2 mentionnés plus
+haut en même temps.
+
+## Comment Typescript peut t'aider?
+
+Typescript c'est un language à 90% similaire à Javascript. On parle même de
+Typescript comme un **superset** de Javascript, parce que du code Javascript
+valide est du code Typescript valide. Les 10% de différences sont liés au fait
+que Typescript t'autorise à ajouter des **annotations de types** à ton code.
+
+Les annotations de types, ce sont des informations qui vont indiquer le type de
+donnée (nombre, chaîne de caractères, etc...) attendu par une variable, un
+paramètres de fonction, où même, ce qu'une fonction retourne. Tu peux le voir
+comme une indication, un contrat que ton code doit respecter pour espérer
+fonctionner correctement
+
+```typescript
+// Le code ci dessous est valide en Javascript et Typescript
+const user = { id: "10", name: "Christopher" };
+
+// Le code ci dessous n'est valide que dans le cadre de Typescript
+type User = { id: string; name: string };
+const user: User = { id: "10", name: "Christopher" };
+```
+
+Ces annotations de type vont être utilisées par le compilateur Typescript (un
+programme appelé `tsc`), afin de vérifier si ton programme respecte bien les
+contrats que tu as établi dans le code. Si jamais quelque chose semble
+incorrect, `tsc` refuse de compiler ton programme et une erreur est retournée.
+
+Le résultat de la compilation de `tsc`, c'est juste ton code, sans les
+annotations de type, et donc du Javascript valide.
+
+> Pour des raisons de simplicité, je vulgarise ici. Ce n'est pas exactement 100%
+> ton code mais ca reste du Javascript.
+
+Dans l'exemple evoqué en début d'article, si la variable `cart` avait un type
+associé, on aurait pu se rendre compte que la fonction manipule l'objet `cart`
+d'une manière qui peut provoquer des erreurs en production. Cette information
+serait connue depuis l'IDE car Typescript s'intègre très bien aux éditeurs de
+code (via le
+[Language Server Protocol](https://learn.microsoft.com/fr-fr/visualstudio/extensibility/language-server-protocol?view=vs-2022#language-servers))
+
+<Image
+  src={typescriptError}
+  alt="Après avoir ajouté un type pour le paramètre `cart`, Typescript est capable de nous dire que la première version de notre fonction n'est pas valide comme elle oublie de considérer que l'objet `cart.princing` est peut-être absent."
+/>
+
+Sur l'image précédente, on a ajouté un type à la variable `cart`. Quand on
+applique ce type à la première version de la fonction
+`getDiscountFromSavedCart`, Typescript est capable de nous dire qu'on a surement
+une erreur dans ce code.
+
+C'est la puissance de ce que l'on appelle le **compile-time type checking**, le
+fait qu'un outil comm `tsc` va vérifier que les types et les usages des types de
+ton programme sont correct **AVANT** que ton application tourne en production
+(ce qu'on appelle le `runtime`). Typescript fait un job assez décent sur ce
+point. Toute une classe de bugs est minimisée grâce à cette pratique.
+
+Aussi, le code est d'un coup plus clair à lire et à comprendre, malgré l'absence
+de documentation et de commentaire.
+
+```typescript
+type CartItem = {
+  id: string;
+  discount: null | number;
+  pricing?: { discount: null | number };
+};
+
+type Cart = {
+  cartItems: CartItem[];
+};
+
+function getDiscountFromSavedCart(cart: Cart) {
+  const discountTotalValue = cart.cartItems.reduce((sum, cartItem) => {
+    if (cartItem.pricing?.discount) {
+      return sum + cartItem.pricing.discount;
+    } else if (cartItem.discount) {
+      return sum + cartItem.discount;
+    } else {
+      return sum;
+    }
+  }, 0);
+
+  return discountTotalValue;
+}
+```
+
+Au premier regard, tu comprends ce que la variable `cart` contient, et quelles
+sont les contraintes appliqués à ce paramètre. Génial non?
+
+## Donc Typescript évite tous les bugs?
+
+**Non.**
+
+Très souvent, pour ne pas dire tout le temps, ton application va interagir avec
+**l'extérieur**: des APIs, des cookies, le `localStorage`, le `sessionStorage`,
+des entrées utilisateurs, etc...
+
+<Image
+  src={userInputMeme}
+  alt="Ne jamais faire confiance aux input utilisateur"
+/>
+
+Dans ce cas, tu peux prévoir et avoir une idée de ce que ces systèmes vont
+envoyer à ton app, puis écrire des types Typescript afin que ton type system
+soit toujours cohérent. MAIS on est loin, très loin, du **compile-time** et donc
+Typescript ne peut RIEN pour t'aider à vérifier que tout est correct.
+
+C'est une des grosses limites de Typescript, une fois que l'application tourne,
+et fait appel à du code que l'on ne maitrise pas, on est de nouveau exposé aux
+types d'erreurs que l'on souhaite réduire. La solution ici, c'est d'implémenter
+une système de **runtime type checking**.
+
+L'idée, c'est de créer une fonction, un validateur, qui va check tout ce qui
+rentre dans ton application au runtime. Tu peux utiliser des trucs comme:
+
+- [Joi](https://github.com/hapijs/joi),
+- [Zod](https://zod.dev/),
+- [IO-TS](https://github.com/gcanti/io-ts).
+
+Certains utilitaires te permettent même de pouvoir générer un type Typescript à
+partir d'un validateur donné, histoire d'allier l'utile à l'agréable.
+
+Tu veux un example?
+
+```typescript
+import { z } from "zod";
+
+const cartItemValidator = z.object({
+  id: z.string(),
+  discount: z.union([z.null(), z.number()]),
+  pricing: z
+    .object({
+      discount: z.union([z.null(), z.number()]),
+    })
+    .optional(),
+});
+
+type CartItem = z.infer<typeof cartItemValidator>;
+
+const result = cartItemValidator.safeParse(foreignData);
+if (result.success) {
+  const cartItem = result.data;
+  // Do something I guess?
+} else {
+  // Show an error or something
+}
+```
+
+Ici j'utilise `Zod`. J'ai un validateur qui va vérifier mes `cartItem` au
+runtime, quand ces items viennent de sources non-sûres comme le localStorage. Le
+validateur me permet aussi de génerer un type Typescript gràce aux utilitaires
+que `Zod` fournit. Pas mal non?
+
+## Tout n'est pas parfait
+
+Maintenant que j'ai bien vendu le truc, je vais te donner quelques points sur
+pourquoi c'est parfois super chiant.
+
+### All or nothing
+
+Le truc avec Typescript, c'est que pour garantir la safety d'un programme, TOUT
+doit être typé. Si tu laisses un seul point faible, tu diminues l'efficacité de
+Typescript.
+
+### `Any`
+
+Typescript donne des outils pour te tirer dans le cul tout seul comme un grand.
+`any` en fait parti. C'est une manière de désactiver le checking en disant
+qu'une variable peut être "n'importe quoi".
+
+### Le tooling
+
+Image que tu veuilles faire une webapp. Tu te retrouves à installer Typescript,
+son tooling et comprendre sa configuration! Je dois admettre que c'est parfois
+le plus gros point de difficulté. La configuration de Typescript est une étape
+qui frustre énormément de gens.
+
+### La verbosité
+
+Tu passes d'un code simple et conçis, à un code annoté, qui demande parfois
+l'écriture manuelle de type. C'est en théorie plus de taf. Il faut voir ça comme
+un investissement que tu fais pour avoir moins de bugs et plus de facilités de
+maintenance. Un truc qui aide avec la verbosité c'est
+[l'inférence](https://www.typescriptlang.org/docs/handbook/type-inference.html),
+qui va finalement te permettre d'écrire moins d'annotations tout en te
+permettant de profiter des avantages cités.
+
+## Finalement Typescript ou pas?
+
+**Oui!**
+
+Les avantages surpassent tellement les inconvénients. J'ai fait le parti de
+Typescript en 2015 et je ne regrette pas du tout. D'un point de vue
+employabilité, ouverture d'esprit et progression de carrière, le langage m'a
+apporté beaucoup. C'est une - excellente - habitude à prendre qui peut ouvrir la
+porte vers d'autres choses dans le même style, pour le frontend:
+
+- [ReasonML](https://reasonml.github.io/)
+- [ReScript](https://rescript-lang.org/)
+- [PureScript](https://www.purescript.org/)
+- [Elm](https://elm-lang.org/)
