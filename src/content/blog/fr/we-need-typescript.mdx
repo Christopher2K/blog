@@ -4,7 +4,7 @@ description:
   Typescript c'est cool, mais c'est pas assez, et c'est chiant parfois.
 tags: [javascript, typescript, types, type system]
 publishingDate: 2024-07-08
-draft: true
+draft: false
 slug: typescript-est-necessaire
 translation: we-need-typescript
 ---
@@ -14,16 +14,16 @@ import turnoverMeme from "@/assets/we-need-typescript/turnover-meme.jpg";
 import typescriptError from "@/assets/we-need-typescript/typescript-error.png";
 import userInputMeme from "@/assets/we-need-typescript/user-input-meme.jpeg";
 
-Certain(e)s sont déjà convaincu(e)s par Typescript. Cet article ne va donc rien
-vous apprendre, mais beaucoup ici sont aussi à la recherche de réponses. De
-réponses à la question:
+Certain(e)s sont déjà convaincu(e)s par Typescript donc, cet article ne va donc
+rien vous apprendre de nouveau. Mais, beaucoup ici sont aussi à la recherche de
+réponses. De réponses à la question:
 
 > Je suis dev web et je viens juste de m'en sortir avec Javascript. Pourquoi on
 > me casse les pieds avec Typescript?
 
 Je vais tenter, très humblement, d'apporter des éléments de réponse, basés sur
 de véritables situations. Je vais même aller un peu plus loin et parler des
-quelques moment où même Typescript ne pourra RIEN pour toi. C'est parti!
+quelques moments où même Typescript ne pourra RIEN pour toi. C'est parti!
 
 ## Posons un contexte
 
@@ -40,11 +40,11 @@ managers ne comprennent pas pourquoi!).
 />
 
 Un nouveau sprint démarre (vous faîtes de "l'agile scrum"), et tu choisis de
-démarrrer ce nouveau cycle de deux semaines en choisissant une tâche où tu dois
-restaurer le panier sauvegardé d'un utilisateur.
+d'attaquer ce nouveau cycle de deux semaines en choisissant une tâche où tu dois
+restaurer le panier d'un utilisateur.
 
-Tout se passe bien. À un moment, tu décides de coder une fonction qui permet
-d'afficher le total du rabais de tous les élements du panier qui a été
+Tout se passe assez bien, puis à un moment, tu décides de coder une fonction qui
+permet d'afficher le total du rabais de tous les élements du panier qui a été
 sauvegardé, genre:
 
 ```javascript
@@ -64,13 +64,14 @@ plus vite! Donc, tu les négliges et hop, ça part!
 > Classique.
 
 Le temps passe et un jour, ton équipe reçoit un rapport alarmant concernant une
-alerte sur Datadog. Une erreur Javascript a été détectée plus de 15000 fois sur
-le site en production! Cette erreur est due au fait que le discount de certain
-panier affiche `NaN` (Not A Number), ce qui est très frustrant pour les clients.
+alerte sur Datadog. Une erreur Javascript a été détectée plus de 15 000 fois sur
+le site en production! Cette erreur est due au fait que le discount de certains
+paniers affiche `NaN` (Not A Number), ce qui est très frustrant pour les
+clients.
 
 Après investigation, tu te rends compte que certains éléments du catalogue
-d'articles ont une valeur `null` sur le discount. Comme tu es un 10x engineer,
-tu envoies un fix super rapidement après la détection.
+d'articles ont une valeur `null`, au lieu de `0`, sur le discount. Comme tu es
+un 10x engineer, tu envoies un fix super rapidement après la détection.
 
 ```javascript
 function getDiscountFromSavedCart(cart) {
@@ -87,7 +88,7 @@ function getDiscountFromSavedCart(cart) {
 ```
 
 Tout est carré. Le code part en prod. Sauf que maintenant, ton équipe reçoit un
-type différent d'alertes :
+type différent d'alertes:
 
 ```text
 Uncaught TypeError: Cannot read properties of undefined (reading 'discount')
@@ -122,12 +123,15 @@ Mais cette fois, tu fais deux nouveaux trucs:
 2. Tu commentes ton code, pour expliquer que un `cartItem` contient ou non un
    objet `pricing` avec ou non une valeur `discount`.
 
-> Oui, il y a un milliard de manières pour résoudre ce problème, manières qui ne
-> passent pas forcément par du code, mais laissez moi faire un exemple -
-> merdique - en paix pour prouver mon point.
+> Là, tu dois te dire qu'il y a un milliard de manières pour résoudre ce
+> problème, manières qui ne passent pas forcément par du code. T'as 100% raison,
+> mais prétendons que non. Code first.
 
 Typescript va te permettre de vérifier le point 1 et le point 2 mentionnés plus
 haut en même temps.
+
+> Typescript ne remplace pas les tests unitaires, mais certains tests peuvent
+> faire doublons avec un bon type system.
 
 ## Comment Typescript peut t'aider?
 
@@ -139,8 +143,8 @@ que Typescript t'autorise à ajouter des **annotations de types** à ton code.
 Les annotations de types, ce sont des informations qui vont indiquer le type de
 donnée (nombre, chaîne de caractères, etc...) attendu par une variable, un
 paramètres de fonction, où même, ce qu'une fonction retourne. Tu peux le voir
-comme une indication, un contrat que ton code doit respecter pour espérer
-fonctionner correctement
+comme un contrat que ton code doit respecter pour espérer fonctionner
+correctement.
 
 ```typescript
 // Le code ci dessous est valide en Javascript et Typescript
@@ -152,8 +156,8 @@ const user: User = { id: "10", name: "Christopher" };
 ```
 
 Ces annotations de type vont être utilisées par le compilateur Typescript (un
-programme appelé `tsc`), afin de vérifier si ton programme respecte bien les
-contrats que tu as établi dans le code. Si jamais quelque chose semble
+exécutable appelé `tsc`), afin de vérifier si ton programme respecte bien les
+contraintes que tu as établi dans le code. Si jamais quelque chose semble
 incorrect, `tsc` refuse de compiler ton programme et une erreur est retournée.
 
 Le résultat de la compilation de `tsc`, c'est juste ton code, sans les
@@ -180,13 +184,13 @@ applique ce type à la première version de la fonction
 une erreur dans ce code.
 
 C'est la puissance de ce que l'on appelle le **compile-time type checking**, le
-fait qu'un outil comm `tsc` va vérifier que les types et les usages des types de
-ton programme sont correct **AVANT** que ton application tourne en production
-(ce qu'on appelle le `runtime`). Typescript fait un job assez décent sur ce
-point. Toute une classe de bugs est minimisée grâce à cette pratique.
+fait qu'un outil comm `tsc` va vérifier que les types et leurs usages dans le
+code sont corrects **AVANT** que ton application tourne en production (ce qu'on
+appelle le `runtime`). Typescript fait un job assez décent sur ce point. Toute
+une classe de bugs est minimisée grâce à cette pratique.
 
 Aussi, le code est d'un coup plus clair à lire et à comprendre, malgré l'absence
-de documentation et de commentaire.
+de documentation et de commentaires.
 
 ```typescript
 type CartItem = {
@@ -235,12 +239,13 @@ envoyer à ton app, puis écrire des types Typescript afin que ton type system
 soit toujours cohérent. MAIS on est loin, très loin, du **compile-time** et donc
 Typescript ne peut RIEN pour t'aider à vérifier que tout est correct.
 
-C'est une des grosses limites de Typescript, une fois que l'application tourne,
-et fait appel à du code que l'on ne maitrise pas, on est de nouveau exposé aux
-types d'erreurs que l'on souhaite réduire. La solution ici, c'est d'implémenter
+C'est une des grosses limites de Typescript, comparé à d'autres système de
+types, comme celui d'OCaml ou Rust. Une fois que l'application tourne, et fait
+appel à de la donnée externe (Input/Output), on est de nouveau exposé au genre
+d'erreurs que l'on voulait éviter de base. La solution ici, c'est d'implémenter
 une système de **runtime type checking**.
 
-L'idée, c'est de créer une fonction, un validateur, qui va check tout ce qui
+L'idée, c'est de créer une fonction, un validateur, qui va contrôler tout ce qui
 rentre dans ton application au runtime. Tu peux utiliser des trucs comme:
 
 - [Joi](https://github.com/hapijs/joi),
@@ -276,10 +281,10 @@ if (result.success) {
 }
 ```
 
-Ici j'utilise `Zod`. J'ai un validateur qui va vérifier mes `cartItem` au
-runtime, quand ces items viennent de sources non-sûres comme le localStorage. Le
-validateur me permet aussi de génerer un type Typescript gràce aux utilitaires
-que `Zod` fournit. Pas mal non?
+Ici j'utilise `Zod`. J'ai un validateur qui va vérifier au runtime qu'une donnée
+inconnue correspond bien à ce que mon app considère comme étant un `CartItem`.
+Le validateur me permet aussi de génerer un type Typescript grâce aux
+utilitaires que `Zod` fournit. Pas mal non?
 
 ## Tout n'est pas parfait
 
@@ -292,18 +297,21 @@ Le truc avec Typescript, c'est que pour garantir la safety d'un programme, TOUT
 doit être typé. Si tu laisses un seul point faible, tu diminues l'efficacité de
 Typescript.
 
-### `Any`
+### Le type `any`
 
 Typescript donne des outils pour te tirer dans le cul tout seul comme un grand.
-`any` en fait parti. C'est une manière de désactiver le checking en disant
-qu'une variable peut être "n'importe quoi".
+`any` en fait parti. Il s'agit d'un type qui accepte n'importe quelle donnée.
+C'est une manière de désactiver le checking en disant qu'une variable peut être
+"n'importe quoi".
 
 ### Le tooling
 
-Image que tu veuilles faire une webapp. Tu te retrouves à installer Typescript,
-son tooling et comprendre sa configuration! Je dois admettre que c'est parfois
-le plus gros point de difficulté. La configuration de Typescript est une étape
-qui frustre énormément de gens.
+Imagine que tu veuilles faire une webapp. Tu te retrouves à installer
+Typescript, son tooling et comprendre sa configuration! Je dois admettre que
+c'est parfois le plus gros point de difficulté. La configuration de Typescript
+est une étape qui frustre énormément de gens et l'interaction avec des
+librairies externes est parfois difficile quand les types sont de mauvaise
+qualité. On a parfois l'impression de combattre le type system.
 
 ### La verbosité
 
@@ -329,3 +337,9 @@ porte vers d'autres choses dans le même style, pour le frontend:
 - [ReScript](https://rescript-lang.org/)
 - [PureScript](https://www.purescript.org/)
 - [Elm](https://elm-lang.org/)
+
+Quelques ressources pour t'aider à démarrer:
+
+- [La piste Typescript sur Exercism](https://exercism.org/tracks/typescript)
+- [TypeHero pour comprendre les types complexes](https://typehero.dev/)
+- [Typescript cheatsheet](https://devhints.io/typescript)
