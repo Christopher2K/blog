@@ -7,6 +7,7 @@ import coolNerdIconImage from "@/assets/common/cool-nerd-icon.png";
 import { css } from "@/style/css";
 import { hstack, stack } from "@/style/patterns";
 import { youtube, twitch } from "@/utils/link";
+import { RssIcon } from "lucide-solid";
 
 const navStyle = stack({
   flexDirection: "column",
@@ -30,11 +31,15 @@ const navUlStyle = hstack({
 });
 
 const navLiStyle = css({
-  px: "2",
   textStyle: "body",
   fontWeight: "bold",
+  height: "fit-content",
+  width: "fit-content",
   _hover: {
     backgroundColor: "orange.100",
+    "& svg": {
+      backgroundColor: "orange.100",
+    },
   },
 });
 
@@ -75,6 +80,15 @@ const { frUrl = path, enUrl = `/en${path}` } = Astro.props;
     <!-- </li> -->
     <li><a href={twitch} class={navLiStyle}>{t("common:nav.twitch")}</a></li>
     <li><a href={youtube} class={navLiStyle}>{t("common:nav.videos")}</a></li>
+    <li>
+      <a
+        href={l("/rss.xml")}
+        class={navLiStyle}
+        aria-label={t("common:nav.rss")}
+      >
+        <RssIcon />
+      </a>
+    </li>
   </ul>
   <div class={navLangStyle}>
     <a title="Français" href={frUrl}>🇫🇷</a>

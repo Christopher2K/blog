@@ -4,7 +4,8 @@
     "blog": "Blog",
     "projects": "Projects",
     "videos": "Videos",
-    "twitch": "Live coding"
+    "twitch": "Live coding",
+    "rss": "Subscribe to the RSS feed"
   },
   "footer": {
     "twitter": "My twitter account",
@@ -13,7 +14,7 @@
     "twitch": "My twitch channel",
     "youtube": "My youtube channel",
     "credits": "All rights reserved © Christopher N. Katoyi Kaba - 2024",
-    "alternateLangLink": "🇫🇷 Voir le site en français"
+    "rss": "Subscribe to the RSS feed"
   },
   "seo": {
     "titleTemplate": "{{ title }} | Christopher N. Katoyi Kaba",

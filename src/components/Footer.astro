@@ -1,5 +1,7 @@
 ---
-import { t } from "@/i18n";
+import { RssIcon } from "lucide-solid";
+
+import { t, l } from "@/i18n";
 import { css } from "@/style/css";
 import { vstack } from "@/style/patterns";
 
@@ -25,15 +27,26 @@ const footerHrStyle = css({
 
 const footerTextContainerStyle = vstack({
   w: "full",
-  gap: 10,
+  gap: "5",
   justifyContent: "center",
   alignItems: "center",
+  textStyle: "small",
 });
 
 const footerTextStyle = css({
   width: "full",
   textStyle: "small",
   textAlign: "center",
+});
+
+const footerLinkStyle = css({
+  display: "inline-flex",
+  gap: "2",
+  fontWeight: "bold",
+  textDecoration: "underline",
+  _hover: {
+    backgroundColor: "orange.100",
+  },
 });
 ---
 
@@ -43,5 +56,9 @@ const footerTextStyle = css({
     <p class={footerTextStyle}>
       {t("common:footer.credits")}
     </p>
+    <a href={l("/rss.xml")} class={footerLinkStyle}>
+      <RssIcon />
+      {t("common:footer.rss")}
+    </a>
   </div>
 </footer>
