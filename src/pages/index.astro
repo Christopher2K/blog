@@ -12,7 +12,7 @@ const locale = Astro.currentLocale ?? DEFAULT_LANG;
 const blogCollection = await getBlogCollection(locale);
 ---
 
-<Base title={t("home:title")}>
+<Base title={t("home:title")} forceUseDefaultOgTitle>
   <Navbar />
   <IndexHeader />
   <IndexSectionList title={t("home:blogSectionTitle")}>
