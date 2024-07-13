@@ -11,6 +11,11 @@ const headerStyle = css({
   w: "full",
   px: "6",
   mb: "20",
+  lg: {
+    display: "grid",
+    gridTemplateColumns: "repeat(4, 1fr)",
+    gap: "6",
+  },
 });
 
 const headerContainerStyle = css({
@@ -20,6 +25,18 @@ const headerContainerStyle = css({
   justifyContent: "center",
   alignItems: "center",
   gap: "6",
+  md: {
+    display: "grid",
+    gridTemplateColumns: "repeat(4, 1fr)",
+    gap: "6",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+  },
+  lg: {
+    gridColumnStart: "span 3",
+    gridTemplateColumns: "repeat(3, 1fr)",
+    transform: "translateX(calc( (100% /4) - (var(--spacing-6) * 3)))",
+  },
 });
 
 const headerImageContainerStyle = css({
@@ -34,17 +51,25 @@ const headerImageContainerStyle = css({
 });
 
 const headerTextContainerStyle = vstack({
-  gridColumnStart: "span 2",
   width: "100%;",
   justifyContent: "flex-start",
   alignItems: "flex-start",
   gap: "4",
+  md: {
+    gridColumnStart: "span 3",
+  },
+  lg: {
+    gridColumnStart: "span 2",
+  },
 });
 
 const headerTitleStyle = css({
   w: "full",
   textStyle: "heading1",
   textAlign: "center",
+  md: {
+    textAlign: "left",
+  },
 });
 
 const headerSubtitleStyle = css({
@@ -52,12 +77,25 @@ const headerSubtitleStyle = css({
   textStyle: "heading2",
   fontWeight: "normal",
   textAlign: "center",
+  md: {
+    textAlign: "left",
+  },
 });
 
 const headerBodyStyle = css({
   textStyle: "body",
   textAlign: "center",
   mb: "4",
+  md: {
+    textAlign: "left",
+  },
+});
+
+const headerSocialsContainerStyle = css({
+  alignSelf: "center",
+  md: {
+    alignSelf: "start",
+  },
 });
 ---
 
@@ -73,7 +111,7 @@ const headerBodyStyle = css({
       <p class={headerBodyStyle}>
         {t("home:bio")}
       </p>
-      <div class={css({ alignSelf: "center" })}>
+      <div class={headerSocialsContainerStyle}>
         <Socials />
       </div>
     </div>
