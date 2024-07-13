@@ -1,0 +1,56 @@
+---
+import { getCollection, getEntry } from "astro:content";
+import { t } from "@/i18n";
+
+import { css } from "@/style/css";
+import Article from "@/layouts/Article.astro";
+import { vstack } from "@/style/patterns";
+import { format } from "@/utils/date";
+
+export async function getStaticPaths({ lang = "fr" }: { lang?: string }) {
+  const alternateLang = lang === "fr" ? "en" : "fr";
+
+  const blogCollection = await getCollection(
+    "blog",
+    ({ data, id }) =>
+      id.startsWith(lang) && Boolean(import.meta.env.DEV || !data.draft),
+  );
+
+  const paths = await Promise.all(
+    blogCollection.map(async (entry) => {
+      const alternateEntry = entry.data?.translation
+        ? await getEntry("blog", entry.data.translation)
+        : await Promise.resolve(undefined);
+
+      return {
+        params: { slug: entry.slug },
+        props: {
+          entry,
+          lang,
+          alternateLang,
+          alternateEntry,
+        },
+      };
+    }),
+  );
+
+  return paths;
+}
+
+const { entry, alternateLang, alternateEntry, lang } = Astro.props;
+const { Content } = await entry.render();
+const alternateLangLink = ["", alternateLang, "blog", alternateEntry?.slug]
+  .filter((chunk) => chunk !== "fr")
+  .join("/");
+
+const frUrl =
+  lang === "fr"
+    ? Astro.url.pathname
+    : alternateEntry
+      ? alternateLangLink
+      : "/en";
+const enUrl =
+  lang === "en" ? Astro.url.pathname : alternateEntry ? alternateLangLink : "/";
+---
+
+<div>Hello</div>

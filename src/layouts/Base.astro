@@ -1,7 +1,16 @@
 ---
-import "../index.css";
-import { css } from "@/style/css";
+import "@/index.css";
 import SEO from "@/components/SEO.astro";
+import Footer from "@/components/Footer.astro";
+
+import { css } from "@/style/css";
+
+const mainStyle = css({
+  py: "10",
+  width: "100%",
+  maxWidth: "contentWidth",
+  mx: "auto",
+});
 
 export interface Props {
   title: string;
@@ -32,14 +41,21 @@ const { title, description, forceUseDefaultOgTitle } = Astro.props;
       rel="preload"
       as="font"
       type="font/woff2"
-      href="/fonts/IBMPlexMono-Medium.woff2"
+      href="/fonts/IBMPlexMono-Bold.woff2"
       crossorigin
     />
     <link
       rel="preload"
       as="font"
       type="font/woff2"
-      href="/fonts/IBMPlexMono-Bold.woff2"
+      href="/fonts/IBMPlexSansCond-Regular.woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/IBMPlexSansCond-Bold.woff2"
       crossorigin
     />
     <meta name="viewport" content="width=device-width" />
@@ -51,19 +67,10 @@ const { title, description, forceUseDefaultOgTitle } = Astro.props;
       src="https://plausible.lab.llcoolserver.dev/js/script.js"></script>
   </head>
 
-  <body
-    class={css({
-      position: "relative",
-      width: "full",
-      minHeight: "100svh",
-      mx: "auto",
-      lg: {
-        display: "grid",
-        gridTemplateColumns:
-          "var(--sizes-nav-width) minmax(0, var(--sizes-content))",
-      },
-    })}
-  >
-    <slot />
+  <body>
+    <main class={mainStyle}>
+      <slot />
+      <Footer />
+    </main>
   </body>
 </html>

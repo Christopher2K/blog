@@ -1,0 +1,83 @@
+---
+import { Image } from "astro:assets";
+import { SUPPORTED_LANG } from "@/i18n";
+
+import { t, l } from "@/i18n";
+import coolNerdIconImage from "@/assets/common/cool-nerd-icon.png";
+import { css } from "@/style/css";
+import { hstack, stack } from "@/style/patterns";
+import { youtube, twitch } from "@/utils/link";
+
+const navStyle = stack({
+  flexDirection: "column",
+  justifyContent: "flex-start",
+  alignItems: "center",
+  w: "fit-content",
+  px: "4",
+  py: "3",
+  mx: "auto",
+  mb: "10",
+});
+
+const navHomeLinkStyle = css({
+  w: "fit-content",
+});
+
+const navUlStyle = hstack({
+  justifyContent: "center",
+  columnGap: "5",
+  flexWrap: "wrap",
+});
+
+const navLiStyle = css({
+  px: "2",
+  textStyle: "body",
+  fontWeight: "bold",
+  _hover: {
+    backgroundColor: "orange.100",
+  },
+});
+
+const headerImage = css({
+  width: "32px",
+  height: "32px",
+});
+
+const navLangStyle = hstack({
+  gap: "10px",
+  "& > button": {
+    cursor: "pointer",
+  },
+});
+
+const path = Astro.url.pathname
+  .split("/")
+  .filter((chunk) => !(SUPPORTED_LANG as readonly string[]).includes(chunk))
+  .join("/");
+
+export interface Props {
+  frUrl?: string;
+  enUrl?: string;
+}
+
+const { frUrl = path, enUrl = `/en${path}` } = Astro.props;
+---
+
+<nav class={navStyle}>
+  <a href={l("/")} class={navHomeLinkStyle}>
+    <Image class={headerImage} src={coolNerdIconImage} alt="Cool Nerd Icon" />
+  </a>
+  <ul class={navUlStyle}>
+    <li><a href={l("/")} class={navLiStyle}>{t("common:nav.home")}</a></li>
+    <!-- <li><a href={l("/blog")} class={navLiStyle}>{t("common:nav.blog")}</a></li> -->
+    <!-- <li> -->
+    <!--   <a href={l("/projects")} class={navLiStyle}>{t("common:nav.projects")}</a> -->
+    <!-- </li> -->
+    <li><a href={twitch} class={navLiStyle}>{t("common:nav.twitch")}</a></li>
+    <li><a href={youtube} class={navLiStyle}>{t("common:nav.videos")}</a></li>
+  </ul>
+  <div class={navLangStyle}>
+    <a title="Français" href={frUrl}>🇫🇷</a>
+    <a title="English" href={enUrl}>🇬🇧</a>
+  </div>
+</nav>

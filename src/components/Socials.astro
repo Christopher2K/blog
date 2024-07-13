@@ -4,11 +4,12 @@ import {
   TwitchIcon,
   LinkedinIcon,
   GithubIcon,
+  YoutubeIcon,
 } from "lucide-solid";
 
 import { t } from "@/i18n";
 import { hstack } from "@/style/patterns";
-import { linkedin, twitch, twitter, github } from "@/utils/link";
+import { linkedin, twitch, twitter, github, youtube } from "@/utils/link";
 ---
 
 <ul
@@ -20,24 +21,29 @@ import { linkedin, twitch, twitter, github } from "@/utils/link";
 >
   <li>
     <a href={github} target="_blank" aria-label={t("common:footer.github")}>
-      <GithubIcon strokeWidth="1" />
+      <GithubIcon />
     </a>
   </li>
   <li>
     <a href={twitter} target="_blank" aria-label={t("common:footer.twitter")}>
-      <TwitterIcon strokeWidth="1" />
+      <TwitterIcon />
     </a>
   </li>
 
   <li>
     <a href={twitch} target="_blank" aria-label={t("common:footer.twitch")}>
-      <TwitchIcon strokeWidth="1" />
+      <TwitchIcon />
     </a>
   </li>
 
   <li>
+    <a href={youtube} target="_blank" aria-label={t("common:footer.twitch")}>
+      <YoutubeIcon />
+    </a>
+  </li>
+  <li>
     <a href={linkedin} target="_blank" aria-label={t("common:footer.linkedin")}>
-      <LinkedinIcon strokeWidth="1" />
+      <LinkedinIcon />
     </a>
   </li>
 </ul>

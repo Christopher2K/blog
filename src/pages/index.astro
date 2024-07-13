@@ -2,10 +2,12 @@
 import { getCollection } from "astro:content";
 
 import { t } from "@/i18n";
-import Article from "@/components/Article.astro";
-import { css } from "@/style/css";
-import Page from "@/layouts/Page.astro";
-import { vstack } from "@/style/patterns";
+import Base from "@/layouts/Base.astro";
+import ArticleCard from "@/components/ArticleCard.astro";
+import Navbar from "@/components/Navbar.astro";
+import IndexHeader from "@/components/IndexHeader.astro";
+import IndexSectionList from "@/components/IndexSectionList.astro";
+import { getArticleUrl } from "@/utils/link";
 
 const blogCollection = await getCollection("blog", ({ data, id }) => {
   return (
@@ -25,17 +27,20 @@ const blogCollection = await getCollection("blog", ({ data, id }) => {
 );
 ---
 
-<Page title={t("home:title")} frUrl="/" enUrl="/en">
-  <section class={css({ mb: "10" })}>
-    <h2 class={css({ textStyle: "h2" })}>{t("home:lastPostSection.title")}</h2>
-    <ul class={vstack({ w: "full", gap: "10" })}>
-      {
-        blogCollection.map((entry) => (
-          <li class={css({ w: "full" })}>
-            <Article data={entry.data} id={entry.id} slug={entry.slug} />
-          </li>
-        ))
-      }
-    </ul>
-  </section>
-</Page>
+<Base title={t("home:title")}>
+  <Navbar />
+  <IndexHeader />
+  <IndexSectionList title={t("home:blogSectionTitle")}>
+    {
+      blogCollection.map((entry) => (
+        <ArticleCard
+          title={entry.data.title}
+          date={entry.data.publishingDate}
+          description={entry.data.description}
+          tags={entry.data.tags}
+          href={getArticleUrl(entry.id, entry.slug)}
+        />
+      ))
+    }
+  </IndexSectionList>
+</Base>

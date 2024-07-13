@@ -1,16 +1,18 @@
 {
   "nav": {
-    "intro": "Plus 8 ans dans la tech et le développement, 2 ans sur Twitch, 27 ans sur Terre. J'ai surement deux ou trois trucs à partager, je pense...",
     "home": "Accueil",
-    "twitch": "Live coding",
-    "lang": "Langue"
+    "blog": "Blog",
+    "projects": "Projets",
+    "videos": "Vidéos",
+    "twitch": "Live coding"
   },
   "footer": {
     "twitter": "Mon profil Twitter",
     "linkedin": "Mon profil Linkedin",
     "github": "Mon compte Github",
     "twitch": "Ma chaine Twitch",
-    "credits": "Tous droits réservés © Christopher N. Katoyi Kaba - 2023",
+    "youtube": "Ma chaine Youtube",
+    "credits": "Tous droits réservés © Christopher N. Katoyi Kaba - 2024",
     "alternateLangLink": "🇬🇧 Check the english website"
   },
   "seo": {

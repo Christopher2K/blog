@@ -1,11 +1,14 @@
 ---
 import { getCollection, getEntry } from "astro:content";
-import { t } from "@/i18n";
 
 import { css } from "@/style/css";
-import Article from "@/layouts/Article.astro";
-import { vstack } from "@/style/patterns";
+import { vstack, hstack } from "@/style/patterns";
 import { format } from "@/utils/date";
+import { t } from "@/i18n";
+
+import Base from "@/layouts/Base.astro";
+import Navbar from "@/components/Navbar.astro";
+import Tag from "@/components/Tag.astro";
 
 export async function getStaticPaths({ lang = "fr" }: { lang?: string }) {
   const alternateLang = lang === "fr" ? "en" : "fr";
@@ -53,73 +56,136 @@ const enUrl =
   lang === "en" ? Astro.url.pathname : alternateEntry ? alternateLangLink : "/";
 ---
 
-<Article
+<Base
   title={entry.data.title}
   description={entry.data.description}
-  {frUrl}
-  {enUrl}
+  ogType="article"
 >
-  <div
-    class={vstack({
-      my: "14",
-      textAlign: "center",
-      width: "full",
-      gap: 5,
-    })}
-    slot="header"
-  >
-    <h1
-      class={css({
-        textStyle: "h1",
-        textAlign: "center",
-        w: "full",
-      })}
-    >
-      {entry.data.title}
-    </h1>
-    <div
-      class={css({
-        textStyle: "small",
-        fontWeight: "medium",
-        color: "neutral.600",
-      })}
-    >
-      <p>
-        {
-          t("blog:publishedOn", {
-            date: format(entry.data.publishingDate, "PPPP"),
-          })
-        }
+  <Navbar frUrl={frUrl} enUrl={enUrl} />
+  <div class={css({ maxWidth: "800px", mx: "auto", px: "6" })}>
+    <header class={vstack({ gap: "2", alignItems: "flex-start", mb: "10" })}>
+      <h1 class={css({ textStyle: "heading1" })}>
+        {entry.data.title}
+      </h1>
+      <p class={css({ textStyle: "label" })}>
+        {t("blog:publishedOn", { date: format(entry.data.publishingDate) })}
       </p>
       {
-        Boolean(alternateEntry) && (
-          <p>
-            <a
-              class={css({ textDecoration: "underline" })}
-              href={alternateLangLink}
-            >
-              {t("blog:alternateLangLink")}
-            </a>
-          </p>
+        alternateLangLink && (
+          <a
+            class={css({
+              textStyle: "label",
+              textDecoration: "underline",
+              fontWeight: "bold",
+              mb: "6",
+              color: "orange.700",
+
+              _hover: {
+                backgroundColor: "orange.100",
+              },
+            })}
+            href={alternateLangLink}
+          >
+            {t("blog:alternateLangLink")}
+          </a>
         )
       }
-    </div>
+      <p
+        class={css({
+          textStyle: "body",
+          fontWeight: "bold",
+          color: "neutral.600",
+        })}
+      >
+        {entry.data.description}
+      </p>
+      {
+        entry.data.tags.length > 0 && (
+          <ul class={hstack({ flexWrap: "wrap", gap: "4" })}>
+            {entry.data.tags.map((tag) => (
+              <li>
+                <Tag name={tag} />
+              </li>
+            ))}
+          </ul>
+        )
+      }
 
-    <hr class={css({ w: 10 })} />
-    <p
+      <hr
+        class={css({
+          borderColor: "neutral.950",
+          width: "100%",
+          mt: "8",
+        })}
+      />
+    </header>
+    <div
       class={css({
-        textAlign: "center",
-        textStyle: "h6",
-        color: "neutral.600",
-        lg: {
-          maxWidth: "70%",
+        "& h2": { textStyle: "heading2", mb: "10", mt: "16" },
+        "& h3": { textStyle: "heading3", mb: "8", mt: "14" },
+        "& h4": { textStyle: "heading4", mb: "6", mt: "12" },
+        "& p": {
+          textStyle: "body",
+          mb: "5",
+        },
+        "& a": {
+          textDecoration: "underline",
+          color: "orange.700",
+          fontWeight: "bold",
+          _hover: {
+            backgroundColor: "orange.100",
+          },
+        },
+        "& pre": {
+          borderRadius: "md",
+          p: "4",
+          my: "10",
+        },
+        "& img": {
           mx: "auto",
+          my: "10",
+          width: "100%",
+        },
+
+        "& blockquote": {
+          my: "10",
+          py: "6",
+          px: "10",
+          backgroundColor: "neutral.100",
+          borderLeft: "4px solid",
+          borderColor: "neutral.700",
+          borderRightRadius: "md",
+
+          "& p": {
+            margin: "0",
+            fontWeight: "bold",
+          },
+        },
+
+        "& ul, & ol": {
+          my: "10",
+          px: "8",
+          listStyle: "inside disc",
+        },
+
+        "& li": {
+          textStyle: "body",
+        },
+
+        "& p + ul, & p + ol": {
+          mt: "0",
+        },
+
+        "& p code, & li code": {
+          display: "inline-block",
+          backgroundColor: "neutral.200",
+          borderRadius: "md",
+          px: "1",
+          fontWeight: "bold",
         },
       })}
     >
-      {entry.data.description}
-    </p>
+      <Content />
+    </div>
   </div>
-
-  <Content />
-</Article>
+</Base>

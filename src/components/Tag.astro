@@ -1,0 +1,22 @@
+---
+import { css } from "@/style/css";
+
+export interface Props {
+  name: string;
+}
+
+const { name } = Astro.props;
+---
+
+<span
+  class={css({
+    display: "inline-block",
+    fontFamily: "body",
+    fontSize: "12px",
+    p: "2",
+    fontWeight: "bold",
+    bg: "#000000",
+    color: "#fff",
+    borderRadius: "sm",
+  })}>{name}</span
+>

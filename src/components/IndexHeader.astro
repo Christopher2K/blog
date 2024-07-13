@@ -1,0 +1,81 @@
+---
+import { Image } from "astro:assets";
+
+import { t } from "@/i18n";
+import chrisImage from "@/assets/common/chris.jpg";
+import Socials from "@/components/Socials.astro";
+import { css } from "@/style/css";
+import { vstack } from "@/style/patterns";
+
+const headerStyle = css({
+  w: "full",
+  px: "6",
+  mb: "20",
+});
+
+const headerContainerStyle = css({
+  w: "full",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "6",
+});
+
+const headerImageContainerStyle = css({
+  border: "2px solid black",
+  h: "fit-content",
+  w: "fit-content",
+  borderRadius: "md",
+  "& img": {
+    borderRadius: "sm",
+    maxWidth: "300px",
+  },
+});
+
+const headerTextContainerStyle = vstack({
+  gridColumnStart: "span 2",
+  width: "100%;",
+  justifyContent: "flex-start",
+  alignItems: "flex-start",
+  gap: "4",
+});
+
+const headerTitleStyle = css({
+  w: "full",
+  textStyle: "heading1",
+  textAlign: "center",
+});
+
+const headerSubtitleStyle = css({
+  w: "full",
+  textStyle: "heading2",
+  fontWeight: "normal",
+  textAlign: "center",
+});
+
+const headerBodyStyle = css({
+  textStyle: "body",
+  textAlign: "center",
+  mb: "4",
+});
+---
+
+<header class={headerStyle}>
+  <div class={headerContainerStyle}>
+    <div class={headerImageContainerStyle}>
+      <Image src={chrisImage} alt="Christopher's photo" />
+    </div>
+    <div class={headerTextContainerStyle}>
+      <h1 class={headerTitleStyle}>👋 Christopher K.</h1>
+      <p class={headerSubtitleStyle}>LLCoolChris_ 📺</p>
+
+      <p class={headerBodyStyle}>
+        {t("home:bio")}
+      </p>
+      <div class={css({ alignSelf: "center" })}>
+        <Socials />
+      </div>
+    </div>
+  </div>
+</header>

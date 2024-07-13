@@ -2,7 +2,6 @@ import {
   defineConfig,
   defineTextStyles,
   defineGlobalStyles,
-  defineRecipe,
 } from "@pandacss/dev";
 
 const globalCss = defineGlobalStyles({
@@ -13,73 +12,51 @@ const globalCss = defineGlobalStyles({
 });
 
 const textStyles = defineTextStyles({
-  h1: {
+  heading1: {
     value: {
+      fontSize: "2.75rem",
       fontFamily: "title",
-      fontSize: "2.027rem",
+      lineHeight: "140%",
       fontWeight: "bold",
-      lineHeight: "1.6",
+    },
+  },
+  heading2: {
+    value: {
+      fontSize: "2.5rem",
+      fontFamily: "title",
+      lineHeight: "140%",
+      fontWeight: "bold",
+    },
+  },
+  heading3: {
+    value: {
+      fontSize: "2.25rem",
+      fontFamily: "title",
+      lineHeight: "140%",
     },
   },
 
-  h2: {
+  heading4: {
     value: {
+      fontSize: "2rem",
       fontFamily: "title",
-      fontSize: "1.802rem",
-      fontWeight: "bold",
-      lineHeight: "1.6",
-    },
-  },
-
-  h3: {
-    value: {
-      fontFamily: "title",
-      fontSize: "1.602rem",
-      fontWeight: "bold",
-      lineHeight: "1.6",
-    },
-  },
-
-  h4: {
-    value: {
-      fontFamily: "title",
-      fontSize: "1.424rem",
-      fontWeight: "bold",
-      lineHeight: "1.6",
-    },
-  },
-
-  h5: {
-    value: {
-      fontFamily: "title",
-      fontSize: "1.266rem",
-      fontWeight: "bold",
-      lineHeight: "1.6",
-    },
-  },
-
-  h6: {
-    value: {
-      fontFamily: "title",
-      fontSize: "1.125rem",
-      fontWeight: "bold",
-      lineHeight: "1.6",
+      lineHeight: "140%",
     },
   },
 
   body: {
     value: {
-      fontSize: "1rem",
-      fontWeight: "400",
-      lineHeight: "1.6",
+      fontFamily: "body",
+      fontSize: "1.125rem",
+      lineHeight: "150%",
     },
   },
 
-  small: {
+  label: {
     value: {
-      fontSize: "0.9rem",
-      fontWeight: "400",
-      lineHeight: "1.6",
+      fontFamily: "body",
+      fontSize: "0.75rem",
+      lineHeight: "150%",
     },
   },
 });
@@ -102,13 +79,9 @@ export default defineConfig({
       textStyles,
       tokens: {
         sizes: {
-          content: {
-            value: "960px",
-            description: "Content max width",
-          },
-          navWidth: {
-            value: "340px",
-            description: "Navigation bar size",
+          contentWidth: {
+            value: "1200px",
+            description: "Max width of the content",
           },
         },
         fonts: {

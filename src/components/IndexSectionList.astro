@@ -1,0 +1,41 @@
+---
+import { css } from "@/style/css";
+import { vstack } from "@/style/patterns";
+
+export interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+
+const sectionContainerStyle = vstack({
+  w: "full",
+  gap: "10",
+  justifyContent: "flex-start",
+  alignItems: "flex-start",
+  marginBottom: "20",
+  px: "6",
+});
+
+const sectionTitleStyle = css({
+  fontFamily: "title",
+  w: "full",
+  fontSize: "44px",
+  fontWeight: "bold",
+  lineHeight: "140%",
+});
+
+const sectionItemsContainerStyle = css({
+  display: "grid",
+  gridTemplateColumns: "repeat(1, 1fr)",
+  gap: "6",
+});
+---
+
+<section class={sectionContainerStyle}>
+  <h2 class={sectionTitleStyle}>{title}</h2>
+
+  <div class={sectionItemsContainerStyle}>
+    <slot />
+  </div>
+</section>

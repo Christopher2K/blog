@@ -2,39 +2,45 @@
 import { t } from "@/i18n";
 import { css } from "@/style/css";
 import { vstack } from "@/style/patterns";
+
+const footerStyle = css({
+  width: "full",
+  flexDirection: "column",
+  py: 10,
+  gap: 0,
+  justifyContent: "center",
+  alignItems: "center",
+  mx: "auto",
+  px: "6",
+});
+
+const footerHrStyle = css({
+  w: "full",
+  mx: "auto",
+  mb: 10,
+  borderWidth: 0.5,
+  borderRadius: 999,
+  md: { maxWidth: "1/2" },
+});
+
+const footerTextContainerStyle = vstack({
+  w: "full",
+  gap: 10,
+  justifyContent: "center",
+  alignItems: "center",
+});
+
+const footerTextStyle = css({
+  width: "full",
+  textStyle: "small",
+  textAlign: "center",
+});
 ---
 
-<footer
-  class={vstack({
-    width: "full",
-    flexDirection: "column",
-    py: 10,
-    gap: 0,
-    justifyContent: "center",
-    alignItems: "center",
-    mx: "auto",
-  })}
->
-  <hr
-    class={css({
-      w: "full",
-      mb: 10,
-      borderWidth: 0.5,
-      borderRadius: 999,
-      md: { maxWidth: "1/2" },
-
-      lg: { maxWidth: 500 },
-    })}
-  />
-  <div
-    class={vstack({
-      width: "full",
-      gap: 10,
-      justifyContent: "center",
-      alignItems: "center",
-    })}
-  >
-    <p class={css({ width: "full", textStyle: "small", textAlign: "center" })}>
+<footer class={footerStyle}>
+  <hr class={footerHrStyle} />
+  <div class={footerTextContainerStyle}>
+    <p class={footerTextStyle}>
       {t("common:footer.credits")}
     </p>
   </div>

@@ -1,0 +1,74 @@
+---
+import Tag from "@/components/Tag.astro";
+import { format } from "@/utils/date";
+import { css } from "@/style/css";
+import { hstack, vstack } from "@/style/patterns";
+
+export interface Props {
+  title: string;
+  href: string;
+  description: string;
+  tags: string[];
+  date: Date;
+}
+const { title, href, description, tags, date } = Astro.props;
+
+const articleContainerStyle = css({
+  w: "full",
+  p: "5",
+  border: "2px solid black",
+  borderRadius: "sm",
+  m: 0,
+});
+
+const linkStyle = vstack({
+  w: "full",
+  justifyContent: "flex-start",
+  alignItems: "flex-start",
+  gap: "4",
+});
+
+const dateStyle = css({
+  fontFamily: "body",
+  fontWeight: "bold",
+  fontSize: "12px",
+});
+
+const titleStyle = css({
+  fontFamily: "title",
+  fontSize: "26px",
+  lineHeight: "140%",
+});
+
+const descriptionStyle = css({
+  fontFamily: "body",
+  fontSize: "18px",
+  lineHeight: "140%",
+  color: "neutral.600",
+});
+
+const tagListStyle = hstack({
+  flexWrap: "wrap",
+});
+---
+
+<article class={articleContainerStyle}>
+  <a href={href} class={linkStyle}>
+    <span class={dateStyle}>
+      {format(date)}
+    </span>
+    <h3 class={titleStyle}>
+      {title}
+    </h3>
+    <p class={descriptionStyle}>{description}</p>
+    <ul class={tagListStyle}>
+      {
+        tags.map((tag) => (
+          <li>
+            <Tag name={tag} />
+          </li>
+        ))
+      }
+    </ul>
+  </a>
+</article>

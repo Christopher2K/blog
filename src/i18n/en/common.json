@@ -1,16 +1,18 @@
 {
   "nav": {
-    "intro": "I spent the past 8 years in tech as a software engineer, I've been streaming on Twitch for the past 2 years and I've been on Earth for the last 27 years. I might have like, two or three things to share, I think...",
     "home": "Home",
-    "twitch": "Live coding",
-    "lang": "Language"
+    "blog": "Blog",
+    "projects": "Projects",
+    "videos": "Videos",
+    "twitch": "Live coding"
   },
   "footer": {
     "twitter": "My twitter account",
     "linkedin": "My linkedin profile",
     "github": "My github account",
     "twitch": "My twitch channel",
-    "credits": "All rights reserved © Christopher N. Katoyi Kaba - 2023",
+    "youtube": "My youtube channel",
+    "credits": "All rights reserved © Christopher N. Katoyi Kaba - 2024",
     "alternateLangLink": "🇫🇷 Voir le site en français"
   },
   "seo": {
