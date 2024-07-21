@@ -16,7 +16,7 @@ const textStyles = defineTextStyles({
     value: {
       fontSize: "2.75rem",
       fontFamily: "title",
-      lineHeight: "140%",
+      lineHeight: "110%",
       fontWeight: "bold",
     },
   },
@@ -24,7 +24,7 @@ const textStyles = defineTextStyles({
     value: {
       fontSize: "2.5rem",
       fontFamily: "title",
-      lineHeight: "140%",
+      lineHeight: "110%",
       fontWeight: "bold",
     },
   },
@@ -32,7 +32,7 @@ const textStyles = defineTextStyles({
     value: {
       fontSize: "2.25rem",
       fontFamily: "title",
-      lineHeight: "140%",
+      lineHeight: "110%",
     },
   },
 
@@ -40,7 +40,7 @@ const textStyles = defineTextStyles({
     value: {
       fontSize: "2rem",
       fontFamily: "title",
-      lineHeight: "140%",
+      lineHeight: "110%",
     },
   },
 
@@ -48,7 +48,7 @@ const textStyles = defineTextStyles({
     value: {
       fontFamily: "body",
       fontSize: "1.125rem",
-      lineHeight: "150%",
+      lineHeight: "160%",
     },
   },
 
@@ -56,7 +56,7 @@ const textStyles = defineTextStyles({
     value: {
       fontFamily: "body",
       fontSize: "0.75rem",
-      lineHeight: "150%",
+      lineHeight: "160%",
     },
   },
 });

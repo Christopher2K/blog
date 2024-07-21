@@ -42,7 +42,7 @@ const enUrl = lang === "en" ? entry.path : entry?.translation?.path ?? "/";
   <Navbar frUrl={frUrl} enUrl={enUrl} />
   <div class={css({ maxWidth: "800px", mx: "auto", px: "6" })}>
     <header class={vstack({ gap: "2", alignItems: "flex-start", mb: "10" })}>
-      <h1 class={css({ textStyle: "heading1" })}>
+      <h1 class={css({ textStyle: "heading1", textWrap: "balance" })}>
         {entry.data.title}
       </h1>
       <p class={css({ textStyle: "label" })}>
@@ -99,9 +99,27 @@ const enUrl = lang === "en" ? entry.path : entry?.translation?.path ?? "/";
     </header>
     <div
       class={css({
-        "& h2": { textStyle: "heading2", mb: "10", mt: "16" },
-        "& h3": { textStyle: "heading3", mb: "8", mt: "14" },
-        "& h4": { textStyle: "heading4", mb: "6", mt: "12" },
+        "& h2": {
+          textStyle: "heading2",
+          mb: "10",
+          mt: "16",
+          textWrap: "pretty",
+        },
+        "& h3": {
+          textStyle: "heading3",
+          mb: "8",
+          mt: "14",
+          textWrap: "pretty",
+        },
+        "& h4": {
+          textStyle: "heading4",
+          mb: "6",
+          mt: "12",
+          textWrap: "pretty",
+        },
+        "& h2 + h3": {
+          mt: "-6",
+        },
         "& p": {
           textStyle: "body",
           mb: "5",
