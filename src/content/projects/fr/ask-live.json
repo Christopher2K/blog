@@ -1,0 +1,8 @@
+{
+  "name": "Ask Live",
+  "description": "Une webapp qui se connecte au chat Twitch d'un(e) créateur(trice) de contenu afin de récupérer les questions posées et controler l'affichage ou non de ces questions dans un overlay.",
+  "thumbnail": "/projects/project-ask-live.png",
+  "url": "https://asklive.co/fr/",
+  "publishingDate": "2024-02-01",
+  "tech": ["typescript", "solid", "elixir", "phoenix"]
+}

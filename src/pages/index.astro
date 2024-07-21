@@ -2,14 +2,17 @@
 import { t, DEFAULT_LANG } from "@/i18n";
 import Base from "@/layouts/Base.astro";
 import ArticleCard from "@/components/ArticleCard.astro";
+import ProjectCard from "@/components/ProjectCard.astro";
 import Navbar from "@/components/Navbar.astro";
 import IndexHeader from "@/components/IndexHeader.astro";
 import IndexSectionList from "@/components/IndexSectionList.astro";
 
 import { getBlogCollection } from "@/article";
+import { getProjectsCollection } from "@/projects";
 
 const locale = Astro.currentLocale ?? DEFAULT_LANG;
 const blogCollection = await getBlogCollection(locale);
+const projectsCollection = await getProjectsCollection(locale);
 ---
 
 <Base title={t("home:title")} forceUseDefaultOgTitle>
@@ -24,6 +27,18 @@ const blogCollection = await getBlogCollection(locale);
           description={entry.data.description}
           tags={entry.data.tags}
           href={entry.path}
+        />
+      ))
+    }
+  </IndexSectionList>
+  <IndexSectionList title={t("home:projectsSectionTitle")}>
+    {
+      projectsCollection.map((entry) => (
+        <ProjectCard
+          title={entry.data.name}
+          description={entry.data.description}
+          href={entry.data.url}
+          imagePath={entry.data.thumbnail}
         />
       ))
     }

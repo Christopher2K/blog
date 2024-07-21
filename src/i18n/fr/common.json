@@ -22,5 +22,8 @@
     "defaultDescription": "Viens voir les articles de Christopher Katoyi Kaba quant au développement web, au développement indépendant, aux SAAS et à l'organisation.",
     "defaultOgTitle": "Le site où je raconte comment faire du logiciel de qualité",
     "defaultOgImageAlt": "{{ title }}, Photo de Christopher Katoyi Kaba, Ingénieur logiciel vivant à Toronto, dessin à la main d'un clavier splitté"
+  },
+  "projects": {
+    "ctaLabel": "En savoir plus"
   }
 }

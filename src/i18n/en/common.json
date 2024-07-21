@@ -22,5 +22,8 @@
     "defaultDescription": "Come check out Christopher Katoyi Kaba's articles about web development, indie dev, SAAS and project management",
     "defaultOgTitle": "The tech blog where I tell you how to build quality software",
     "defaultOgImageAlt": "{{ title }}, Christopher Katoyi Kaba's photo, Software Engineer living in Toronto, handwring of a split keyboard"
+  },
+  "projects": {
+    "ctaLabel": "Learn more"
   }
 }

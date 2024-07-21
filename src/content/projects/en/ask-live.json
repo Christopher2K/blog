@@ -1,0 +1,8 @@
+{
+  "name": "Ask Live",
+  "description": "A webapp that connects to content creators chat like Twitch, and display whatever question people are asking. It also allow content creators to manage those question and chose what to display on screen, as AskLive offers an overlay ready to use.",
+  "thumbnail": "/projects/project-ask-live.png",
+  "url": "https://asklive.co/en/",
+  "publishingDate": "2024-02-01",
+  "tech": ["typescript", "solid", "elixir", "phoenix"]
+}

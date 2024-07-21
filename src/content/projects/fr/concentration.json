@@ -1,0 +1,8 @@
+{
+  "name": "Concentration",
+  "description": "Une application pomodoro simpliste!",
+  "thumbnail": "/projects/project-concentration.png",
+  "url": "https://concentration.app/fr",
+  "publishingDate": "2023-04-01",
+  "tech": ["react-native", "typescript", "expo"]
+}
