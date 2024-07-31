@@ -1,0 +1,159 @@
+---
+title: "Marché de l'emploi tech: la fête est finie"
+description:
+  J'ai passé du temps à interviewer, je me suis rendu compte de deux trois
+  trucs. C'est la merde.
+tags: [career, tech, interview]
+publishingDate: 2024-07-30
+draft: false
+slug: le-marche-du-travail-est-casse
+---
+
+import { Image } from "astro:assets";
+
+import frontendDevEvolution from "@/assets/job-market-is-broken/frontend-dev-evolution.png";
+import pourquoiThierryHenry from "@/assets/job-market-is-broken/pourquoi-thierry-henry.jpeg";
+
+Ceci n'est pas un ènième article pour se plaindre du marché. Tout le monde sait
+qu'il est particulièrement difficile après le run covid/post-covid, où tout le
+monde avait droit à un taf et lorsque l'on pouvait (dans la tech en tout cas)
+faire la fine bouche. J'ai pris la décision de rechercher activement un nouvel
+emploi aux alentours d'Avril 2024. J'ai trouvé et validé un poste en tant que
+**Señor Software Engineer** en Juillet 2024; tout en ayant bien pris mon temps,
+après une trentaine de candidatures. Je vais raconter mon expérience, mes
+observations, et quelles leçons j'en tire.
+
+## La typologie des postes a changée
+
+J'ai eu la chance de vivre un cycle complet. J'ai connu périodes où on recrutait
+de l'ingénieur logiciel, puis la scission entre backend et frontend, pour être
+maintenant de retour sur du recrutement full-stack... Et ben pas vraiment. Dans
+la catégorie dev frontend, on peut maintenant trouver des spécialisations assez
+particulières. J'ai croisé un bon nombre d'offres intitulées **Design
+engineer**, dont les compétences vont du design graphique, en passant par
+l'expertise UX, jusqu'au développement frontend, sur des technologies classiques
+(React, Vue, Angular). À l'opposé, j'ai également vu un bon nombre de **Product
+engineer** dont le rôle rassemble les missions d'un product owner et d'un dev
+frontend.
+
+<Image
+  src={frontendDevEvolution}
+  alt="Graphique qui montre que le métier de développeur frontend inclus juste le développement, que celui de design engineer inclus du design et du dev, et que le métier de product engineer inclus du produit et du dev"
+/>
+
+Les compétences montrées sur le diagramme ci-dessous ne sont pas 100% étrangères
+au métier de dev frontend. Ce qui change, c'est le fait que la nature des rôles
+qui est clairement assumée aujourd'hui. Les fiches de postes sont claires dans
+les mentions, plus de surprise à l'embauche. Pourquoi? J'imagine que c'est une
+des conséquences directes de la présence des outils d'IA dans le paysage: vu
+qu'on peut passer (en théorie, lol) moins de temps sur le dev, on peut se focus
+sur d'autres aspects. Même constat pour les poste orientés backend, où
+finalement, une compétence frontend (voir system dev) est souvent requise. J'ai
+clairement été challangé sur ces sujets dans ma recherche, beaucoup plus que
+lors de mon dernier changement de poste en 2021.
+
+## La spécialisation n'est plus à la mode
+
+Demande toi à quoi tu t'identifies maintenant. Certain(e)s me diront frontend ou
+backend, d'autres nomeront des outils particuliers, comme **Développeur
+Angular**. Je me suis moi-même enfermé dans ce rôle de die-hard frontend (mon
+dernier poste backend date de 2020), et je constate qu'en 2024, ce n'est plus
+**assez** pour convaincre une équipe de te recruter. Lors de mes entretiens,
+j'ai du justifier d'une vision globale de la stack, du backend, au frontend en
+passant par l'infrastructure. Il y a un retour (forcé?) aux fondamentaux, et tu
+le vois par rapport au contenu des entretiens.
+
+Ces changements de critères sont assez surprenants parce que j'ai cette
+impression que les organisations sont toujours bloquées la spécialisation des
+profils d'ingénieurs. On peut alors se demander **pourquoi** cette
+transformation?
+
+<Image
+  src={pourquoiThierryHenry}
+  alt="Thierry Henry quand il dit 'J\'aimerais bien savoir pourquoi'"
+/>
+
+## Qu'est ce qu'il se passe?
+
+Je vais exposer mes théories et je t'invite à me dire, si je dis de la merde (je
+vais pas te répondre).
+
+> Les boîtes ne savent plus quoi recruter, et donc s'alignent sur des modèles
+> qui ne partagent pas leur réalité.
+
+Le monde de la tech est chamboulé par les nouveaux outils, par les rondes de
+licenciement, et plus personne ne sait comment se comporter. J'ai vecu des
+situations où la boite à laquelle je postulais, changeait ses critères pendant 3
+semaines. Remote, puis hybride, puis re-remote, puis on-site; full-stack, puis
+frontend, puis non, finalement full-stack. Il y a ce sentiment d'instabilité qui
+se répercute à mort dans l'expérience de candidat. On a de plus en plus affaire
+à des gens et des équipes qui ne garantissent pas un lendemain au process que tu
+enclenches.
+
+> Les processus de recrutement sont calqués sur ceux des FANGs, sans raisons
+> valables.
+
+J'ai postulé à des positions pour ainsi dire hyper nulles, où la liste des
+pré-requis me faisait souffler du nez. Mais, un travail reste un travail. En
+savoir plus sur le job pouvait me donner envie de faire le job, donc je ne
+négligeais rien. Ma surprise, quand je me rends compte que le job "facile" me
+demandait 7 rondes d'entretiens avec:
+
+- un round technique spécifique,
+- un system design géneraliste,
+- et un Leetcode medium-hard.
+
+J'ai une fois demandé au culot pourquoi il y avait autant d'étapes. On m'a
+répondu: **parce que les meilleures boites tech recrutent comme ça**. C'est
+super triste. On a collectivement arrêté de refléchir et on applique, par
+mimétisme, ce que d'autres ont inventé pour eux. Ca rejoint un peu l'idée au
+dessus, sur le fait qu'on ne sait plus quoi recruter.
+
+> On est sur un marché employeur, donc les boites recherchent les "meilleurs"
+> profils...
+
+Et tout ce boucan pour que ces meilleurs profils finissent par s'ennuyer. Parce
+que oui, si le day-2-day work se résume à se battre contre le PO sur JIRA et
+faire des `useState()`, certain(e)s vont trouver ça hyper barbant. Qu'est ce qui
+est arrivé à la volonté d'utiliser la meilleure ressource pour une situation
+donnée? Dans un monde idéal, on pourrait se servir de ces postes non-critiques,
+pour faire montrer en compétences des devs moins expériementés. Mais bon,
+ils/elles ne passent pas le LeetCode donc non ✋🥸🤚.
+
+> Le marché est saturé.
+
+Pas nouveau, mais avec les rondes de licenciement, tu peux VRAIEMENT voir la
+concurrence. Plus de talents disponibles, plus dur de se démarquer, donc les
+boites vont pousser pour que tu prennes plus de responsabilités. C'est un peu
+genre une correction de marché.
+
+Toutes ces raisons font que la recherche d'emploi est extrêmement difficile pour
+les nouveaux arrivants, assez chronophage pour les profils plus seniors, et
+quasiement impossible pour les gens qui sont restés très longtemps en poste.
+
+## Comment on s'en sort?
+
+Les choses peuvent se calmer et s'équilibrer avec le temps. Par contre, si tu es
+dans l'urgence et ok avec cette idée d'hybridation, tu vas devoir sortir de ta
+zone de confort. Une compétence adjacente va te permettre de faire la différence
+par rapport à tes pairs. Produit, marketing (RIP), design, backend, frontend,
+infrastructure, cloud, machine learning, data & analytics etc... Prends un sujet
+supplémentaire et passe un peu du temps dessus, et devient ce putain de mouton à
+5 pattes (ou licorne comme ils disent).
+
+Si t'es en poste, commence à te documenter auprès des gens qui sont déjà chauds
+sur ces sujets. Si tu es au chomage et en recherche, montre un intéret sur ton
+CV, et pendant les entretiens.
+
+Sur le long terme, le marché m'aura appris que rester en mouvement est hyper
+important. Le stagnation et le confort vont jouer contre toi à un moment ou un
+autre. Les entreprises n'hésiteront pas à te laisser tomber, donc pense toujours
+à avoir un coup d'avance en prenant régulièrement la température à l'extérieur.
+Parle à tes collègues, à tes pairs, à tes amis. Demande leur des informations
+sur ce qu'ils/elles remarquent, comment ils/elles voient l'avenir, quelles sont
+leur difficultés du moment, etc... Ton réseau pro est hyper important quand le
+marché est volatile à ce point, ne le néglige pas.
+
+En conclusion, hyper curieux d'entendre vos avis, si vos expériences sont
+similaires et en quels points. On s'attrape sur
+[Twitter](https://twitter.com/llcoolchris_) pour en parler!
