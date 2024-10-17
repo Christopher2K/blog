@@ -1,0 +1,152 @@
+---
+title: L'IA après 3 ans, en tant que développeur
+description:
+  J'ai assez eu de temps pour analyser la situation, et me forger ma propre
+  opinion sur l'ère de l'IA. Parlons-en
+tags: [tooling, ai, career, tools]
+publishingDate: 2024-10-16
+draft: false
+slug: ia-en-tant-que-developpeur
+---
+
+import { css } from "@/style/css";
+
+J'écris cet article en octobre 2024. Pas super sûr de mes chiffres, mais on est
+à environ 2/3 ans après l'événement que l'on qualifiera dans les livres
+d'histoire comme **La Grande Chute** : quand l'IA générative est devenue
+mainstream.
+
+**JE RIGOLE !!!!!!!** ... mais à moitié. On peut dire que ça fut le début de
+quelque chose de vachement différent. Les crypto-bros sont devenus des AI bros.
+Des diplômés de fac en LEA sont devenus des Expert(e)s IA. Presque tous les
+indie-hackers se sont lancés dans le concours de qui fera le GPT wrapper le plus
+viral. Les entreprises les plus lentes et les plus corporate ont mobilisé tout
+leur personnel -
+[Happiness Manager](https://ca.indeed.com/career-advice/finding-a-job/chief-happiness-officer)
+compris, afin de savoir comment implémenter l'IA dans leur produit. En bref,
+tout le monde a pété un plomb, pour le meilleur et pour le pire.
+
+Je vais rapidement parler de mon ressenti en tant que dev, de mon expérience, de
+ce que j'en tire et comment je vois le futur.
+
+## Le déni
+
+> Le code c'est fini, tout le monde va pouvoir faire n'importe quel produit en
+> utilisant le langage naturel ! Au chômage les développeurs !
+
+_signé un anon sur Twitter, sûrement un trou du c\*l_
+
+Des phrases comme ça, t'en voyais des centaines par jour. Et au bout d'un moment
+ça te pique l'ego. Forcément, voir des ahuris bastardiser les skills que tu as
+galéré à affiner peut provoquer un genre de sentiment de colère en toi. Je
+reconnais que ça a été le cas pour moi à un moment donné. J'étais pas anti-AI,
+mais je voulais juste pas essayer le truc. Par peur d'être déçu ? Pour prouver
+que j'avais encore le truc ? Sah, j'en sais rien.
+
+J'ai ce truc où je m'interdis de critiquer un outil, sans avoir un MINIMUM testé
+la chose avant. Mais là, j'étais dans une situation où je n'avais pas testé que
+ce soit ChatGPT, ou même Copilot. J'avais Z-E-R-O balle contre le truc, juste
+mon seum (et des top-tweets). Le truc c'est que ni l'un ni l'autre ne peut me
+garantir la sécurité de l'emploi donc bon.
+
+Quand c'est devenu insupportable, que le
+[FOMO](https://dictionary.cambridge.org/dictionary/english/fomo) a pris la place
+du seum, j'ai pris un abonnement OpenAI et un abonnement Copilot, dans un esprit
+de chercher la MOINDRE chose à critiquer ; donc pas dans une démarche
+impartiale. On est mi-2022 et je touche pour la (première ?) fois aux outils
+d'IA générative.
+
+## La déception
+
+Le titre spoile un peu le contenu ensuite mais, cette première tentative s'est
+montrée extrêmement décevante. Le `prompt engineering` ? Naze. On m'a dit que je
+le faisais mal, que je ne donnais pas assez de détails, que je n'utilisais pas
+ces techniques arcaniques pour faire plier la MACHINE. J'te garantis que j'ai
+tout essayé. Je suis venu avec l'idée que la moindre chose pouvait être inférée
+par les LLM, que j'avais juste à formuler mes demandes correctement. J'ai
+rencontré **deux problèmes majeurs**.
+
+> Pour arriver à un résultat satisfaisant, je devais expliquer avec des détails
+> super précis ce que je voulais faire.
+
+Le truc c'est que mon cerveau ne marche pas comme ça. Je pars d'une idée
+globale, je commence à bosser (coder) un squelette, et plus j'avance, plus la
+chose se précise. L'exercice avec le prompting est de saisir son propre besoin
+fin dès le départ. J'en suis incapable. Tu peux me dire "ouais mais Chris, tu
+peux itérer sur tes prompts précédents". Et bah mon pote, ça nous mène au
+deuxième problème.
+
+> C'est lent.
+
+Le gain de productivité attendu n'était pas là, en tout cas pour moi. La boucle
+est devenue :
+
+1. Prompt,
+2. Attente du résultat,
+3. Copie-colle,
+4. Test,
+5. Prompt d'affinement,
+6. Revenir à l'étape #3...
+
+...jusqu'au résultat attendu, c'était juste d'une extrême lenteur. À ce point,
+j'étais frustré de ne pas voir ce bump incroyable dont tout le monde parlait.
+C'est ainsi que j'ai réalisé un truc :
+
+**Je n'étais peut-être pas la bonne cible pour ce genre d'usage !!!!!!!!**.
+
+Je prenais des informations et calquais des attentes venant de gens qui
+n'avaient peut-être pas les mêmes problèmes que les miens. En écrivant c'est un
+sentiment hyper toxique mdr, en mode "Ah bah c'est pas moi le problème, ce sont
+les autres qui sont fous.". Bah écoute, j'ai rejoint le livestream d'une
+personne qui s'auto-proclamait développeur devenu addict au prompt-engineering,
+et j'ai ainsi compris que c'était pas pour moi. Mes habitudes et ma manière de
+build étaient différentes de la personne que je regardais à l'écran. Après tout,
+je suis construit différemment...
+
+## AI redemption arc ? Presque
+
+Vient ensuite mon arc `Github Copilot`. Ben figure-toi que j'ai pensé à ce
+moment avoir trouvé le parfait compromis pour enfin être un dev augmenté par
+l'IA. Les suggestions étaient ok tier, le bruit généré par les mauvaises
+suggestions était à peine supportable, mais franchement, c'était juste assez
+pour voir l'outil comme un LSP glorifié, avec un peu plus de contexte que
+l'auto-complete classique.
+
+Jusqu'au jour où j'ai désactivé Copilot... J'ai réalisé que j'étais plus
+"rapide". Je me suis rendu compte d'un truc : Copilot m'avait habitué à attendre
+la suggestion avant de coder. J'avais perdu ce "flow state", où je pouvais
+balancer code sur code pendant 2 heures et avoir un résultat génial. J'étais
+DÉ-VAS-TÉ. Dans le but de fit dans la narration de "l'IA, c'est génial", je me
+suis rendu artificiellement dépendant à l'outil. Copilot était finalement lent,
+mais une lenteur différente (you wouldn't understand...).
+
+## AI redemption arc
+
+Persuadé que j'étais proche d'un truc avec Copilot, j'ai retenté l'aventure AI
+code completion avec [Supermaven](https://supermaven.com/). La promesse ? Plus
+gros contexte, beaucoup plus rapide et de meilleures suggestions. Promesse
+tenue. Je l'utilise en daily driver aujourd'hui et il match totalement avec ma
+vélocité et mes habitudes de code. Il est meilleur en JS qu'en Elixir, mais je
+suis globalement satisfait du résultat.
+
+Et c'est là que j'ai atteint un stade de maturité vis-à-vis du domaine et de ses
+applications dans mon métier.
+
+On a toujours eu plusieurs manières de build. Code, no-code, low-code. L'IA
+vient juste s'ajouter à cette pile d'outils et c'est pas quelque chose qu'il
+faut ignorer. Il n'y a jamais et il n'y aura JAMAIS eu une seule et unique
+méthode de dev. Il y a autant de chemins que de personnes et toutes méthodes
+apportent leur lot d'avantages et d'inconvénients. C'est le constat de base. Les
+gens qui ont un intérêt à te vendre leurs outils futuristiques vont forcément
+tirer la couverture de leur côté. Il faut garder la tête froide vis-à-vis de ces
+commerciaux et réellement se questionner par rapport à ses propres usages, ses
+propres intentions et surtout sur la manière dont on se projette dans le futur.
+La vélocité n'est pas la seule métrique dans le développement logiciel.
+
+En bref, notre métier ne se résume pas non plus au code. On a la maîtrise de la
+chose la plus importante : le contexte. Est-ce que je suis déçu ? Peut-être.
+Mais après avoir mis mon pied dedans, mon hostilité a disparu, et ce simple fait
+parle de lui-même.
+
+Bon en relisant, je me rends compte que je ne dis pas grand-chose ici, mais je
+poste quand même, **#content** **#créateurDeContenu**.
