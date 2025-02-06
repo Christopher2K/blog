@@ -114,10 +114,8 @@ const enUrl = lang === "en" ? entry.path : entry?.translation?.path ?? "/";
             backgroundColor: "orange.100",
           },
         },
-        "& pre": {
-          borderRadius: "md",
-          p: "4",
-          my: "10",
+        "& .expressive-code": {
+          mb: "5",
         },
         "& img": {
           mx: "auto",
@@ -159,7 +157,15 @@ const enUrl = lang === "en" ? entry.path : entry?.translation?.path ?? "/";
           backgroundColor: "neutral.200",
           borderRadius: "md",
           px: "1",
-          fontWeight: "bold",
+          fontWeight: "600",
+          fontFamily: "monospace",
+        },
+
+        "& div.center": {
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
         },
       })}
     >
