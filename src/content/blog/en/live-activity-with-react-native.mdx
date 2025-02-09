@@ -443,8 +443,7 @@ export type IsLiveActivityRunningFn = () => boolean;
 ```
 
 This represents the contract our module has to follow on the native side. Open
-`modules/activity-controller/src/ActivityControllerModule.ts` and replace the
-content with the following:
+`ActivityControllerModule.ts` and replace the content with the following:
 
 ```ts title='modules/activity-controller/src/ActivityControllerModule.ts'
 import { requireNativeModule } from "expo";
