@@ -1,20 +1,30 @@
 ---
 import { css } from "@/style/css";
-import { vstack } from "@/style/patterns";
+import { hstack, vstack } from "@/style/patterns";
 
 export interface Props {
   title: string;
+  count: number;
 }
 
-const { title } = Astro.props;
+const { title, count } = Astro.props;
 
 const sectionContainerStyle = vstack({
   w: "full",
-  gap: "6",
   justifyContent: "flex-start",
   alignItems: "flex-start",
   marginBottom: "20",
   px: "6",
+});
+
+const sectionHeaderStyle = hstack({
+  w: "full",
+  justifyContent: "space-between",
+  alignItems: "flex-end",
+  px: "2",
+  pb: "4",
+  borderBottom: "1px solid",
+  borderColor: "borderStrong",
 });
 
 const sectionTitleStyle = css({
@@ -22,21 +32,24 @@ const sectionTitleStyle = css({
   color: "ink",
 });
 
-const sectionItemsContainerStyle = css({
-  display: "grid",
-  gridTemplateColumns: "repeat(1, 1fr)",
-  gap: "6",
-  w: "100%",
-  md: {
-    gridTemplateColumns: "repeat(2, 1fr)",
-  },
+const sectionCountStyle = css({
+  textStyle: "label",
+  color: "inkMuted",
+});
+
+const sectionItemsContainerStyle = vstack({
+  w: "full",
+  gap: "0",
 });
 ---
 
 <section class={sectionContainerStyle}>
-  <h2 class={sectionTitleStyle}>{title}</h2>
-
-  <div class={sectionItemsContainerStyle}>
-    <slot />
+  <div class={sectionHeaderStyle}>
+    <h2 class={sectionTitleStyle}>{title}</h2>
+    <span class={sectionCountStyle}>{String(count).padStart(2, "0")}</span>
   </div>
+
+  <ul class={sectionItemsContainerStyle}>
+    <slot />
+  </ul>
 </section>

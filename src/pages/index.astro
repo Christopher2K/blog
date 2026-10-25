@@ -1,8 +1,8 @@
 ---
 import { t, DEFAULT_LANG } from "@/i18n";
 import Base from "@/layouts/Base.astro";
-import ArticleCard from "@/components/ArticleCard.astro";
-import ProjectCard from "@/components/ProjectCard.astro";
+import ArticleRow from "@/components/ArticleRow.astro";
+import ProjectRow from "@/components/ProjectRow.astro";
 import Navbar from "@/components/Navbar.astro";
 import IndexHeader from "@/components/IndexHeader.astro";
 import IndexSectionList from "@/components/IndexSectionList.astro";
@@ -18,29 +18,30 @@ const projectsCollection = await getProjectsCollection(locale);
 <Base title={t("home:title")} forceUseDefaultOgTitle>
   <Navbar />
   <IndexHeader />
-  <IndexSectionList title={t("home:blogSectionTitle")}>
-    {
-      blogCollection.map((entry) => (
-        <ArticleCard
-          title={entry.data.title}
-          date={entry.data.publishingDate}
-          description={entry.data.description}
-          tags={entry.data.tags}
-          href={entry.path}
-        />
-      ))
-    }
+  <IndexSectionList
+    title={t("home:blogSectionTitle")}
+    count={blogCollection.length}
+  >
+    {blogCollection.map((entry) => (
+      <ArticleRow
+        title={entry.data.title}
+        date={entry.data.publishingDate}
+        tags={entry.data.tags}
+        href={entry.path}
+      />
+    ))}
   </IndexSectionList>
-  <IndexSectionList title={t("home:projectsSectionTitle")}>
-    {
-      projectsCollection.map((entry) => (
-        <ProjectCard
-          title={entry.data.name}
-          description={entry.data.description}
-          href={entry.data.url}
-          imagePath={entry.data.thumbnail}
-        />
-      ))
-    }
+  <IndexSectionList
+    title={t("home:projectsSectionTitle")}
+    count={projectsCollection.length}
+  >
+    {projectsCollection.map((entry) => (
+      <ProjectRow
+        title={entry.data.name}
+        tech={entry.data.tech}
+        date={entry.data.publishingDate}
+        href={entry.data.url}
+      />
+    ))}
   </IndexSectionList>
 </Base>
