@@ -15,5 +15,13 @@ export function format(date: Date | number, pattern: string = "PPP") {
       break;
   }
 
-  return fnsFormat(date, pattern, { locale });
+  // Content dates are date-only values parsed as UTC midnight. Re-interpret
+  // them as local midnight so the calendar day renders correctly in any
+  // timezone (otherwise they shift to the previous day west of UTC).
+  const localDate =
+    date instanceof Date
+      ? new Date(date.getTime() + date.getTimezoneOffset() * 60_000)
+      : date;
+
+  return fnsFormat(localDate, pattern, { locale });
 }
