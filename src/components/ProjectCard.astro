@@ -6,14 +6,24 @@ import { t } from "@/i18n";
 import { css } from "@/style/css";
 import { vstack } from "@/style/patterns";
 
-const rootStyle = vstack({
-  width: "100%",
-  justifyContent: "flex-start",
-  alignItems: "flex-start",
-  gap: "4",
-  p: "4",
-  border: "2px solid black",
-  borderRadius: "sm",
+const rootStyle = css({
+  w: "full",
+  h: "100%",
+  display: "flex",
+  flexDirection: "column",
+  overflow: "hidden",
+  bg: "surface",
+  border: "1px solid",
+  borderColor: "border",
+  borderRadius: "card",
+  boxShadow: "card",
+  transition:
+    "transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease",
+  _hover: {
+    transform: "translateY(-2px)",
+    borderColor: "borderStrong",
+    boxShadow: "cardHover",
+  },
 });
 
 const headerStyle = css({
@@ -24,46 +34,51 @@ const imageStyle = css({
   width: "100%",
   height: "auto",
   aspectRatio: "16 / 9",
-  borderRadius: "sm",
+  objectFit: "cover",
 });
 
 const textContainerStyle = vstack({
   width: "100%",
   justifyContent: "flex-start",
   alignItems: "flex-start",
-  gap: "4",
+  gap: "3",
+  p: "6",
+  pb: "4",
 });
 
 const titleStyle = css({
   textStyle: "heading4",
+  color: "ink",
 });
 
 const descriptionStyle = css({
   textStyle: "body",
-  color: "neutral.600",
+  color: "inkMuted",
 });
 
 const footerStyle = vstack({
   width: "100%",
   flexGrow: "1",
-  height: "fit-content",
   justifyContent: "flex-end",
   alignItems: "flex-start",
+  px: "6",
+  pb: "6",
 });
 
 const footerLinkStyle = css({
-  display: "inline-block",
+  display: "inline-flex",
+  alignItems: "center",
   textStyle: "body",
   fontWeight: "bold",
-  backgroundColor: "neutral.900",
-  borderRadius: "sm",
-  color: "neutral.100",
+  backgroundColor: "accent",
+  borderRadius: "pill",
+  color: "onAccent",
   textAlign: "center",
-  px: "4",
-  py: "3",
+  px: "5",
+  py: "2",
+  transition: "background-color 0.15s ease",
   _hover: {
-    cursor: "pointer",
-    backgroundColor: "neutral.800",
+    backgroundColor: "accentHover",
   },
 });
 
@@ -88,15 +103,13 @@ const expandedPath = "../assets" + imagePath;
   </header>
 
   <div class={textContainerStyle}>
-    <h3 class={titleStyle}>
-      {title}
-    </h3>
-    <p class={descriptionStyle}>
-      {description}
-    </p>
+    <h3 class={titleStyle}>{title}</h3>
+    <p class={descriptionStyle}>{description}</p>
   </div>
 
   <footer class={footerStyle}>
-    <a class={footerLinkStyle} href={href}>{t("common:projects.ctaLabel")}</a>
+    <a class={footerLinkStyle} href={href}>
+      {t("common:projects.ctaLabel")}
+    </a>
   </footer>
 </article>

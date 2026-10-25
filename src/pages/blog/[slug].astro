@@ -42,9 +42,11 @@ const enUrl = lang === "en" ? entry.path : (entry?.translation?.path ?? "/");
 >
   <Navbar frUrl={frUrl} enUrl={enUrl} />
   <div class={css({ maxWidth: "800px", mx: "auto", px: "6" })}>
-    <header class={vstack({ gap: "2", alignItems: "flex-start", mb: "10" })}>
-      <h1 class={css({ textStyle: "heading1" })}>{entry.data.title}</h1>
-      <p class={css({ textStyle: "label" })}>
+    <header class={vstack({ gap: "3", alignItems: "flex-start", mb: "10" })}>
+      <h1 class={css({ textStyle: "heading1", color: "ink" })}>
+        {entry.data.title}
+      </h1>
+      <p class={css({ textStyle: "label", color: "accentHover" })}>
         {t("blog:publishedOn", { date: format(entry.data.publishingDate) })}
       </p>
       {entry.translation && (
@@ -52,12 +54,13 @@ const enUrl = lang === "en" ? entry.path : (entry?.translation?.path ?? "/");
           class={css({
             textStyle: "label",
             textDecoration: "underline",
-            fontWeight: "bold",
-            mb: "6",
-            color: "orange.700",
-
+            textUnderlineOffset: "4px",
+            color: "accentHover",
+            mb: "4",
+            transition: "background-color 0.15s ease, color 0.15s ease",
             _hover: {
-              backgroundColor: "orange.100",
+              color: "ink",
+              backgroundColor: "accentSoft",
             },
           })}
           href={entry.translation.path}
@@ -69,13 +72,13 @@ const enUrl = lang === "en" ? entry.path : (entry?.translation?.path ?? "/");
         class={css({
           textStyle: "body",
           fontWeight: "bold",
-          color: "neutral.600",
+          color: "inkMuted",
         })}
       >
         {entry.data.description}
       </p>
       {entry.data.tags.length > 0 && (
-        <ul class={hstack({ flexWrap: "wrap", gap: "4" })}>
+        <ul class={hstack({ flexWrap: "wrap", gap: "2" })}>
           {entry.data.tags.map((tag) => (
             <li>
               <Tag name={tag} />
@@ -86,27 +89,46 @@ const enUrl = lang === "en" ? entry.path : (entry?.translation?.path ?? "/");
 
       <hr
         class={css({
-          borderColor: "neutral.950",
+          borderColor: "border",
           width: "100%",
-          mt: "8",
+          mt: "6",
         })}
       />
     </header>
     <div
       class={css({
-        "& h2": { textStyle: "heading2", mb: "10", mt: "16" },
-        "& h3": { textStyle: "heading3", mb: "8", mt: "14" },
-        "& h4": { textStyle: "heading4", mb: "6", mt: "12" },
+        "& h2": {
+          textStyle: "heading2",
+          color: "ink",
+          mb: "6",
+          mt: "14",
+        },
+        "& h3": {
+          textStyle: "heading3",
+          color: "ink",
+          mb: "4",
+          mt: "12",
+        },
+        "& h4": {
+          textStyle: "heading4",
+          color: "ink",
+          mb: "4",
+          mt: "10",
+        },
         "& p": {
           textStyle: "body",
+          color: "ink",
           mb: "5",
         },
         "& a": {
           textDecoration: "underline",
-          color: "orange.700",
+          textUnderlineOffset: "4px",
+          color: "accentHover",
           fontWeight: "bold",
+          transition: "background-color 0.15s ease, color 0.15s ease",
           _hover: {
-            backgroundColor: "orange.100",
+            color: "ink",
+            backgroundColor: "accentSoft",
           },
         },
         "& .expressive-code": {
@@ -116,31 +138,38 @@ const enUrl = lang === "en" ? entry.path : (entry?.translation?.path ?? "/");
           mx: "auto",
           my: "10",
           width: "100%",
+          borderRadius: "card",
         },
 
         "& blockquote": {
-          my: "10",
-          py: "6",
-          px: "10",
-          backgroundColor: "neutral.100",
-          borderLeft: "4px solid",
-          borderColor: "neutral.700",
-          borderRightRadius: "md",
+          my: "8",
+          py: "5",
+          px: "6",
+          backgroundColor: "surfaceAlt",
+          borderLeftWidth: "4px",
+          borderLeftStyle: "solid",
+          borderLeftColor: "accent",
+          borderRadius: "card",
+          borderTopLeftRadius: "0",
+          borderBottomLeftRadius: "0",
 
           "& p": {
             margin: "0",
             fontWeight: "bold",
+            color: "ink",
           },
         },
 
         "& ul, & ol": {
-          my: "10",
-          px: "8",
+          my: "8",
+          px: "6",
           listStyle: "inside disc",
         },
 
         "& li": {
           textStyle: "body",
+          color: "ink",
+          mb: "2",
         },
 
         "& p + ul, & p + ol": {
@@ -149,11 +178,12 @@ const enUrl = lang === "en" ? entry.path : (entry?.translation?.path ?? "/");
 
         "& p code, & li code": {
           display: "inline-block",
-          backgroundColor: "neutral.200",
-          borderRadius: "md",
-          px: "1",
+          backgroundColor: "codeBg",
+          color: "tagText",
+          borderRadius: "6px",
+          px: "2",
           fontWeight: "600",
-          fontFamily: "monospace",
+          fontFamily: "body",
         },
 
         "& div.center": {

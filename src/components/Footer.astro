@@ -7,45 +7,51 @@ import { vstack } from "@/style/patterns";
 
 const footerStyle = css({
   width: "full",
+  display: "flex",
   flexDirection: "column",
-  py: 10,
-  gap: 0,
-  justifyContent: "center",
   alignItems: "center",
-  mx: "auto",
+  justifyContent: "center",
+  gap: "5",
+  py: "10",
   px: "6",
+  mx: "auto",
 });
 
 const footerHrStyle = css({
-  w: "full",
-  mx: "auto",
-  mb: 10,
-  borderWidth: 0.5,
-  borderRadius: 999,
-  md: { maxWidth: "1/2" },
+  width: "full",
+  maxWidth: "contentWidth",
+  borderWidth: "0",
+  borderTopWidth: "1px",
+  borderTopStyle: "solid",
+  borderTopColor: "border",
+  mb: "2",
 });
 
 const footerTextContainerStyle = vstack({
   w: "full",
-  gap: "5",
+  gap: "3",
   justifyContent: "center",
   alignItems: "center",
-  textStyle: "small",
 });
 
 const footerTextStyle = css({
-  width: "full",
   textStyle: "small",
+  color: "inkMuted",
   textAlign: "center",
 });
 
 const footerLinkStyle = css({
   display: "inline-flex",
+  alignItems: "center",
   gap: "2",
+  textStyle: "small",
   fontWeight: "bold",
+  color: "accentHover",
   textDecoration: "underline",
+  textUnderlineOffset: "4px",
+  transition: "color 0.15s ease",
   _hover: {
-    backgroundColor: "orange.100",
+    color: "ink",
   },
 });
 ---
@@ -53,9 +59,7 @@ const footerLinkStyle = css({
 <footer class={footerStyle}>
   <hr class={footerHrStyle} />
   <div class={footerTextContainerStyle}>
-    <p class={footerTextStyle}>
-      {t("common:footer.credits")}
-    </p>
+    <p class={footerTextStyle}>{t("common:footer.credits")}</p>
     <a href={l("/rss.xml")} class={footerLinkStyle}>
       <RssIcon />
       {t("common:footer.rss")}

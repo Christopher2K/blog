@@ -7,7 +7,8 @@ import Footer from "@/components/Footer.astro";
 import { css } from "@/style/css";
 
 const mainStyle = css({
-  py: "10",
+  pt: "0",
+  pb: "10",
   width: "100%",
   maxWidth: "contentWidth",
   mx: "auto",
@@ -63,10 +64,12 @@ const { title, description, forceUseDefaultOgTitle } = Astro.props;
       rel="alternate"
       type="application/rss+xml"
       title={t("rss:title")}
-      href={new URL(
-        l("/rss.xml", { targetLocale: Astro.currentLocale }),
-        Astro.site,
-      )}
+      href={
+        new URL(
+          l("/rss.xml", { targetLocale: Astro.currentLocale }),
+          Astro.site,
+        )
+      }
     />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
@@ -74,7 +77,8 @@ const { title, description, forceUseDefaultOgTitle } = Astro.props;
     <script
       defer
       data-domain="christopher.engineering"
-      src="https://analytics.coolsrv.dev/js/script.js"></script>
+      src="https://analytics.coolsrv.dev/js/script.js"
+    ></script>
   </head>
 
   <body>

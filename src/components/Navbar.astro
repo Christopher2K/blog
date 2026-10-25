@@ -5,54 +5,92 @@ import { SUPPORTED_LANG } from "@/i18n";
 import { t, l } from "@/i18n";
 import coolNerdIconImage from "@/assets/common/cool-nerd-icon.png";
 import { css } from "@/style/css";
-import { hstack, stack } from "@/style/patterns";
+import { hstack } from "@/style/patterns";
 import { youtube, twitch } from "@/utils/link";
 import { RssIcon } from "lucide-solid";
 
-const navStyle = stack({
-  flexDirection: "column",
-  justifyContent: "flex-start",
+const navStyle = css({
+  display: "flex",
+  flexDirection: "row",
   alignItems: "center",
-  w: "fit-content",
-  px: "4",
-  py: "3",
+  justifyContent: "space-between",
+  gap: "4",
+  flexWrap: "wrap",
+  w: "100%",
+  maxWidth: "contentWidth",
   mx: "auto",
-  mb: "10",
+  px: "6",
+  py: "5",
 });
 
 const navHomeLinkStyle = css({
-  w: "fit-content",
+  display: "inline-flex",
+  alignItems: "center",
+  borderRadius: "pill",
+});
+
+const navRightStyle = hstack({
+  gap: "4",
+  flexWrap: "wrap",
+  justifyContent: "flex-end",
 });
 
 const navUlStyle = hstack({
-  justifyContent: "center",
-  columnGap: "5",
+  gap: "1",
   flexWrap: "wrap",
 });
 
 const navLiStyle = css({
+  display: "inline-flex",
+  alignItems: "center",
   textStyle: "body",
   fontWeight: "bold",
-  height: "fit-content",
-  width: "fit-content",
+  color: "inkMuted",
+  px: "3",
+  py: "2",
+  borderRadius: "pill",
+  transition: "background-color 0.15s ease, color 0.15s ease",
   _hover: {
-    backgroundColor: "orange.100",
-    "& svg": {
-      backgroundColor: "orange.100",
-    },
+    color: "ink",
+    backgroundColor: "accentSoft",
+  },
+});
+
+const navIconStyle = css({
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  color: "inkMuted",
+  px: "2.5",
+  py: "2",
+  borderRadius: "pill",
+  transition: "background-color 0.15s ease, color 0.15s ease",
+  _hover: {
+    color: "ink",
+    backgroundColor: "accentSoft",
+  },
+});
+
+const navLangStyle = hstack({
+  gap: "1",
+});
+
+const langLinkStyle = css({
+  display: "inline-flex",
+  alignItems: "center",
+  px: "2",
+  py: "1",
+  borderRadius: "pill",
+  transition: "background-color 0.15s ease",
+  _hover: {
+    backgroundColor: "accentSoft",
   },
 });
 
 const headerImage = css({
-  width: "32px",
-  height: "32px",
-});
-
-const navLangStyle = hstack({
-  gap: "10px",
-  "& > button": {
-    cursor: "pointer",
-  },
+  width: "40px",
+  height: "40px",
+  borderRadius: "pill",
 });
 
 const path = Astro.url.pathname
@@ -69,29 +107,43 @@ const { frUrl = path, enUrl = `/en${path}` } = Astro.props;
 ---
 
 <nav class={navStyle}>
-  <a href={l("/")} class={navHomeLinkStyle}>
+  <a href={l("/")} class={navHomeLinkStyle} aria-label={t("common:nav.home")}>
     <Image class={headerImage} src={coolNerdIconImage} alt="Cool Nerd Icon" />
   </a>
-  <ul class={navUlStyle}>
-    <li><a href={l("/")} class={navLiStyle}>{t("common:nav.home")}</a></li>
-    <!-- <li><a href={l("/blog")} class={navLiStyle}>{t("common:nav.blog")}</a></li> -->
-    <!-- <li> -->
-    <!--   <a href={l("/projects")} class={navLiStyle}>{t("common:nav.projects")}</a> -->
-    <!-- </li> -->
-    <li><a href={twitch} class={navLiStyle}>{t("common:nav.twitch")}</a></li>
-    <li><a href={youtube} class={navLiStyle}>{t("common:nav.videos")}</a></li>
-    <li>
-      <a
-        href={l("/rss.xml")}
-        class={navLiStyle}
-        aria-label={t("common:nav.rss")}
-      >
-        <RssIcon />
+  <div class={navRightStyle}>
+    <ul class={navUlStyle}>
+      <li>
+        <a href={l("/")} class={navLiStyle}>
+          {t("common:nav.home")}
+        </a>
+      </li>
+      <li>
+        <a href={twitch} class={navLiStyle}>
+          {t("common:nav.twitch")}
+        </a>
+      </li>
+      <li>
+        <a href={youtube} class={navLiStyle}>
+          {t("common:nav.videos")}
+        </a>
+      </li>
+      <li>
+        <a
+          href={l("/rss.xml")}
+          class={navIconStyle}
+          aria-label={t("common:nav.rss")}
+        >
+          <RssIcon />
+        </a>
+      </li>
+    </ul>
+    <div class={navLangStyle}>
+      <a class={langLinkStyle} title="Français" href={frUrl}>
+        🇫🇷
       </a>
-    </li>
-  </ul>
-  <div class={navLangStyle}>
-    <a title="Français" href={frUrl}>🇫🇷</a>
-    <a title="English" href={enUrl}>🇬🇧</a>
+      <a class={langLinkStyle} title="English" href={enUrl}>
+        🇬🇧
+      </a>
+    </div>
   </div>
 </nav>

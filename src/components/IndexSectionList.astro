@@ -10,7 +10,7 @@ const { title } = Astro.props;
 
 const sectionContainerStyle = vstack({
   w: "full",
-  gap: "10",
+  gap: "6",
   justifyContent: "flex-start",
   alignItems: "flex-start",
   marginBottom: "20",
@@ -18,17 +18,15 @@ const sectionContainerStyle = vstack({
 });
 
 const sectionTitleStyle = css({
-  fontFamily: "title",
-  w: "full",
-  fontSize: "44px",
-  fontWeight: "bold",
-  lineHeight: "140%",
+  textStyle: "heading2",
+  color: "ink",
 });
 
 const sectionItemsContainerStyle = css({
   display: "grid",
   gridTemplateColumns: "repeat(1, 1fr)",
   gap: "6",
+  w: "100%",
   md: {
     gridTemplateColumns: "repeat(2, 1fr)",
   },

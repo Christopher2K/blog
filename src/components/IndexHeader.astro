@@ -11,109 +11,74 @@ const headerStyle = css({
   w: "full",
   px: "6",
   mb: "20",
-  lg: {
-    display: "grid",
-    gridTemplateColumns: "repeat(4, 1fr)",
-    gap: "6",
-  },
-});
-
-const headerContainerStyle = css({
-  w: "full",
   display: "flex",
   flexDirection: "column",
-  justifyContent: "center",
   alignItems: "center",
-  gap: "6",
+  justifyContent: "center",
+  gap: "10",
   md: {
-    display: "grid",
-    gridTemplateColumns: "repeat(4, 1fr)",
-    gap: "6",
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
-  },
-  lg: {
-    gridColumnStart: "span 3",
-    gridTemplateColumns: "repeat(3, 1fr)",
-    transform: "translateX(calc( (100% /4) - (var(--spacing-6) * 3)))",
+    flexDirection: "row",
+    gap: "12",
   },
 });
 
 const headerImageContainerStyle = css({
-  border: "2px solid black",
-  h: "fit-content",
   w: "fit-content",
-  borderRadius: "md",
+  h: "fit-content",
+  flexShrink: "0",
   "& img": {
-    borderRadius: "sm",
-    maxWidth: "300px",
+    display: "block",
+    width: "auto",
+    maxWidth: "260px",
+    borderRadius: "card",
+    border: "1px solid",
+    borderColor: "border",
+    boxShadow: "card",
   },
 });
 
 const headerTextContainerStyle = vstack({
-  width: "100%;",
-  justifyContent: "flex-start",
-  alignItems: "flex-start",
+  maxWidth: "560px",
+  justifyContent: "center",
+  alignItems: "center",
+  textAlign: "center",
   gap: "4",
   md: {
-    gridColumnStart: "span 3",
-  },
-  lg: {
-    gridColumnStart: "span 2",
+    alignItems: "flex-start",
+    textAlign: "left",
   },
 });
 
 const headerTitleStyle = css({
-  w: "full",
   textStyle: "heading1",
-  textAlign: "center",
-  md: {
-    textAlign: "left",
-  },
 });
 
 const headerSubtitleStyle = css({
-  w: "full",
-  textStyle: "heading2",
-  fontWeight: "normal",
-  textAlign: "center",
-  md: {
-    textAlign: "left",
-  },
+  textStyle: "label",
+  color: "accentHover",
 });
 
 const headerBodyStyle = css({
   textStyle: "body",
-  textAlign: "center",
-  mb: "4",
-  md: {
-    textAlign: "left",
-  },
+  color: "inkMuted",
 });
 
 const headerSocialsContainerStyle = css({
-  alignSelf: "center",
-  md: {
-    alignSelf: "start",
-  },
+  mt: "2",
 });
 ---
 
 <header class={headerStyle}>
-  <div class={headerContainerStyle}>
-    <div class={headerImageContainerStyle}>
-      <Image src={chrisImage} alt="Christopher's photo" />
-    </div>
-    <div class={headerTextContainerStyle}>
-      <h1 class={headerTitleStyle}>👋 Christopher K.</h1>
-      <p class={headerSubtitleStyle}>LLCoolChris_ 📺</p>
+  <div class={headerImageContainerStyle}>
+    <Image src={chrisImage} alt="Christopher's photo" />
+  </div>
+  <div class={headerTextContainerStyle}>
+    <h1 class={headerTitleStyle}>👋 Christopher K.</h1>
+    <p class={headerSubtitleStyle}>LLCoolChris_ 📺</p>
 
-      <p class={headerBodyStyle}>
-        {t("home:bio")}
-      </p>
-      <div class={headerSocialsContainerStyle}>
-        <Socials />
-      </div>
+    <p class={headerBodyStyle}>{t("home:bio")}</p>
+    <div class={headerSocialsContainerStyle}>
+      <Socials />
     </div>
   </div>
 </header>

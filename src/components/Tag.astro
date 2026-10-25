@@ -10,13 +10,18 @@ const { name } = Astro.props;
 
 <span
   class={css({
-    display: "inline-block",
+    display: "inline-flex",
+    alignItems: "center",
     fontFamily: "body",
     fontSize: "12px",
-    p: "2",
+    lineHeight: "1",
+    px: "3",
+    py: "1.5",
     fontWeight: "bold",
-    bg: "#000000",
-    color: "#fff",
-    borderRadius: "sm",
-  })}>{name}</span
+    bg: "accentSoft",
+    color: "tagText",
+    borderRadius: "pill",
+  })}
 >
+  {name}
+</span>
