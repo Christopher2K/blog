@@ -1,0 +1,17 @@
+{
+  "$schema": "https://schema.railpack.com",
+  "provider": "node",
+  "packages": {
+    // pin the node version (previously NIXPACKS_NODE_VERSION)
+    "node": "24"
+  },
+  "steps": {
+    "build": {
+      // run codegen (panda + husky) before the auto-generated build commands;
+      // styled-system/ is gitignored, so `astro build` needs this to have run
+      "commands": ["pnpm run prepare", "..."]
+    }
+  }
+  // No deploy section needed: Railpack detects this as a static Astro site and
+  // serves dist/ with Caddy, using the Caddyfile at the project root.
+}
