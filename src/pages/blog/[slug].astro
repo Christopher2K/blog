@@ -3,6 +3,7 @@ import { css } from "@/style/css";
 import { vstack, hstack } from "@/style/patterns";
 import { format } from "@/utils/date";
 import { t } from "@/i18n";
+import { render } from "astro:content";
 
 import Base from "@/layouts/Base.astro";
 import Navbar from "@/components/Navbar.astro";
@@ -15,7 +16,7 @@ export async function getStaticPaths({ lang = "fr" }: { lang?: string }) {
   const paths = await Promise.all(
     blogCollection.map(async (entry) => {
       return {
-        params: { slug: entry.slug },
+        params: { slug: entry.data.slug },
         props: {
           entry,
           lang,
@@ -28,10 +29,10 @@ export async function getStaticPaths({ lang = "fr" }: { lang?: string }) {
 }
 
 const { entry, lang } = Astro.props;
-const { Content } = await entry.render();
+const { Content } = await render(entry);
 
-const frUrl = lang === "fr" ? entry.path : entry?.translation?.path ?? "/en";
-const enUrl = lang === "en" ? entry.path : entry?.translation?.path ?? "/";
+const frUrl = lang === "fr" ? entry.path : (entry?.translation?.path ?? "/en");
+const enUrl = lang === "en" ? entry.path : (entry?.translation?.path ?? "/");
 ---
 
 <Base
@@ -42,32 +43,28 @@ const enUrl = lang === "en" ? entry.path : entry?.translation?.path ?? "/";
   <Navbar frUrl={frUrl} enUrl={enUrl} />
   <div class={css({ maxWidth: "800px", mx: "auto", px: "6" })}>
     <header class={vstack({ gap: "2", alignItems: "flex-start", mb: "10" })}>
-      <h1 class={css({ textStyle: "heading1" })}>
-        {entry.data.title}
-      </h1>
+      <h1 class={css({ textStyle: "heading1" })}>{entry.data.title}</h1>
       <p class={css({ textStyle: "label" })}>
         {t("blog:publishedOn", { date: format(entry.data.publishingDate) })}
       </p>
-      {
-        entry.translation && (
-          <a
-            class={css({
-              textStyle: "label",
-              textDecoration: "underline",
-              fontWeight: "bold",
-              mb: "6",
-              color: "orange.700",
+      {entry.translation && (
+        <a
+          class={css({
+            textStyle: "label",
+            textDecoration: "underline",
+            fontWeight: "bold",
+            mb: "6",
+            color: "orange.700",
 
-              _hover: {
-                backgroundColor: "orange.100",
-              },
-            })}
-            href={entry.translation.path}
-          >
-            {t("blog:alternateLangLink")}
-          </a>
-        )
-      }
+            _hover: {
+              backgroundColor: "orange.100",
+            },
+          })}
+          href={entry.translation.path}
+        >
+          {t("blog:alternateLangLink")}
+        </a>
+      )}
       <p
         class={css({
           textStyle: "body",
@@ -77,17 +74,15 @@ const enUrl = lang === "en" ? entry.path : entry?.translation?.path ?? "/";
       >
         {entry.data.description}
       </p>
-      {
-        entry.data.tags.length > 0 && (
-          <ul class={hstack({ flexWrap: "wrap", gap: "4" })}>
-            {entry.data.tags.map((tag) => (
-              <li>
-                <Tag name={tag} />
-              </li>
-            ))}
-          </ul>
-        )
-      }
+      {entry.data.tags.length > 0 && (
+        <ul class={hstack({ flexWrap: "wrap", gap: "4" })}>
+          {entry.data.tags.map((tag) => (
+            <li>
+              <Tag name={tag} />
+            </li>
+          ))}
+        </ul>
+      )}
 
       <hr
         class={css({

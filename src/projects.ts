@@ -2,7 +2,7 @@ import { getCollection } from "astro:content";
 
 export async function getProjectsCollection(lang: string) {
   const projectsCollection = await getCollection("projects", ({ id }) => {
-    return id.startsWith(lang);
+    return id.startsWith(`${lang}/`);
   }).then((data) =>
     data.toSorted((a, b) => {
       if (a.data.publishingDate > b.data.publishingDate) {

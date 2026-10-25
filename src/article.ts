@@ -7,7 +7,9 @@ function getTranslationPath(translationLang: string, slug: string) {
 
 export async function getBlogCollection(lang: string) {
   const blogCollection = await getCollection("blog", ({ data, id }) => {
-    return id.startsWith(lang) && Boolean(import.meta.env.DEV || !data.draft);
+    return (
+      id.startsWith(`${lang}/`) && Boolean(import.meta.env.DEV || !data.draft)
+    );
   }).then((data) =>
     data.toSorted((a, b) => {
       if (a.data.publishingDate > b.data.publishingDate) {
@@ -23,10 +25,11 @@ export async function getBlogCollection(lang: string) {
   return blogCollection.map((entry) => {
     const langPrefix = lang === "fr" ? "" : lang + "/";
     const translationLang = lang === "fr" ? "en" : "fr";
+    const slug = entry.data.slug;
 
     return {
       ...entry,
-      path: `/${langPrefix}blog/${entry.slug}`,
+      path: `/${langPrefix}blog/${slug}`,
       translation: entry.data.translation
         ? {
             path: getTranslationPath(translationLang, entry.data.translation),

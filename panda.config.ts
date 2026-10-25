@@ -62,6 +62,10 @@ const textStyles = defineTextStyles({
 });
 
 export default defineConfig({
+  // Panda v2 no longer adds the default presets for you, so list them
+  // explicitly to keep the base utilities, conditions and patterns.
+  presets: ["@pandacss/preset-base", "@pandacss/preset-panda"],
+
   // Whether to use css reset
   preflight: true,
 
