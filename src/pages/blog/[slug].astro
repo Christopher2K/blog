@@ -192,6 +192,13 @@ const enUrl = lang === "en" ? entry.path : (entry?.translation?.path ?? "/");
           justifyContent: "center",
           alignItems: "center",
         },
+
+        "& hr": {
+          borderColor: "border",
+          width: "200px",
+          my: "10",
+          mx: "auto",
+        },
       })}
     >
       <Content />
