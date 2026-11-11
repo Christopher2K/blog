@@ -1,9 +1,9 @@
 ---
 import "@/index.css";
-import { t, l } from "@/i18n";
+import { getLocale, getTranslator, type SupportedLang } from "@/i18n";
 import SEO from "@/components/SEO.astro";
 import Footer from "@/components/Footer.astro";
-
+import { getRssPath } from "@/utils/routes";
 import { css } from "@/style/css";
 
 const mainStyle = css({
@@ -19,12 +19,25 @@ export interface Props {
   description?: string;
   forceUseDefaultOgTitle?: boolean;
   ogType?: "website" | "article";
+  canonicalPath?: string;
+  alternatePaths?: Partial<Record<SupportedLang, string>>;
+  includeXDefault?: boolean;
 }
 
-const { title, description, forceUseDefaultOgTitle } = Astro.props;
+const {
+  title,
+  description,
+  forceUseDefaultOgTitle,
+  ogType,
+  canonicalPath,
+  alternatePaths,
+  includeXDefault,
+} = Astro.props;
+const locale = getLocale(Astro.currentLocale);
+const t = getTranslator(locale);
 ---
 
-<html lang={Astro.currentLocale}>
+<html lang={locale}>
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
@@ -64,32 +77,35 @@ const { title, description, forceUseDefaultOgTitle } = Astro.props;
       rel="alternate"
       type="application/rss+xml"
       title={t("rss:title")}
-      href={
-        new URL(
-          l("/rss.xml", { targetLocale: Astro.currentLocale }),
-          Astro.site,
-        )
-      }
+      href={new URL(getRssPath(locale), Astro.site ?? Astro.url)}
     />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <SEO {title} {description} {forceUseDefaultOgTitle} />
+    <SEO
+      {title}
+      {description}
+      {forceUseDefaultOgTitle}
+      {ogType}
+      {canonicalPath}
+      {alternatePaths}
+      {includeXDefault}
+    />
     <!-- Privacy-friendly analytics by Plausible -->
     <script
       async
       src="https://stats.coolsrv.dev/js/pa-htYElZWwGlKeVeDMEd_IX.js"
     ></script>
     <script is:inline>
-      window.plausible =
+      ((window.plausible =
         window.plausible ||
         function () {
           (plausible.q = plausible.q || []).push(arguments);
-        },
+        }),
         (plausible.init =
           plausible.init ||
           function (i) {
             plausible.o = i || {};
-          });
+          }));
       plausible.init();
     </script>
   </head>

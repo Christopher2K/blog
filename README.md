@@ -1,50 +1,36 @@
-# Astro Starter Kit: Minimal
+# llcoolblog
+
+Bilingual personal blog built with Astro, MDX, Solid, and Panda CSS.
+
+## Commands
 
 ```sh
-npm create astro@latest -- --template minimal
+pnpm dev        # Start the development server
+pnpm typecheck # Run TypeScript and Astro checks
+pnpm build     # Build the production site
+pnpm preview   # Preview the production build
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
+## Internationalization
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+French is the default locale and uses unprefixed URLs. English pages live under
+`/en`. UI messages are in `src/i18n/{fr,en}` and are read through the typed,
+locale-explicit `getTranslator(locale)` helper; there is no global language
+state or middleware.
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
+Articles live in `src/content/blog/{fr,en}`. Each article has a localized
+`slug`, which determines its public URL. Files with the same basename are
+treated as translations even when their slugs differ:
 
 ```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+content/blog/en/build-your-own-x.mdx  -> /en/blog/build-your-own-x
+content/blog/fr/build-your-own-x.mdx  -> /blog/fais-ton-propre-x
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page
-is exposed as a route based on its file name.
+An article does not need a translation. Drafts and translations are resolved
+together so production language links never target an unpublished article.
 
-There's nothing special about `src/components/`, but that's where we like to put
-any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into
-our [Discord server](https://astro.build/chat).
+`src/article.ts` owns the article/translation graph, and `src/utils/routes.ts`
+owns localized paths. Language links, canonical and `hreflang` metadata, RSS,
+and the sitemap all use those helpers. Shared page markup lives in
+`src/components/pages`; the files under `src/pages` are thin route entry points.

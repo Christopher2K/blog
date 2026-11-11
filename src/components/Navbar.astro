@@ -1,8 +1,7 @@
 ---
 import { Image } from "astro:assets";
-import { SUPPORTED_LANG } from "@/i18n";
-
-import { t, l } from "@/i18n";
+import { getLocale, getTranslator } from "@/i18n";
+import { getHomePath, getRssPath } from "@/utils/routes";
 import coolNerdIconImage from "@/assets/common/cool-nerd-icon.png";
 import { css } from "@/style/css";
 import { hstack } from "@/style/patterns";
@@ -93,27 +92,28 @@ const headerImage = css({
   borderRadius: "pill",
 });
 
-const path = Astro.url.pathname
-  .split("/")
-  .filter((chunk) => !(SUPPORTED_LANG as readonly string[]).includes(chunk))
-  .join("/");
-
 export interface Props {
-  frUrl?: string;
-  enUrl?: string;
+  frUrl: string;
+  enUrl: string;
 }
 
-const { frUrl = path, enUrl = `/en${path}` } = Astro.props;
+const { frUrl, enUrl } = Astro.props;
+const locale = getLocale(Astro.currentLocale);
+const t = getTranslator(locale);
 ---
 
 <nav class={navStyle}>
-  <a href={l("/")} class={navHomeLinkStyle} aria-label={t("common:nav.home")}>
+  <a
+    href={getHomePath(locale)}
+    class={navHomeLinkStyle}
+    aria-label={t("common:nav.home")}
+  >
     <Image class={headerImage} src={coolNerdIconImage} alt="Cool Nerd Icon" />
   </a>
   <div class={navRightStyle}>
     <ul class={navUlStyle}>
       <li>
-        <a href={l("/")} class={navLiStyle}>
+        <a href={getHomePath(locale)} class={navLiStyle}>
           {t("common:nav.home")}
         </a>
       </li>
@@ -129,7 +129,7 @@ const { frUrl = path, enUrl = `/en${path}` } = Astro.props;
       </li>
       <li>
         <a
-          href={l("/rss.xml")}
+          href={getRssPath(locale)}
           class={navIconStyle}
           aria-label={t("common:nav.rss")}
         >

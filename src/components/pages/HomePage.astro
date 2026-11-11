@@ -1,0 +1,64 @@
+---
+import { getTranslator, type SupportedLang } from "@/i18n";
+import Base from "@/layouts/Base.astro";
+import ArticleRow from "@/components/ArticleRow.astro";
+import ProjectRow from "@/components/ProjectRow.astro";
+import Navbar from "@/components/Navbar.astro";
+import IndexHeader from "@/components/IndexHeader.astro";
+import IndexSectionList from "@/components/IndexSectionList.astro";
+import { getBlogCollection } from "@/article";
+import { getProjectsCollection } from "@/projects";
+import { getHomePath } from "@/utils/routes";
+
+export interface Props {
+  locale: SupportedLang;
+}
+
+const { locale } = Astro.props;
+const t = getTranslator(locale);
+const [blogCollection, projectsCollection] = await Promise.all([
+  getBlogCollection(locale),
+  getProjectsCollection(locale),
+]);
+const alternatePaths: Record<SupportedLang, string> = {
+  fr: getHomePath("fr"),
+  en: getHomePath("en"),
+};
+---
+
+<Base
+  title={t("home:title")}
+  forceUseDefaultOgTitle
+  canonicalPath={getHomePath(locale)}
+  alternatePaths={alternatePaths}
+  includeXDefault
+>
+  <Navbar frUrl={getHomePath("fr")} enUrl={getHomePath("en")} />
+  <IndexHeader />
+  <IndexSectionList
+    title={t("home:blogSectionTitle")}
+    count={blogCollection.length}
+  >
+    {blogCollection.map((entry) => (
+      <ArticleRow
+        title={entry.data.title}
+        date={entry.data.publishingDate}
+        tags={entry.data.tags}
+        href={entry.path}
+      />
+    ))}
+  </IndexSectionList>
+  <IndexSectionList
+    title={t("home:projectsSectionTitle")}
+    count={projectsCollection.length}
+  >
+    {projectsCollection.map((entry) => (
+      <ProjectRow
+        title={entry.data.name}
+        tech={entry.data.tech}
+        date={entry.data.publishingDate}
+        href={entry.data.url}
+      />
+    ))}
+  </IndexSectionList>
+</Base>

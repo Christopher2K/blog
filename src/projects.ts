@@ -1,6 +1,7 @@
 import { getCollection } from "astro:content";
+import type { SupportedLang } from "@/i18n";
 
-export async function getProjectsCollection(lang: string) {
+export async function getProjectsCollection(lang: SupportedLang) {
   const projectsCollection = await getCollection("projects", ({ id }) => {
     return id.startsWith(`${lang}/`);
   }).then((data) =>

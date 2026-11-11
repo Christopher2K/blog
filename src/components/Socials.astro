@@ -1,8 +1,10 @@
 ---
-import { t } from "@/i18n";
+import { getLocale, getTranslator } from "@/i18n";
 import { css } from "@/style/css";
 import { hstack } from "@/style/patterns";
 import { linkedin, twitch, twitter, github, youtube } from "@/utils/link";
+
+const t = getTranslator(getLocale(Astro.currentLocale));
 
 type Icon = {
   href: string;

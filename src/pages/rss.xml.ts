@@ -1,18 +1,18 @@
 import type { APIContext } from "astro";
 import rss from "@astrojs/rss";
-
-import { t, l } from "@/i18n";
+import { getLocale, getTranslator } from "@/i18n";
 import { getBlogCollection } from "@/article";
-import { DEFAULT_LANG } from "@/i18n";
+import { getHomePath } from "@/utils/routes";
 
 export async function GET(context: APIContext) {
-  const locale = context.currentLocale ?? DEFAULT_LANG;
+  const locale = getLocale(context.currentLocale);
+  const t = getTranslator(locale);
   const blogCollection = await getBlogCollection(locale);
 
   return rss({
     title: t("rss:title"),
     description: t("rss:description"),
-    site: context.site + l("/", { targetLocale: locale }),
+    site: new URL(getHomePath(locale), context.site ?? context.url),
     trailingSlash: false,
     stylesheet: `/${locale}/rss-stylesheet.xsl`,
     items: blogCollection.map((item) => ({

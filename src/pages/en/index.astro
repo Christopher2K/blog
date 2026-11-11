@@ -1,5 +1,6 @@
 ---
-import Page from "../index.astro";
+import HomePage from "@/components/pages/HomePage.astro";
+import { getLocale } from "@/i18n";
 ---
 
-<Page />
+<HomePage locale={getLocale(Astro.currentLocale)} />

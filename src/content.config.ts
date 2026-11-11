@@ -6,9 +6,16 @@ const blogCollection = defineCollection({
   loader: glob({
     pattern: "**/*.mdx",
     base: "./src/content/blog",
-    generateId: ({ entry, data }) => {
-      const locale = entry.split("/")[0];
-      return `${locale}/${String(data.slug)}`;
+    generateId: ({ entry }) => {
+      const [locale, ...path] = entry.split("/");
+      const filename = path.at(-1);
+
+      if (!locale || !filename) {
+        throw new Error(`Invalid blog entry path: ${entry}`);
+      }
+
+      const translationKey = filename.replace(/\.mdx$/, "");
+      return `${locale}/${translationKey}`;
     },
   }),
   schema: z.object({
@@ -18,7 +25,6 @@ const blogCollection = defineCollection({
     publishingDate: z.coerce.date(),
     draft: z.boolean(),
     slug: z.string(),
-    translation: z.string().optional(),
   }),
 });
 

@@ -1,9 +1,13 @@
 ---
 import { RssIcon } from "lucide-solid";
 
-import { t, l } from "@/i18n";
+import { getLocale, getTranslator } from "@/i18n";
+import { getRssPath } from "@/utils/routes";
 import { css } from "@/style/css";
 import { vstack } from "@/style/patterns";
+
+const locale = getLocale(Astro.currentLocale);
+const t = getTranslator(locale);
 
 const footerStyle = css({
   width: "full",
@@ -60,7 +64,7 @@ const footerLinkStyle = css({
   <hr class={footerHrStyle} />
   <div class={footerTextContainerStyle}>
     <p class={footerTextStyle}>{t("common:footer.credits")}</p>
-    <a href={l("/rss.xml")} class={footerLinkStyle}>
+    <a href={getRssPath(locale)} class={footerLinkStyle}>
       <RssIcon />
       {t("common:footer.rss")}
     </a>

@@ -1,6 +1,11 @@
 ---
-import { t, LOCALE_FULL_NAME, type SupportedLang } from "@/i18n";
-
+import {
+  LOCALE_FULL_NAME,
+  SUPPORTED_LANG,
+  getLocale,
+  getTranslator,
+  type SupportedLang,
+} from "@/i18n";
 import { Cloudinary, Transformation } from "@cloudinary/url-gen";
 import { TextStyle } from "@cloudinary/url-gen/qualifiers/textStyle";
 import { source } from "@cloudinary/url-gen/actions/overlay";
@@ -33,26 +38,52 @@ interface Props {
   description?: string;
   forceUseDefaultOgTitle?: boolean;
   ogType?: "website" | "article";
+  canonicalPath?: string;
+  alternatePaths?: Partial<Record<SupportedLang, string>>;
+  includeXDefault?: boolean;
 }
 
+const locale = getLocale(Astro.currentLocale);
+const t = getTranslator(locale);
 const {
   title = t("common:seo.defaultTitle"),
   description = t("common:seo.defaultDescription"),
   forceUseDefaultOgTitle,
   ogType = "website",
+  canonicalPath = Astro.url.pathname,
+  alternatePaths,
+  includeXDefault = false,
 } = Astro.props;
 
 const ogTitle = forceUseDefaultOgTitle ? t("common:seo.defaultOgTitle") : title;
-
-const locale = Astro.currentLocale;
-const currentLocaleFullName =
-  LOCALE_FULL_NAME[locale as unknown as SupportedLang] ?? LOCALE_FULL_NAME.en;
-
+const currentLocaleFullName = LOCALE_FULL_NAME[locale];
 const ogImage = getPageMetadataImage(ogTitle);
 const ogImageAlt = t("common:seo.defaultOgImageAlt", { title: ogTitle });
+const canonicalUrl = new URL(canonicalPath, Astro.site ?? Astro.url);
+const alternates = SUPPORTED_LANG.flatMap((alternateLocale) => {
+  const path = alternatePaths?.[alternateLocale];
+  return path
+    ? [{ locale: alternateLocale, url: new URL(path, canonicalUrl) }]
+    : [];
+});
+const alternateOgLocales = alternates.filter(
+  (alternate) => alternate.locale !== locale,
+);
 ---
 
 <title>{t("common:seo.titleTemplate", { title })}</title>
+
+<link rel="canonical" href={canonicalUrl} />
+{alternates.map((alternate) => (
+  <link rel="alternate" hreflang={alternate.locale} href={alternate.url} />
+))}
+{includeXDefault && alternatePaths?.fr && (
+  <link
+    rel="alternate"
+    hreflang="x-default"
+    href={new URL(alternatePaths.fr, canonicalUrl)}
+  />
+)}
 
 <meta name="robots" content="index, follow" />
 <meta name="description" content={description} />
@@ -61,12 +92,15 @@ const ogImageAlt = t("common:seo.defaultOgImageAlt", { title: ogTitle });
 <meta property="og:title" content={ogTitle} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={ogImage} />
-<meta property="og:url" content={Astro.url.pathname} />
-
+<meta property="og:url" content={canonicalUrl} />
 <meta property="og:locale" content={currentLocaleFullName} />
-
+{alternateOgLocales.map((alternate) => (
+  <meta
+    property="og:locale:alternate"
+    content={LOCALE_FULL_NAME[alternate.locale]}
+  />
+))}
 <meta property="og:image:url" content={ogImage} />
-
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="627" />
 <meta property="og:image:alt" content={ogImageAlt} />

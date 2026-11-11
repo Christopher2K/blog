@@ -1,14 +1,14 @@
 ---
-// @ts-nocheck
-import Page, {
-  getStaticPaths as proxyGetStaticPaths,
-} from "../../blog/[slug].astro";
+import ArticlePage, {
+  type Props as ArticlePageProps,
+} from "@/components/pages/ArticlePage.astro";
+import { getArticleStaticPaths } from "@/article";
 
 export function getStaticPaths() {
-  return proxyGetStaticPaths({ lang: "en" });
+  return getArticleStaticPaths("en");
 }
 
-const props = Astro.props;
+const { entry, lang } = Astro.props as ArticlePageProps;
 ---
 
-<Page {...props} />
+<ArticlePage entry={entry} lang={lang} />
