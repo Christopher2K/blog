@@ -7,11 +7,16 @@ const workspaceStyle = css({
     base: "minmax(0, 1fr)",
     lg: "282px minmax(0, 1fr)",
   },
+  gridTemplateRows: "minmax(0, 1fr)",
   minWidth: "0",
+  height: "100%",
 });
 
 const sidebarStyle = css({
+  display: { base: "none", lg: "block" },
   minWidth: "0",
+  minHeight: "0",
+  overflowY: "auto",
   bg: "panel",
   borderRightWidth: { base: "0", lg: "1px" },
   borderColor: "ruleStrong",
@@ -19,7 +24,10 @@ const sidebarStyle = css({
 
 const mainStyle = css({
   minWidth: "0",
-  overflow: "hidden",
+  minHeight: "0",
+  height: "100%",
+  overflowX: "hidden",
+  overflowY: "auto",
 });
 ---
 

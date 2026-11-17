@@ -164,8 +164,9 @@ typically use 20 px, and introduction/article body use 24 px (`space-6`).
 - Mobile touch targets are at least 44 px high.
 - Text wraps using fixed-width/fill-container behavior; horizontal scrolling and
   clipped text are not acceptable.
-- Root height follows content. Only deliberate desktop workspace chrome may use
-  fixed heights.
+- The session and status bars remain fixed at the top and bottom of the
+  viewport. The central content region owns scrolling; on desktop, the sidebar
+  stays in place while the main content scrolls.
 
 ## Component guidance
 
