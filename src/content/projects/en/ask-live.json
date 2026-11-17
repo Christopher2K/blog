@@ -4,5 +4,6 @@
   "thumbnail": "/projects/project-ask-live.png",
   "url": "https://asklive.co/en/",
   "publishingDate": "2024-02-01",
-  "tech": ["typescript", "solid", "elixir", "phoenix"]
+  "tech": ["typescript", "solid", "elixir", "phoenix"],
+  "type": "web"
 }

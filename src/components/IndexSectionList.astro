@@ -1,56 +1,103 @@
 ---
+import { getTranslator, getLocale } from "@/i18n";
 import { css } from "@/style/css";
-import { hstack, vstack } from "@/style/patterns";
 
 export interface Props {
   title: string;
   count: number;
+  href: string;
+  linkLabel: string;
+  kind: "articles" | "projects";
 }
 
-const { title, count } = Astro.props;
+const { title, count, href, linkLabel, kind } = Astro.props;
+const t = getTranslator(getLocale(Astro.locals.locale));
 
-const sectionContainerStyle = vstack({
-  w: "full",
-  justifyContent: "flex-start",
-  alignItems: "flex-start",
-  marginBottom: "20",
-  px: "6",
+const sectionStyle = css({
+  px: { base: "6", md: "8", lg: "14" },
+  py: { base: "8", md: "10", lg: "12" },
+  borderBottomWidth: "1px",
+  borderColor: "rule",
 });
 
-const sectionHeaderStyle = hstack({
-  w: "full",
-  justifyContent: "space-between",
+const headingRowStyle = css({
+  display: "flex",
   alignItems: "flex-end",
-  px: "2",
+  justifyContent: "space-between",
+  flexWrap: "wrap",
+  gap: "4",
   pb: "4",
-  borderBottom: "1px solid",
-  borderColor: "borderStrong",
+  borderBottomWidth: "1px",
+  borderColor: "ruleStrong",
 });
 
-const sectionTitleStyle = css({
-  textStyle: "heading2",
+const titleGroupStyle = css({
+  display: "flex",
+  alignItems: "baseline",
+  gap: "3",
+});
+const headingStyle = css({
+  fontSize: { base: "24px", md: "20px" },
+  fontWeight: "bold",
   color: "ink",
 });
-
-const sectionCountStyle = css({
+const summaryStyle = css({
   textStyle: "label",
-  color: "inkMuted",
+  color: "dim",
+  fontSize: { base: "8px", md: "9px" },
 });
-
-const sectionItemsContainerStyle = vstack({
-  w: "full",
-  gap: "0",
-  alignItems: "stretch",
+const allLinkStyle = css({
+  color: "accent",
+  fontSize: "10px",
+  minHeight: "44px",
+  display: "inline-flex",
+  alignItems: "center",
+  _hover: { textDecoration: "underline", textUnderlineOffset: "3px" },
+});
+const columnsStyle = css({
+  display: { base: "none", lg: "grid" },
+  gridTemplateColumns: "104px minmax(0, 1fr) 180px 20px",
+  gap: "5",
+  px: "5",
+  py: "3",
+  color: "dim",
+  textStyle: "label",
+  fontSize: "8px",
+  borderBottomWidth: "1px",
+  borderColor: "ruleSubtle",
 });
 ---
 
-<section class={sectionContainerStyle}>
-  <div class={sectionHeaderStyle}>
-    <h2 class={sectionTitleStyle}>{title}</h2>
-    <span class={sectionCountStyle}>{String(count).padStart(2, "0")}</span>
+<section class={sectionStyle} aria-labelledby={`${kind}-heading`}>
+  <div class={headingRowStyle}>
+    <div>
+      <div class={titleGroupStyle}>
+        <span class={css({ color: "accent" })} aria-hidden="true">
+          $
+        </span>
+        <h2 id={`${kind}-heading`} class={headingStyle}>
+          {title}
+        </h2>
+      </div>
+      <p class={summaryStyle}>
+        {count}{" "}
+        {kind === "articles" ? t("home:articlesUnit") : t("home:projectsUnit")}{" "}
+        — {t("home:mostRecent")}
+      </p>
+    </div>
+    <a href={href} class={allLinkStyle}>
+      {linkLabel} ↗
+    </a>
   </div>
-
-  <ul class={sectionItemsContainerStyle}>
+  {kind === "articles" && (
+    <div class={columnsStyle} aria-hidden="true">
+      <span>{t("home:date")}</span>
+      <span>{t("home:titleColumn")}</span>
+      <span>{t("home:tags")}</span>
+      <span></span>
+    </div>
+  )}
+  <ul>
     <slot />
   </ul>
 </section>

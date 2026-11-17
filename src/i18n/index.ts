@@ -2,11 +2,13 @@ import commonEn from "./en/common.json";
 import homeEn from "./en/home.json";
 import blogEn from "./en/blog.json";
 import rssEn from "./en/rss.json";
+import projectsEn from "./en/projects.json";
 
 import commonFr from "./fr/common.json";
 import homeFr from "./fr/home.json";
 import blogFr from "./fr/blog.json";
 import rssFr from "./fr/rss.json";
+import projectsFr from "./fr/projects.json";
 
 export const SUPPORTED_LANG = ["en", "fr"] as const;
 export const DEFAULT_LANG = "fr" satisfies SupportedLang;
@@ -18,6 +20,7 @@ type Resource = {
   home: typeof homeEn;
   blog: typeof blogEn;
   rss: typeof rssEn;
+  projects: typeof projectsEn;
 };
 
 type TranslationValues = Record<string, string | number>;
@@ -44,12 +47,14 @@ const resources: Record<SupportedLang, Resource> = {
     home: homeEn,
     blog: blogEn,
     rss: rssEn,
+    projects: projectsEn,
   },
   fr: {
     common: commonFr,
     home: homeFr,
     blog: blogFr,
     rss: rssFr,
+    projects: projectsFr,
   },
 };
 

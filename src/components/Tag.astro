@@ -8,20 +8,6 @@ export interface Props {
 const { name } = Astro.props;
 ---
 
-<span
-  class={css({
-    display: "inline-flex",
-    alignItems: "center",
-    fontFamily: "body",
-    fontSize: "12px",
-    lineHeight: "1",
-    px: "3",
-    py: "1.5",
-    fontWeight: "bold",
-    bg: "accentSoft",
-    color: "tagText",
-    borderRadius: "pill",
-  })}
->
+<span class={css({ color: "secondary", fontSize: "10px", lineHeight: "1.6" })}>
   {name}
 </span>

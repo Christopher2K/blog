@@ -1,0 +1,6 @@
+---
+import ArticlesIndexPage from "@/components/pages/ArticlesIndexPage.astro";
+import { getLocale } from "@/i18n";
+---
+
+<ArticlesIndexPage locale={getLocale(Astro.locals.locale)} />

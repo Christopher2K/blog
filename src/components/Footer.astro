@@ -1,71 +1,71 @@
 ---
-import { RssIcon } from "lucide-solid";
-
 import { getLocale, getTranslator } from "@/i18n";
 import { getRssPath } from "@/utils/routes";
 import { css } from "@/style/css";
-import { vstack } from "@/style/patterns";
 
+export interface Props {
+  currentFile: string;
+}
+
+const { currentFile } = Astro.props;
 const locale = getLocale(Astro.locals.locale);
 const t = getTranslator(locale);
 
 const footerStyle = css({
-  width: "full",
+  minHeight: "44px",
   display: "flex",
-  flexDirection: "column",
   alignItems: "center",
-  justifyContent: "center",
-  gap: "5",
-  py: "10",
-  px: "6",
-  mx: "auto",
-});
-
-const footerHrStyle = css({
-  width: "full",
-  maxWidth: "contentWidth",
-  borderWidth: "0",
+  justifyContent: "space-between",
+  flexWrap: "wrap",
+  gap: "2",
+  py: "2",
+  px: { base: "5", md: "8", lg: "4" },
+  bg: "panel",
   borderTopWidth: "1px",
-  borderTopStyle: "solid",
-  borderTopColor: "border",
-  mb: "2",
+  borderColor: "ruleStrong",
+  color: "dim",
+  fontSize: { base: "8px", md: "10px" },
 });
 
-const footerTextContainerStyle = vstack({
-  w: "full",
-  gap: "3",
-  justifyContent: "center",
+const groupStyle = css({
+  display: "flex",
   alignItems: "center",
+  flexWrap: "wrap",
+  gap: "4",
 });
 
-const footerTextStyle = css({
-  textStyle: "small",
-  color: "inkMuted",
-  textAlign: "center",
+const modeStyle = css({
+  bg: "accent",
+  color: "bg",
+  px: "3",
+  py: "1",
+  fontWeight: "bold",
 });
 
-const footerLinkStyle = css({
+const linkStyle = css({
   display: "inline-flex",
   alignItems: "center",
-  gap: "2",
-  textStyle: "small",
-  fontWeight: "bold",
-  color: "accentHover",
-  textDecoration: "underline",
-  textUnderlineOffset: "4px",
-  transition: "color 0.15s ease",
-  _hover: {
-    color: "ink",
-  },
+  minHeight: "36px",
+  color: "accent",
+  _hover: { textDecoration: "underline", textUnderlineOffset: "3px" },
 });
 ---
 
 <footer class={footerStyle}>
-  <hr class={footerHrStyle} />
-  <div class={footerTextContainerStyle}>
-    <p class={footerTextStyle}>{t("common:footer.credits")}</p>
-    <a href={getRssPath(locale)} class={footerLinkStyle}>
-      <RssIcon />
+  <div class={groupStyle}>
+    <span class={modeStyle}>{t("common:footer.mode")}</span>
+    <span>
+      {currentFile}&nbsp;&nbsp; utf-8 · {locale} · LF
+    </span>
+  </div>
+  <div class={groupStyle}>
+    <span class={css({ display: { base: "none", md: "inline" } })}>
+      {t("common:footer.credits")}
+    </span>
+    <span class={css({ display: { base: "inline", md: "none" } })}>
+      {t("common:footer.shortCredits")}
+    </span>
+    <a href={getRssPath(locale)} class={linkStyle}>
       {t("common:footer.rss")}
     </a>
   </div>

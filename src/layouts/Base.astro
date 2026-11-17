@@ -3,16 +3,13 @@ import "@/index.css";
 import { getLocale, getTranslator, type SupportedLang } from "@/i18n";
 import SEO from "@/components/SEO.astro";
 import Footer from "@/components/Footer.astro";
+import Navbar from "@/components/Navbar.astro";
+import { getBlogCollection } from "@/article";
+import { getProjectsCollection } from "@/projects";
 import { getRssPath } from "@/utils/routes";
 import { css } from "@/style/css";
 
-const mainStyle = css({
-  pt: "0",
-  pb: "10",
-  width: "100%",
-  maxWidth: "contentWidth",
-  mx: "auto",
-});
+export type ConsoleSection = "home" | "blog" | "projects";
 
 export interface Props {
   title: string;
@@ -21,6 +18,10 @@ export interface Props {
   ogType?: "website" | "article";
   canonicalPath?: string;
   alternatePaths?: Partial<Record<SupportedLang, string>>;
+  section: ConsoleSection;
+  currentFile: string;
+  frUrl: string;
+  enUrl: string;
 }
 
 const {
@@ -30,9 +31,40 @@ const {
   ogType,
   canonicalPath,
   alternatePaths,
+  section,
+  currentFile,
+  frUrl,
+  enUrl,
 } = Astro.props;
 const locale = getLocale(Astro.locals.locale);
 const t = getTranslator(locale);
+const [articles, projects] = await Promise.all([
+  getBlogCollection(locale),
+  getProjectsCollection(locale),
+]);
+
+const shellStyle = css({
+  width: "100%",
+  maxWidth: "contentWidth",
+  mx: "auto",
+  bg: "bg",
+  borderLeftWidth: "1px",
+  borderRightWidth: "1px",
+  borderColor: "ruleStrong",
+});
+
+const skipLinkStyle = css({
+  position: "fixed",
+  top: "2",
+  left: "2",
+  zIndex: "50",
+  px: "4",
+  py: "3",
+  bg: "accent",
+  color: "bg",
+  transform: "translateY(-200%)",
+  _focus: { transform: "translateY(0)" },
+});
 ---
 
 <html lang={locale}>
@@ -42,7 +74,6 @@ const t = getTranslator(locale);
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="stylesheet" href="/app.css" />
     <link
       rel="preload"
       as="font"
@@ -55,20 +86,6 @@ const t = getTranslator(locale);
       as="font"
       type="font/woff2"
       href="/fonts/IBMPlexMono-Bold.woff2"
-      crossorigin
-    />
-    <link
-      rel="preload"
-      as="font"
-      type="font/woff2"
-      href="/fonts/IBMPlexSansCond-Regular.woff2"
-      crossorigin
-    />
-    <link
-      rel="preload"
-      as="font"
-      type="font/woff2"
-      href="/fonts/IBMPlexSansCond-Bold.woff2"
       crossorigin
     />
     <link
@@ -87,7 +104,6 @@ const t = getTranslator(locale);
       {canonicalPath}
       {alternatePaths}
     />
-    <!-- Privacy-friendly analytics by Plausible -->
     <script
       async
       src="https://stats.coolsrv.dev/js/pa-htYElZWwGlKeVeDMEd_IX.js"
@@ -106,11 +122,22 @@ const t = getTranslator(locale);
       plausible.init();
     </script>
   </head>
-
   <body>
-    <main class={mainStyle}>
-      <slot />
-      <Footer />
-    </main>
+    <a href="#content" class={skipLinkStyle}>
+      {t("common:skipToContent")}
+    </a>
+    <div class={shellStyle}>
+      <Navbar
+        {section}
+        {frUrl}
+        {enUrl}
+        articleCount={articles.length}
+        projectCount={projects.length}
+      />
+      <main id="content">
+        <slot />
+      </main>
+      <Footer {currentFile} />
+    </div>
   </body>
 </html>

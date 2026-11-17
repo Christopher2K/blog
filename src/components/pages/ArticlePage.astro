@@ -1,14 +1,20 @@
 ---
 import { css } from "@/style/css";
-import { vstack, hstack } from "@/style/patterns";
+import { hstack } from "@/style/patterns";
 import { format } from "@/utils/date";
 import { getTranslator, type SupportedLang } from "@/i18n";
 import { render } from "astro:content";
 import Base from "@/layouts/Base.astro";
-import Navbar from "@/components/Navbar.astro";
 import Tag from "@/components/Tag.astro";
-import { getArticleAlternatePaths, type BlogArticle } from "@/article";
+import ArticleSidebar from "@/components/ArticleSidebar.astro";
+import ConsoleWorkspace from "@/components/ConsoleWorkspace.astro";
+import {
+  getArticleAlternatePaths,
+  getBlogCollection,
+  type BlogArticle,
+} from "@/article";
 import { getHomePath } from "@/utils/routes";
+import { ArrowUpRightIcon, ChevronDownIcon } from "lucide-solid";
 
 export interface Props {
   entry: BlogArticle;
@@ -16,12 +22,195 @@ export interface Props {
 }
 
 const { entry, lang } = Astro.props;
-const { Content } = await render(entry);
+const { Content, headings: renderedHeadings } = await render(entry);
+const headings = renderedHeadings.filter((heading) => heading.depth === 2);
 const t = getTranslator(lang);
+const articles = await getBlogCollection(lang);
+const currentIndex = articles.findIndex((article) => article.id === entry.id);
+const nextArticle = currentIndex >= 0 ? articles[currentIndex + 1] : undefined;
 const frUrl =
   lang === "fr" ? entry.path : (entry.translation?.path ?? getHomePath("fr"));
 const enUrl =
   lang === "en" ? entry.path : (entry.translation?.path ?? getHomePath("en"));
+
+const articleStyle = css({
+  width: "100%",
+  maxWidth: "articleHeaderWidth",
+  mx: "auto",
+  px: { base: "6", md: "10", lg: "8" },
+  py: { base: "8", md: "10", lg: "14" },
+});
+
+const eyebrowStyle = css({
+  textStyle: "label",
+  color: "accent",
+  fontSize: { base: "8px", md: "10px" },
+  mb: "5",
+});
+const titleStyle = css({
+  color: "ink",
+  fontSize: { base: "32px", md: "42px", lg: "48px" },
+  lineHeight: { base: "1.16", md: "1.14", lg: "1.12" },
+  fontWeight: "bold",
+  letterSpacing: "-0.04em",
+  overflowWrap: "anywhere",
+});
+const descriptionStyle = css({
+  color: "dim",
+  fontSize: { base: "13px", md: "15px" },
+  lineHeight: "1.75",
+  mt: "6",
+});
+const metaStyle = css({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  flexWrap: "wrap",
+  gap: "4",
+  mt: "6",
+  pt: "5",
+  borderTopWidth: "1px",
+  borderColor: "rule",
+});
+const translationStyle = css({
+  display: "inline-flex",
+  alignItems: "center",
+  minHeight: "44px",
+  color: "accent",
+  border: "0",
+  bg: "transparent",
+  p: "0",
+  textStyle: "label",
+  fontSize: "9px",
+  _hover: { textDecoration: "underline", textUnderlineOffset: "3px" },
+});
+const detailsStyle = css({
+  display: { base: "block", lg: "none" },
+  my: "8",
+  bg: "panel",
+  borderWidth: "1px",
+  borderColor: "rule",
+});
+const summaryStyle = css({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  minHeight: "48px",
+  px: "4",
+  color: "ink",
+  fontSize: "12px",
+  fontWeight: "bold",
+  listStyle: "none",
+});
+const tocStyle = css({
+  px: "4",
+  pb: "4",
+  display: "flex",
+  flexDirection: "column",
+  gap: "1",
+});
+const tocLinkStyle = css({
+  display: "flex",
+  alignItems: "center",
+  minHeight: "40px",
+  color: "dim",
+  fontSize: "11px",
+  borderTopWidth: "1px",
+  borderColor: "ruleSubtle",
+  _hover: { color: "accent" },
+});
+
+const contentStyle = css({
+  maxWidth: "articleWidth",
+  color: "ink",
+  overflowWrap: "break-word",
+  "& h2": {
+    textStyle: "heading3",
+    color: "ink",
+    mb: "6",
+    mt: "14",
+    scrollMarginTop: "8",
+  },
+  "& h3": {
+    textStyle: "heading4",
+    color: "ink",
+    mb: "4",
+    mt: "12",
+    scrollMarginTop: "8",
+  },
+  "& h4": {
+    fontSize: "18px",
+    lineHeight: "1.4",
+    fontWeight: "bold",
+    color: "ink",
+    mb: "4",
+    mt: "10",
+  },
+  "& p": { textStyle: "body", color: "ink", mb: "5" },
+  "& a": {
+    textDecoration: "underline",
+    textUnderlineOffset: "4px",
+    color: "accent",
+    fontWeight: "bold",
+    _hover: { color: "ink", bg: "panel" },
+  },
+  "& .expressive-code": {
+    mb: "5",
+    maxWidth: "100%",
+    fontSize: { base: "12px", md: "14px" },
+  },
+  "& pre": { maxWidth: "100%", overflowX: "auto" },
+  "& img": {
+    mx: "auto",
+    my: "10",
+    width: "100%",
+    height: "auto",
+    borderRadius: "md",
+    borderWidth: "1px",
+    borderColor: "rule",
+  },
+  "& blockquote": {
+    my: "8",
+    py: "5",
+    px: "6",
+    bg: "panel",
+    borderLeftWidth: "3px",
+    borderLeftStyle: "solid",
+    borderLeftColor: "ruleAccent",
+    "& p": { m: "0", fontWeight: "bold", color: "ink" },
+  },
+  "& ul, & ol": { my: "8", pl: "6", pr: "0" },
+  "& ul": { listStyle: "none" },
+  "& ul li::before": { content: '"—"', color: "accent", mr: "3" },
+  "& ol": { listStyle: "decimal" },
+  "& li": { textStyle: "body", color: "ink", mb: "2" },
+  "& p + ul, & p + ol": { mt: "0" },
+  "& p code, & li code": {
+    bg: "panel",
+    color: "secondary",
+    borderRadius: "sm",
+    px: "1",
+    fontWeight: "600",
+    fontFamily: "body",
+    overflowWrap: "anywhere",
+  },
+  "& div.center": {
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  "& hr": { borderColor: "rule", width: "100%", my: "10" },
+  "& table": { display: "block", maxWidth: "100%", overflowX: "auto" },
+});
+
+const nextStyle = css({
+  display: "block",
+  mt: "14",
+  pt: "8",
+  borderTopWidth: "1px",
+  borderColor: "ruleStrong",
+});
 ---
 
 <Base
@@ -30,171 +219,128 @@ const enUrl =
   ogType="article"
   canonicalPath={entry.path}
   alternatePaths={getArticleAlternatePaths(entry)}
+  section="blog"
+  currentFile={`~/${t("blog:pathLabel")}/${entry.data.slug}`}
+  {frUrl}
+  {enUrl}
 >
-  <Navbar frUrl={frUrl} enUrl={enUrl} />
-  <div class={css({ maxWidth: "800px", mx: "auto", px: "6" })}>
-    <header class={vstack({ gap: "3", alignItems: "flex-start", mb: "10" })}>
-      <h1 class={css({ textStyle: "heading1", color: "ink" })}>
-        {entry.data.title}
-      </h1>
-      <p class={css({ textStyle: "label", color: "accentHover" })}>
-        {t("blog:publishedOn", {
-          date: format(entry.data.publishingDate, lang),
-        })}
-      </p>
-      {entry.translation && (
-        <form method="post" action="/locale">
-          <input type="hidden" name="locale" value={entry.translation.locale} />
-          <input type="hidden" name="returnTo" value={entry.translation.path} />
-          <button
+  <ConsoleWorkspace>
+    <ArticleSidebar
+      slot="sidebar"
+      {entry}
+      {headings}
+      position={currentIndex + 1}
+      total={articles.length}
+    />
+    <article class={articleStyle}>
+      <header>
+        <p class={eyebrowStyle}>
+          {t("common:nav.blog").toUpperCase()} —{" "}
+          {format(entry.data.publishingDate, lang).toUpperCase()}
+        </p>
+        <h1 class={titleStyle}>{entry.data.title}</h1>
+        <p class={descriptionStyle}>{entry.data.description}</p>
+        <div class={metaStyle}>
+          {entry.data.tags.length > 0 ? (
+            <ul class={hstack({ flexWrap: "wrap", gap: "3" })}>
+              {entry.data.tags.map((tag) => (
+                <li>
+                  <Tag name={tag.toUpperCase()} />
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <span></span>
+          )}
+          <div class={hstack({ gap: "3", alignItems: "center" })}>
+            <span
+              class={css({ textStyle: "label", color: "dim", fontSize: "9px" })}
+            >
+              {t("blog:language")}
+            </span>
+            {entry.translation && (
+              <form method="post" action="/locale">
+                <input
+                  type="hidden"
+                  name="locale"
+                  value={entry.translation.locale}
+                />
+                <input
+                  type="hidden"
+                  name="returnTo"
+                  value={entry.translation.path}
+                />
+                <button class={translationStyle} type="submit">
+                  {entry.translation.locale.toUpperCase()} ↗
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      </header>
+      {headings.length > 0 && (
+        <details class={detailsStyle}>
+          <summary class={summaryStyle}>
+            <span>{t("blog:contents")}</span>
+            <ChevronDownIcon size={15} />
+          </summary>
+          <nav class={tocStyle} aria-label={t("blog:contents")}>
+            {headings.map((heading) => (
+              <a href={`#${heading.slug}`} class={tocLinkStyle}>
+                {heading.text}
+              </a>
+            ))}
+          </nav>
+        </details>
+      )}
+      <div class={contentStyle}>
+        <Content />
+      </div>
+      {nextArticle && (
+        <a href={nextArticle.path} class={nextStyle}>
+          <span class={css({ textStyle: "label", color: "dim" })}>
+            {t("blog:readNext")}
+          </span>
+          <span
             class={css({
-              textStyle: "label",
-              textDecoration: "underline",
-              textUnderlineOffset: "4px",
-              color: "accentHover",
-              mb: "4",
-              p: "0",
-              border: "0",
-              backgroundColor: "transparent",
-              cursor: "pointer",
-              transition: "background-color 0.15s ease, color 0.15s ease",
-              _hover: {
-                color: "ink",
-                backgroundColor: "accentSoft",
-              },
+              display: "flex",
+              alignItems: "flex-start",
+              justifyContent: "space-between",
+              gap: "5",
+              mt: "4",
             })}
-            type="submit"
           >
-            {t("blog:alternateLangLink")}
-          </button>
-        </form>
+            <span>
+              <time
+                datetime={nextArticle.data.publishingDate.toISOString()}
+                class={css({
+                  textStyle: "label",
+                  color: "secondary",
+                  fontSize: "9px",
+                })}
+              >
+                {format(nextArticle.data.publishingDate, lang).toUpperCase()}
+              </time>
+              <span
+                class={css({
+                  display: "block",
+                  color: "ink",
+                  fontSize: { base: "17px", md: "20px" },
+                  lineHeight: "1.4",
+                  fontWeight: "bold",
+                  mt: "2",
+                })}
+              >
+                {nextArticle.data.title}
+              </span>
+            </span>
+            <ArrowUpRightIcon
+              class={css({ color: "accent", flexShrink: "0" })}
+              size={20}
+            />
+          </span>
+        </a>
       )}
-      <p
-        class={css({
-          textStyle: "body",
-          fontWeight: "bold",
-          color: "inkMuted",
-        })}
-      >
-        {entry.data.description}
-      </p>
-      {entry.data.tags.length > 0 && (
-        <ul class={hstack({ flexWrap: "wrap", gap: "2" })}>
-          {entry.data.tags.map((tag) => (
-            <li>
-              <Tag name={tag} />
-            </li>
-          ))}
-        </ul>
-      )}
-
-      <hr
-        class={css({
-          borderColor: "border",
-          width: "100%",
-          mt: "6",
-        })}
-      />
-    </header>
-    <div
-      class={css({
-        "& h2": {
-          textStyle: "heading2",
-          color: "ink",
-          mb: "6",
-          mt: "14",
-        },
-        "& h3": {
-          textStyle: "heading3",
-          color: "ink",
-          mb: "4",
-          mt: "12",
-        },
-        "& h4": {
-          textStyle: "heading4",
-          color: "ink",
-          mb: "4",
-          mt: "10",
-        },
-        "& p": {
-          textStyle: "body",
-          color: "ink",
-          mb: "5",
-        },
-        "& a": {
-          textDecoration: "underline",
-          textUnderlineOffset: "4px",
-          color: "accentHover",
-          fontWeight: "bold",
-          transition: "background-color 0.15s ease, color 0.15s ease",
-          _hover: {
-            color: "ink",
-            backgroundColor: "accentSoft",
-          },
-        },
-        "& .expressive-code": {
-          mb: "5",
-        },
-        "& img": {
-          mx: "auto",
-          my: "10",
-          width: "100%",
-          borderRadius: "card",
-        },
-        "& blockquote": {
-          my: "8",
-          py: "5",
-          px: "6",
-          backgroundColor: "surfaceAlt",
-          borderLeftWidth: "4px",
-          borderLeftStyle: "solid",
-          borderLeftColor: "accent",
-          borderRadius: "card",
-          borderTopLeftRadius: "0",
-          borderBottomLeftRadius: "0",
-          "& p": {
-            margin: "0",
-            fontWeight: "bold",
-            color: "ink",
-          },
-        },
-        "& ul, & ol": {
-          my: "8",
-          px: "6",
-          listStyle: "inside disc",
-        },
-        "& li": {
-          textStyle: "body",
-          color: "ink",
-          mb: "2",
-        },
-        "& p + ul, & p + ol": {
-          mt: "0",
-        },
-        "& p code, & li code": {
-          display: "inline-block",
-          backgroundColor: "codeBg",
-          color: "tagText",
-          borderRadius: "6px",
-          px: "2",
-          fontWeight: "600",
-          fontFamily: "body",
-        },
-        "& div.center": {
-          width: "100%",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        },
-        "& hr": {
-          borderColor: "border",
-          width: "200px",
-          my: "10",
-          mx: "auto",
-        },
-      })}
-    >
-      <Content />
-    </div>
-  </div>
+    </article>
+  </ConsoleWorkspace>
 </Base>

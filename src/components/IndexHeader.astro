@@ -1,86 +1,116 @@
 ---
-import { Image } from "astro:assets";
-
 import { getLocale, getTranslator } from "@/i18n";
-import chrisImage from "@/assets/common/chris.jpg";
-import Socials from "@/components/Socials.astro";
 import { css } from "@/style/css";
-import { vstack } from "@/style/patterns";
 
+export interface Props {
+  articleCount: number;
+  projectCount: number;
+}
+
+const { articleCount, projectCount } = Astro.props;
 const t = getTranslator(getLocale(Astro.locals.locale));
+const facts = [
+  { value: "08", label: t("home:yearsDev") },
+  { value: "03", label: t("home:yearsLive") },
+  { value: String(articleCount).padStart(2, "0"), label: t("home:articles") },
+  { value: String(projectCount).padStart(2, "0"), label: t("home:projects") },
+];
 
 const headerStyle = css({
-  w: "full",
-  px: "6",
-  mb: "20",
+  px: { base: "6", md: "8", lg: "14" },
+  py: { base: "8", md: "10", lg: "14" },
+  borderBottomWidth: "1px",
+  borderColor: "rule",
+});
+
+const breadcrumbStyle = css({
+  display: "flex",
+  justifyContent: "space-between",
+  gap: "4",
+  color: "dim",
+  textStyle: "label",
+  fontSize: { base: "8px", md: "9px" },
+  mb: { base: "8", lg: "10" },
+});
+
+const commandStyle = css({
+  display: { base: "none", lg: "flex" },
+  gap: "2",
+  color: "dim",
+  fontSize: "11px",
+  mb: "8",
+});
+
+const titleStyle = css({
+  textStyle: "heading1",
+  color: "ink",
+  maxWidth: "760px",
+});
+
+const bioStyle = css({
+  mt: "6",
+  maxWidth: "760px",
+  color: "dim",
+  fontSize: { base: "11px", md: "13px" },
+  lineHeight: "1.9",
+  whiteSpace: "pre-line",
+});
+
+const factsStyle = css({
+  display: "grid",
+  gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
+  mt: { base: "8", lg: "10" },
+  pt: "5",
+  borderTopWidth: "1px",
+  borderColor: "rule",
+});
+
+const factStyle = css({
   display: "flex",
   flexDirection: "column",
-  alignItems: "center",
-  justifyContent: "center",
-  gap: "10",
-  md: {
-    flexDirection: "row",
-    gap: "12",
-  },
 });
 
-const headerImageContainerStyle = css({
-  w: "fit-content",
-  h: "fit-content",
-  flexShrink: "0",
-  "& img": {
-    display: "block",
-    width: "auto",
-    maxWidth: "260px",
-    borderRadius: "card",
-    border: "1px solid",
-    borderColor: "border",
-    boxShadow: "card",
-  },
+const factValueStyle = css({
+  color: "accent",
+  fontSize: { base: "22px", md: "24px" },
+  lineHeight: "1",
+  fontWeight: "bold",
+  order: "0",
 });
 
-const headerTextContainerStyle = vstack({
-  maxWidth: "560px",
-  justifyContent: "center",
-  alignItems: "center",
-  textAlign: "center",
-  gap: "4",
-  md: {
-    alignItems: "flex-start",
-    textAlign: "left",
-  },
-});
-
-const headerTitleStyle = css({
-  textStyle: "heading1",
-});
-
-const headerSubtitleStyle = css({
-  textStyle: "label",
-  color: "accentHover",
-});
-
-const headerBodyStyle = css({
-  textStyle: "body",
-  color: "inkMuted",
-});
-
-const headerSocialsContainerStyle = css({
+const factLabelStyle = css({
   mt: "2",
+  color: "dim",
+  textStyle: "label",
+  fontSize: { base: "7px", md: "9px" },
+  order: "1",
 });
 ---
 
-<header class={headerStyle}>
-  <div class={headerImageContainerStyle}>
-    <Image src={chrisImage} alt="Christopher's photo" />
+<header class={headerStyle} id="introduction">
+  <div class={breadcrumbStyle}>
+    <span>{t("home:breadcrumb")}</span>
+    <span>{t("common:nav.location").toUpperCase()}</span>
   </div>
-  <div class={headerTextContainerStyle}>
-    <h1 class={headerTitleStyle}>👋 Christopher K.</h1>
-    <p class={headerSubtitleStyle}>LLCoolChris_ 📺</p>
-
-    <p class={headerBodyStyle}>{t("home:bio")}</p>
-    <div class={headerSocialsContainerStyle}>
-      <Socials />
-    </div>
+  <div class={commandStyle}>
+    <span class={css({ color: "accent" })}>chris@toronto</span>
+    <span>
+      :~/{getLocale(Astro.locals.locale) === "fr" ? "accueil" : "home"}$
+    </span>
+    <span class={css({ color: "ink" })}>{t("home:readme")}</span>
   </div>
+  <h1 class={titleStyle}>
+    Christopher N.
+    <br />
+    Katoyi Kaba
+  </h1>
+  <p class={bioStyle}>{t("home:bio")}</p>
+  <dl class={factsStyle}>
+    {facts.map((fact) => (
+      <div class={factStyle}>
+        <dt class={factLabelStyle}>{fact.label}</dt>
+        <dd class={factValueStyle}>{fact.value}</dd>
+      </div>
+    ))}
+  </dl>
 </header>

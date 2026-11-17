@@ -4,7 +4,7 @@ import {
   type BlogArticle,
 } from "@/article";
 import { SUPPORTED_LANG, type SupportedLang } from "@/i18n";
-import { getHomePath } from "@/utils/routes";
+import { getBlogPath, getHomePath, getProjectsPath } from "@/utils/routes";
 
 type SitemapPage = {
   path: string;
@@ -52,8 +52,12 @@ export async function generateSitemap(site: URL) {
   const articlesByLocale = await Promise.all(
     SUPPORTED_LANG.map((locale) => getBlogCollection(locale)),
   );
+  const localizedPaths = [getHomePath, getBlogPath, getProjectsPath];
   const pages: SitemapPage[] = [
-    { path: getHomePath("fr") },
+    ...localizedPaths.map((getPath) => ({
+      path: getPath("fr"),
+      alternatePaths: { fr: getPath("fr"), en: getPath("en") },
+    })),
     ...articlesByLocale.flatMap((articles) =>
       articles.map(articleToSitemapPage),
     ),

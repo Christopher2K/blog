@@ -1,0 +1,126 @@
+---
+import { ArrowLeftIcon } from "lucide-solid";
+import { getLocale, getTranslator } from "@/i18n";
+import { getHomePath, getProjectsPath } from "@/utils/routes";
+import { css } from "@/style/css";
+
+export interface Props {
+  selectedType: string;
+  total: number;
+  range: string;
+  counts: { web: number; mobile: number };
+  technologies: string[];
+}
+
+const { selectedType, total, range, counts, technologies } = Astro.props;
+const locale = getLocale(Astro.locals.locale);
+const t = getTranslator(locale);
+const base = getProjectsPath(locale);
+const types = [
+  { value: "", label: t("projects:all"), count: total },
+  { value: "web", label: t("projects:web"), count: counts.web },
+  { value: "mobile", label: t("projects:mobile"), count: counts.mobile },
+];
+
+const sidebarStyle = css({
+  display: { base: "none", lg: "block" },
+  px: "6",
+  py: "8",
+  fontSize: "11px",
+});
+const backStyle = css({
+  display: "inline-flex",
+  alignItems: "center",
+  gap: "2",
+  minHeight: "44px",
+  color: "dim",
+  _hover: { color: "accent" },
+});
+const sectionStyle = css({
+  mt: "8",
+  pt: "6",
+  borderTopWidth: "1px",
+  borderColor: "rule",
+});
+const headingStyle = css({
+  color: "ink",
+  fontSize: "12px",
+  fontWeight: "bold",
+  mb: "3",
+});
+const filterLinkStyle = css({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  gap: "3",
+  minHeight: "36px",
+  px: "3",
+  color: "dim",
+  borderLeftWidth: "2px",
+  borderColor: "transparent",
+  _hover: { color: "ink", bg: "ruleSubtle" },
+});
+const activeStyle = css({
+  color: "ink",
+  bg: "ruleSubtle",
+  borderColor: "ruleAccent",
+});
+---
+
+<div class={sidebarStyle}>
+  <a href={getHomePath(locale)} class={backStyle}>
+    <ArrowLeftIcon size={14} />
+    {t("blog:backHome")}
+  </a>
+  <section class={sectionStyle}>
+    <p class={css({ textStyle: "label", color: "dim" })}>
+      {t("projects:sidebarIndex")}
+    </p>
+    <p
+      class={css({
+        color: "ink",
+        fontSize: "24px",
+        fontWeight: "bold",
+        mt: "3",
+      })}
+    >
+      {String(total).padStart(2, "0")} {t("projects:projectsNoun")}
+    </p>
+    <p class={css({ color: "dim", fontSize: "10px", mt: "2" })}>{range}</p>
+  </section>
+  <nav class={sectionStyle} aria-labelledby="types-sidebar">
+    <h2 id="types-sidebar" class={headingStyle}>
+      {t("projects:types")}
+    </h2>
+    {types.map((type) => (
+      <a
+        href={type.value ? `${base}?type=${type.value}` : base}
+        class={`${filterLinkStyle} ${selectedType === type.value ? activeStyle : ""}`}
+        aria-current={selectedType === type.value ? "true" : undefined}
+      >
+        <span>{type.label}</span>
+        <span class={css({ color: "secondary", fontSize: "9px" })}>
+          {String(type.count).padStart(2, "0")}
+        </span>
+      </a>
+    ))}
+  </nav>
+  <section class={sectionStyle}>
+    <h2 class={headingStyle}>{t("projects:technologies")}</h2>
+    <p
+      class={css({
+        color: "secondary",
+        whiteSpace: "pre-line",
+        lineHeight: "1.9",
+        fontSize: "10px",
+      })}
+    >
+      {technologies.join("\n")}
+    </p>
+  </section>
+  <p
+    class={`${sectionStyle} ${css({ color: "dim", fontSize: "9px", lineHeight: "1.8" })}`}
+  >
+    {t("projects:sidebarNote")}
+  </p>
+</div>

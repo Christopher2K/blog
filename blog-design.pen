@@ -2594,19 +2594,6 @@
                       "fontFamily": "$font-source-body",
                       "fontSize": 11,
                       "fontWeight": "normal"
-                    },
-                    {
-                      "type": "text",
-                      "id": "UGyIC",
-                      "name": "Focus",
-                      "fill": "$console-ink",
-                      "textGrowth": "fixed-width",
-                      "width": "fill_container",
-                      "content": "writing    web / mobile / career",
-                      "lineHeight": 1.5,
-                      "fontFamily": "$font-source-body",
-                      "fontSize": 11,
-                      "fontWeight": "normal"
                     }
                   ]
                 },
@@ -3870,18 +3857,10 @@
                 },
                 {
                   "type": "frame",
-                  "id": "mALjY",
-                  "name": "Content flexible space",
-                  "width": "fill_container",
-                  "height": "fill_container",
-                  "layout": "vertical"
-                },
-                {
-                  "type": "frame",
                   "id": "t3g1lb",
                   "name": "Twitch status",
                   "width": "fill_container",
-                  "height": 74,
+                  "height": 78,
                   "fill": "$console-panel",
                   "gap": "$space-4",
                   "padding": [
@@ -29158,6 +29137,57 @@
           ]
         }
       ]
+    },
+    {
+      "type": "browser",
+      "id": "Z6b0A",
+      "x": 4120,
+      "y": 6100,
+      "name": "Live Homepage · Desktop",
+      "width": 1440,
+      "height": 1642,
+      "url": "localhost:4321"
+    },
+    {
+      "type": "browser",
+      "id": "F3JUFq",
+      "x": 5640,
+      "y": 6100,
+      "name": "Live Homepage · Phone",
+      "width": 390,
+      "height": 1600,
+      "url": "localhost:4321",
+      "deviceId": "phone"
+    },
+    {
+      "type": "browser",
+      "id": "LsYim",
+      "x": 6110,
+      "y": 6100,
+      "name": "Live Journal Index · Desktop",
+      "width": 1440,
+      "height": 1800,
+      "url": "localhost:4321/blog"
+    },
+    {
+      "type": "browser",
+      "id": "Tf7hv",
+      "x": 7630,
+      "y": 6100,
+      "name": "Live Projects Index · Desktop",
+      "width": 1440,
+      "height": 1500,
+      "url": "localhost:4321/projects"
+    },
+    {
+      "type": "browser",
+      "id": "nRXO8",
+      "x": 9150,
+      "y": 6100,
+      "name": "Live Article · Desktop",
+      "width": 1440,
+      "height": 2000,
+      "url": "localhost:4321/blog/mon-parcours-et-ce-que-je-ferais-differemment"
     }
   ],
   "themes": {

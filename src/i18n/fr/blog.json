@@ -1,4 +1,26 @@
 {
   "publishedOn": "Publié le {{ date }}",
-  "alternateLangLink": "🇬🇧 Article available in english"
+  "alternateLangLink": "Lire en anglais",
+  "indexTitle": "Tous les articles",
+  "indexEyebrow": "JOURNAL / TOUS LES ARTICLES",
+  "indexDescription": "Des notes sur le développement, la carrière, les outils et tout ce que j’apprends en construisant des logiciels.",
+  "sidebarIndex": "JOURNAL / INDEX",
+  "articlesNoun": "articles",
+  "years": "Années",
+  "topics": "Sujets",
+  "allYears": "Toutes les années",
+  "allTopics": "Tous les sujets",
+  "results": "RÉSULTATS",
+  "empty": "Aucun article ne correspond à ces filtres.",
+  "backHome": "Accueil",
+  "backBlog": "Retour au journal",
+  "contents": "Sommaire",
+  "publishedLabel": "PUBLIÉ LE",
+  "writtenBy": "ÉCRIT PAR",
+  "articleNoun": "ARTICLE",
+  "readNext": "À lire ensuite",
+  "filter": "Filtrer",
+  "reset": "Réinitialiser",
+  "pathLabel": "journal",
+  "language": "FRANÇAIS"
 }

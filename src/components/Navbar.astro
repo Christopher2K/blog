@@ -1,170 +1,256 @@
 ---
-import { Image } from "astro:assets";
 import { getLocale, getTranslator } from "@/i18n";
-import { getHomePath, getRssPath } from "@/utils/routes";
-import coolNerdIconImage from "@/assets/common/cool-nerd-icon.png";
-import { css } from "@/style/css";
-import { hstack } from "@/style/patterns";
+import {
+  getBlogPath,
+  getHomePath,
+  getProjectsPath,
+  getRssPath,
+} from "@/utils/routes";
 import { youtube, twitch } from "@/utils/link";
 import { RssIcon } from "lucide-solid";
+import { css } from "@/style/css";
+import type { ConsoleSection } from "@/layouts/Base.astro";
 
-const navStyle = css({
-  display: "flex",
-  flexDirection: "row",
-  alignItems: "center",
-  justifyContent: "space-between",
-  gap: "4",
-  flexWrap: "wrap",
-  w: "100%",
-  maxWidth: "contentWidth",
-  mx: "auto",
-  px: "6",
-  py: "5",
-});
+export interface Props {
+  section: ConsoleSection;
+  frUrl: string;
+  enUrl: string;
+  articleCount: number;
+  projectCount: number;
+}
 
-const navHomeLinkStyle = css({
-  display: "inline-flex",
-  alignItems: "center",
-  borderRadius: "pill",
-});
-
-const navRightStyle = hstack({
-  gap: "4",
-  flexWrap: "wrap",
-  justifyContent: "flex-end",
-});
-
-const navUlStyle = hstack({
-  gap: "1",
-  flexWrap: "wrap",
-});
-
-const navLiStyle = css({
-  display: "inline-flex",
-  alignItems: "center",
-  textStyle: "body",
-  fontWeight: "bold",
-  color: "inkMuted",
-  px: "3",
-  py: "2",
-  borderRadius: "pill",
-  transition: "background-color 0.15s ease, color 0.15s ease",
-  _hover: {
-    color: "ink",
-    backgroundColor: "accentSoft",
+const { section, frUrl, enUrl, articleCount, projectCount } = Astro.props;
+const locale = getLocale(Astro.locals.locale);
+const t = getTranslator(locale);
+const links = [
+  { id: "home", label: t("common:nav.home"), href: getHomePath(locale) },
+  { id: "blog", label: t("common:nav.blog"), href: getBlogPath(locale) },
+  {
+    id: "projects",
+    label: t("common:nav.projects"),
+    href: getProjectsPath(locale),
   },
+  { id: "videos", label: t("common:nav.videos"), href: youtube },
+  { id: "twitch", label: t("common:nav.twitch"), href: twitch },
+] as const;
+const activeLink = links.find((link) => link.id === section) ?? links[0];
+
+const sessionStyle = css({
+  minHeight: "48px",
+  display: "flex",
+  alignItems: "stretch",
+  justifyContent: "space-between",
+  gap: "3",
+  px: { base: "5", lg: "4" },
+  bg: "panel",
+  borderBottomWidth: "1px",
+  borderColor: "ruleStrong",
+  fontSize: { base: "10px", md: "11px" },
 });
 
-const navIconStyle = css({
+const identityStyle = css({
+  display: "flex",
+  alignItems: "center",
+  gap: "4",
+  minWidth: "0",
+});
+
+const initialsStyle = css({
+  color: "accent",
+  fontWeight: "bold",
+  letterSpacing: "0.08em",
+});
+
+const tabsStyle = css({
+  display: { base: "none", lg: "flex" },
+  alignItems: "stretch",
+  gap: "1",
+});
+
+const activeTabStyle = css({
+  display: { base: "flex", lg: "none" },
+  alignItems: "center",
+  color: "ink",
+  whiteSpace: "nowrap",
+});
+
+const tabStyle = css({
+  display: "inline-flex",
+  alignItems: "center",
+  minHeight: "44px",
+  px: "3",
+  color: "dim",
+  borderBottomWidth: "2px",
+  borderColor: "transparent",
+  _hover: { color: "ink", bg: "ruleSubtle" },
+});
+
+const activeStyle = css({
+  color: "accent",
+  borderColor: "ruleAccent",
+});
+
+const toolsStyle = css({
+  display: "flex",
+  alignItems: "center",
+  gap: { base: "3", md: "5" },
+  flexShrink: "0",
+});
+
+const localeGroupStyle = css({
+  display: "flex",
+  alignItems: "center",
+  gap: "2",
+  whiteSpace: "nowrap",
+});
+
+const localeButtonStyle = css({
+  minWidth: "32px",
+  minHeight: "44px",
+  px: "1",
+  border: "0",
+  bg: "transparent",
+  color: "dim",
+  _hover: { color: "accent" },
+});
+
+const locationStyle = css({
+  display: { base: "none", md: "block" },
+  color: "dim",
+  whiteSpace: "nowrap",
+});
+
+const iconLinkStyle = css({
   display: "inline-flex",
   alignItems: "center",
   justifyContent: "center",
-  color: "inkMuted",
-  px: "2.5",
-  py: "2",
-  borderRadius: "pill",
-  transition: "background-color 0.15s ease, color 0.15s ease",
-  _hover: {
-    color: "ink",
-    backgroundColor: "accentSoft",
-  },
+  minWidth: "36px",
+  minHeight: "44px",
+  color: "dim",
+  _hover: { color: "accent" },
 });
 
-const navLangStyle = hstack({
-  gap: "1",
+const compactNavStyle = css({
+  display: { base: "grid", lg: "none" },
+  gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
+  borderBottomWidth: "1px",
+  borderColor: "rule",
+  bg: "bg",
 });
 
-const langLinkStyle = css({
-  display: "inline-flex",
+const compactLinkStyle = css({
+  display: "flex",
   alignItems: "center",
+  justifyContent: "center",
+  minHeight: "44px",
   px: "2",
-  py: "1",
-  border: "0",
-  backgroundColor: "transparent",
-  cursor: "pointer",
-  borderRadius: "pill",
-  transition: "background-color 0.15s ease",
-  _hover: {
-    backgroundColor: "accentSoft",
-  },
+  color: "dim",
+  fontSize: { base: "8px", md: "10px" },
+  textAlign: "center",
+  borderRightWidth: "1px",
+  borderColor: "ruleSubtle",
+  _last: { borderRightWidth: "0" },
+  _hover: { color: "ink", bg: "panel" },
 });
-
-const headerImage = css({
-  width: "40px",
-  height: "40px",
-  borderRadius: "pill",
-});
-
-export interface Props {
-  frUrl: string;
-  enUrl: string;
-}
-
-const { frUrl, enUrl } = Astro.props;
-const locale = getLocale(Astro.locals.locale);
-const t = getTranslator(locale);
 ---
 
-<nav class={navStyle}>
-  <a
-    href={getHomePath(locale)}
-    class={navHomeLinkStyle}
-    aria-label={t("common:nav.home")}
-  >
-    <Image class={headerImage} src={coolNerdIconImage} alt="Cool Nerd Icon" />
-  </a>
-  <div class={navRightStyle}>
-    <ul class={navUlStyle}>
-      <li>
-        <a href={getHomePath(locale)} class={navLiStyle}>
-          {t("common:nav.home")}
-        </a>
-      </li>
-      <li>
-        <a href={twitch} class={navLiStyle}>
-          {t("common:nav.twitch")}
-        </a>
-      </li>
-      <li>
-        <a href={youtube} class={navLiStyle}>
-          {t("common:nav.videos")}
-        </a>
-      </li>
-      <li>
-        <a
-          href={getRssPath(locale)}
-          class={navIconStyle}
-          aria-label={t("common:nav.rss")}
-        >
-          <RssIcon />
-        </a>
-      </li>
-    </ul>
-    <div class={navLangStyle}>
-      <form method="post" action="/locale">
-        <input type="hidden" name="locale" value="fr" />
-        <input type="hidden" name="returnTo" value={frUrl} />
-        <button
-          class={langLinkStyle}
-          type="submit"
-          title="Français"
-          aria-label="Français"
-        >
-          🇫🇷
-        </button>
-      </form>
-      <form method="post" action="/locale">
-        <input type="hidden" name="locale" value="en" />
-        <input type="hidden" name="returnTo" value={enUrl} />
-        <button
-          class={langLinkStyle}
-          type="submit"
-          title="English"
-          aria-label="English"
-        >
-          🇬🇧
-        </button>
-      </form>
+<header>
+  <div class={sessionStyle}>
+    <div class={identityStyle}>
+      <a
+        href={getHomePath(locale)}
+        class={initialsStyle}
+        aria-label={t("common:nav.home")}
+      >
+        CNK
+      </a>
+      <nav class={tabsStyle} aria-label={t("common:nav.label")}>
+        {links.map((link, index) => (
+          <a
+            href={link.href}
+            class={`${tabStyle} ${section === link.id ? activeStyle : ""}`}
+            target={
+              link.id === "videos" || link.id === "twitch"
+                ? "_blank"
+                : undefined
+            }
+            rel={
+              link.id === "videos" || link.id === "twitch"
+                ? "noopener noreferrer"
+                : undefined
+            }
+            aria-current={section === link.id ? "page" : undefined}
+          >
+            {index}:{link.label.toLowerCase()}
+            {section === link.id ? "*" : ""}
+          </a>
+        ))}
+      </nav>
+      <span class={activeTabStyle}>
+        &nbsp;{activeLink.label.toLowerCase()}*
+      </span>
+    </div>
+    <div class={toolsStyle}>
+      <div class={localeGroupStyle} aria-label="Language / Langue">
+        <form method="post" action="/locale">
+          <input type="hidden" name="locale" value="fr" />
+          <input type="hidden" name="returnTo" value={frUrl} />
+          <button
+            class={localeButtonStyle}
+            type="submit"
+            title="Français"
+            aria-label="Français"
+            aria-pressed={locale === "fr"}
+          >
+            {locale === "fr" ? "[fr]" : "fr"}
+          </button>
+        </form>
+        <form method="post" action="/locale">
+          <input type="hidden" name="locale" value="en" />
+          <input type="hidden" name="returnTo" value={enUrl} />
+          <button
+            class={localeButtonStyle}
+            type="submit"
+            title="English"
+            aria-label="English"
+            aria-pressed={locale === "en"}
+          >
+            {locale === "en" ? "[en]" : "en"}
+          </button>
+        </form>
+      </div>
+      <span class={locationStyle}>{t("common:nav.location")}</span>
+      <a
+        href={getRssPath(locale)}
+        class={iconLinkStyle}
+        aria-label={t("common:nav.rss")}
+      >
+        <RssIcon size={16} />
+      </a>
     </div>
   </div>
-</nav>
+  <nav class={compactNavStyle} aria-label={t("common:nav.label")}>
+    <a href={getBlogPath(locale)} class={compactLinkStyle}>
+      {t("common:nav.blog")} {String(articleCount).padStart(2, "0")}
+    </a>
+    <a href={getProjectsPath(locale)} class={compactLinkStyle}>
+      {t("common:nav.projects")} {String(projectCount).padStart(2, "0")}
+    </a>
+    <a
+      href={youtube}
+      target="_blank"
+      rel="noopener noreferrer"
+      class={compactLinkStyle}
+    >
+      {t("common:nav.videos")} ↗
+    </a>
+    <a
+      href={twitch}
+      target="_blank"
+      rel="noopener noreferrer"
+      class={compactLinkStyle}
+    >
+      {t("common:nav.twitch")} ↗
+    </a>
+  </nav>
+</header>

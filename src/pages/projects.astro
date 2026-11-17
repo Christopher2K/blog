@@ -1,0 +1,6 @@
+---
+import ProjectsIndexPage from "@/components/pages/ProjectsIndexPage.astro";
+import { getLocale } from "@/i18n";
+---
+
+<ProjectsIndexPage locale={getLocale(Astro.locals.locale)} />

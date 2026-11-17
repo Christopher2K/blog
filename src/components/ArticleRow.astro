@@ -1,7 +1,7 @@
 ---
 import { ArrowUpRightIcon } from "lucide-solid";
 import { format } from "@/utils/date";
-import { getLocale } from "@/i18n";
+import { getLocale, getTranslator } from "@/i18n";
 import { css } from "@/style/css";
 
 export interface Props {
@@ -9,66 +9,163 @@ export interface Props {
   href: string;
   tags: string[];
   date: Date;
+  description?: string;
+  index?: number;
+  latest?: boolean;
+  detailed?: boolean;
 }
-const { title, href, tags, date } = Astro.props;
+
+const {
+  title,
+  href,
+  tags,
+  date,
+  description,
+  index,
+  latest,
+  detailed = false,
+} = Astro.props;
 const locale = getLocale(Astro.locals.locale);
+const t = getTranslator(locale);
 
 const rowStyle = css({
-  display: "flex",
-  alignItems: "center",
-  gap: "6",
-  w: "full",
-  px: "2",
-  py: "5",
-  borderBottom: "1px solid",
-  borderColor: "border",
-  transition: "background-color 0.15s ease",
+  display: "grid",
+  gridTemplateColumns: detailed
+    ? { base: "minmax(0, 1fr) 20px", md: "88px minmax(0, 1fr) 20px" }
+    : { base: "minmax(0, 1fr)", lg: "104px minmax(0, 1fr) 180px 20px" },
+  alignItems: detailed ? "start" : "center",
+  gap: detailed ? "4" : { base: "3", lg: "5" },
+  width: "100%",
+  px: { base: "0", lg: "5" },
+  py: detailed ? { base: "6", md: "5" } : { base: "5", lg: "4" },
+  borderBottomWidth: "1px",
+  borderColor: "ruleSubtle",
   _hover: {
-    bg: "surface",
-    "& .article-title": {
-      color: "accentHover",
-    },
+    bg: "panel",
+    "& h3": { color: "accent" },
+    "& .article-arrow": { color: "accent" },
   },
 });
 
 const dateStyle = css({
-  fontFamily: "body",
-  fontSize: "xs",
-  color: "inkMuted",
-  w: "24",
-  flexShrink: "0",
+  fontSize: detailed ? "9px" : { base: "9px", lg: "10px" },
+  color: "dim",
+  pt: detailed ? "1" : "0",
 });
 
 const titleStyle = css({
-  textStyle: { base: "heading4", md: "heading3" },
   color: "ink",
-  flex: "1",
-  transition: "color 0.15s ease",
+  fontSize: detailed
+    ? { base: "16px", md: "18px" }
+    : { base: "15px", lg: "12px" },
+  lineHeight: "1.45",
+  fontWeight: "bold",
 });
 
 const tagsStyle = css({
-  display: { base: "none", md: "block" },
-  fontFamily: "body",
-  fontSize: "11px",
-  letterSpacing: "0.06em",
-  textTransform: "uppercase",
-  color: "inkMuted",
-  flexShrink: "0",
+  fontSize: "9px",
+  lineHeight: "1.6",
+  color: "secondary",
 });
 
-const iconStyle = css({
-  color: "accentHover",
-  flexShrink: "0",
+const descriptionStyle = css({
+  color: "dim",
+  fontSize: "12px",
+  lineHeight: "1.65",
+  mt: "2",
+  maxWidth: "680px",
 });
+const mobileMetaStyle = css({
+  display: "flex",
+  alignItems: "center",
+  flexWrap: "wrap",
+  gap: "3",
+  color: "dim",
+  fontSize: "9px",
+});
+const arrowStyle = css({ color: "dim", flexShrink: "0" });
 ---
 
 <li>
   <a href={href} class={rowStyle}>
-    <span class={dateStyle}>{format(date, locale, "yyyy-MM-dd")}</span>
-    <span class={`article-title ${titleStyle}`}>{title}</span>
-    {tags.length > 0 && (
-      <span class={tagsStyle}>{tags.slice(0, 3).join(" · ")}</span>
+    {detailed ? (
+      <>
+        <time
+          datetime={date.toISOString()}
+          class={`${dateStyle} ${css({ display: { base: "none", md: "block" } })}`}
+        >
+          {format(date, locale, "yyyy-MM-dd")}
+        </time>
+        <div>
+          <div
+            class={`${mobileMetaStyle} ${css({ display: { base: "flex", md: "none" }, mb: "2" })}`}
+          >
+            <time datetime={date.toISOString()}>
+              {format(date, locale, "yyyy-MM-dd")}
+            </time>
+          </div>
+          <h3 class={titleStyle}>{title}</h3>
+          {description && <p class={descriptionStyle}>{description}</p>}
+          {tags.length > 0 && (
+            <p class={`${tagsStyle} ${css({ mt: "3" })}`}>{tags.join(", ")}</p>
+          )}
+        </div>
+        <ArrowUpRightIcon class={arrowStyle} size={17} aria-hidden="true" />
+      </>
+    ) : (
+      <>
+        <div
+          class={`${mobileMetaStyle} ${css({ display: { base: "flex", lg: "none" }, justifyContent: "space-between" })}`}
+        >
+          <span>
+            {index !== undefined && (
+              <span class={css({ color: "secondary", mr: "3" })}>
+                {String(index).padStart(2, "0")}
+              </span>
+            )}
+            <time datetime={date.toISOString()}>
+              {format(date, locale, "yyyy-MM-dd")}
+            </time>
+            {latest && (
+              <span
+                class={css({
+                  color: "accent",
+                  textStyle: "label",
+                  fontSize: "7px",
+                  ml: "3",
+                })}
+              >
+                {t("home:latest")}
+              </span>
+            )}
+          </span>
+          <ArrowUpRightIcon class={arrowStyle} size={17} aria-hidden="true" />
+        </div>
+        <time
+          datetime={date.toISOString()}
+          class={`${dateStyle} ${css({ display: { base: "none", lg: "block" } })}`}
+        >
+          {format(date, locale, "yyyy-MM-dd")}
+        </time>
+        <h3 class={titleStyle}>{title}</h3>
+        <span
+          class={`${tagsStyle} ${css({ display: { base: "none", lg: "block" } })}`}
+        >
+          {tags.slice(0, 3).join(", ")}
+        </span>
+        <ArrowUpRightIcon
+          class={`${arrowStyle} ${css({ display: { base: "none", lg: "block" } })}`}
+          size={16}
+          aria-hidden="true"
+        />
+        {tags.length > 0 && (
+          <p
+            class={`${tagsStyle} ${css({ display: { base: "block", lg: "none" } })}`}
+          >
+            {tags.slice(0, 3).join(", ")}
+          </p>
+        )}
+      </>
     )}
-    <ArrowUpRightIcon class={iconStyle} size={18} />
   </a>
 </li>

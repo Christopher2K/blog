@@ -11,37 +11,65 @@ const globalCss = defineGlobalStyles({
     backgroundColor: "bg",
     color: "ink",
   },
+  body: {
+    minWidth: "320px",
+  },
+  "a, button, select, summary": {
+    WebkitTapHighlightColor: "transparent",
+  },
+  a: {
+    color: "inherit",
+    textDecoration: "none",
+  },
+  "button, select": {
+    font: "inherit",
+  },
+  "button, summary, select": {
+    cursor: "pointer",
+  },
+  ":focus-visible": {
+    outline: "2px solid",
+    outlineColor: "accent",
+    outlineOffset: "3px",
+  },
+  "::selection": {
+    backgroundColor: "accent",
+    color: "bg",
+  },
 });
 
 const textStyles = defineTextStyles({
   heading1: {
     value: {
-      fontSize: "2.75rem",
-      fontFamily: "title",
-      lineHeight: "1.15",
+      fontSize: { base: "2.375rem", md: "3rem", lg: "3.5rem" },
+      fontFamily: "body",
+      lineHeight: { base: "1.08", lg: "1.06" },
       fontWeight: "bold",
+      letterSpacing: "-0.045em",
     },
   },
   heading2: {
     value: {
-      fontSize: "2rem",
-      fontFamily: "title",
-      lineHeight: "1.25",
+      fontSize: { base: "1.875rem", md: "2.5rem" },
+      fontFamily: "body",
+      lineHeight: "1.15",
       fontWeight: "bold",
+      letterSpacing: "-0.035em",
     },
   },
   heading3: {
     value: {
-      fontSize: "1.5rem",
-      fontFamily: "title",
-      lineHeight: "1.3",
+      fontSize: { base: "1.5625rem", md: "1.875rem" },
+      fontFamily: "body",
+      lineHeight: "1.25",
       fontWeight: "bold",
+      letterSpacing: "-0.025em",
     },
   },
   heading4: {
     value: {
       fontSize: "1.25rem",
-      fontFamily: "title",
+      fontFamily: "body",
       lineHeight: "1.4",
       fontWeight: "bold",
     },
@@ -49,93 +77,69 @@ const textStyles = defineTextStyles({
   body: {
     value: {
       fontFamily: "body",
-      fontSize: "1.125rem",
-      lineHeight: "1.75",
+      fontSize: { base: "0.875rem", md: "1rem" },
+      lineHeight: { base: "1.75", md: "1.8" },
     },
   },
   label: {
     value: {
       fontFamily: "body",
-      fontSize: "0.75rem",
+      fontSize: "0.625rem",
       lineHeight: "1.5",
       fontWeight: "bold",
-      letterSpacing: "0.06em",
+      letterSpacing: "0.08em",
       textTransform: "uppercase",
     },
   },
   small: {
     value: {
       fontFamily: "body",
-      fontSize: "0.875rem",
+      fontSize: "0.75rem",
       lineHeight: "1.6",
     },
   },
 });
 
 export default defineConfig({
-  // Panda v2 no longer adds the default presets for you, so list them
-  // explicitly to keep the base utilities, conditions and patterns.
   presets: ["@pandacss/preset-base", "@pandacss/preset-panda"],
-
-  // Whether to use css reset
   preflight: true,
-
-  // Where to look for your css declarations
   include: ["./src/**/*.{ts,tsx,html,astro,md,mdx}"],
-
-  // Files to exclude
   exclude: [],
-
   globalCss,
-
-  // Useful for theme customization
   theme: {
     extend: {
       textStyles,
       tokens: {
         colors: {
-          bg: { value: "#FAF5EC" },
-          surface: { value: "#F6EDDD" },
-          surfaceAlt: { value: "#EFE3CC" },
-          border: { value: "#E7D9BD" },
-          borderStrong: { value: "#D8C39B" },
-          ink: { value: "#3B3122" },
-          inkMuted: { value: "#8B7B64" },
-          accent: { value: "#C09964" },
-          accentHover: { value: "#A87E47" },
-          accentSoft: { value: "#EBDCBF" },
-          onAccent: { value: "#FFFDF8" },
-          tagText: { value: "#6B4E29" },
-          codeBg: { value: "#F2E8D5" },
+          bg: { value: "var(--console-bg)" },
+          panel: { value: "var(--console-panel)" },
+          ink: { value: "var(--console-ink)" },
+          dim: { value: "var(--console-dim)" },
+          accent: { value: "var(--console-accent)" },
+          secondary: { value: "var(--console-secondary)" },
+          live: { value: "var(--console-live)" },
+          ruleSubtle: { value: "var(--console-rule-subtle)" },
+          rule: { value: "var(--console-rule)" },
+          ruleStrong: { value: "var(--console-rule-strong)" },
+          ruleAccent: { value: "var(--console-rule-accent)" },
         },
         radii: {
-          card: { value: "16px" },
-          pill: { value: "999px" },
-        },
-        shadows: {
-          card: {
-            value:
-              "0 1px 2px rgba(60, 42, 20, 0.04), 0 6px 20px rgba(60, 42, 20, 0.06)",
-          },
-          cardHover: {
-            value:
-              "0 2px 4px rgba(60, 42, 20, 0.06), 0 12px 28px rgba(60, 42, 20, 0.10)",
-          },
+          none: { value: "0" },
+          sm: { value: "2px" },
+          md: { value: "4px" },
         },
         sizes: {
-          contentWidth: {
-            value: "1200px",
-            description: "Max width of the content",
-          },
+          contentWidth: { value: "1440px" },
+          sidebarWidth: { value: "282px" },
+          articleWidth: { value: "760px" },
+          articleHeaderWidth: { value: "780px" },
+          indexWidth: { value: "920px" },
         },
         fonts: {
-          body: { value: "var(--font-body)" },
-          title: { value: "var(--font-title)" },
+          body: { value: '"IBM Plex Mono", monospace' },
         },
       },
     },
   },
-
-  // The output directory for your css system
   outdir: "styled-system",
 });

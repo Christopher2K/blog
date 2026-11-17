@@ -1,0 +1,22 @@
+{
+  "title": "Indie projects",
+  "indexTitle": "Indie projects",
+  "indexEyebrow": "PROJECTS / ALL PROJECTS",
+  "indexDescription": "Tools built to solve concrete problems, developed outside of work and available online.",
+  "sidebarIndex": "PROJECTS / INDEX",
+  "projectsNoun": "projects",
+  "online": "ONLINE",
+  "sourceLabel": "CODE & EXPERIMENTS",
+  "types": "Types",
+  "technologies": "Technologies",
+  "all": "All projects",
+  "web": "Web application",
+  "mobile": "Mobile application",
+  "webShort": "WEB APPLICATION",
+  "mobileShort": "MOBILE APPLICATION",
+  "sidebarNote": "Designed and developed in Toronto.",
+  "filter": "Filter",
+  "reset": "Reset filters",
+  "empty": "No projects match this filter.",
+  "pathLabel": "projects"
+}

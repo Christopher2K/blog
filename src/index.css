@@ -1,1 +1,70 @@
 @layer reset, base, tokens, recipes, utilities;
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("/fonts/IBMPlexMono-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("/fonts/IBMPlexMono-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light;
+  --console-bg: #fbf1c7; /* unslop-ignore: intentional Gruvbox light surface */
+  --console-panel: #f2e5bc; /* unslop-ignore: intentional Gruvbox light panel */
+  --console-ink: #3c3836;
+  --console-dim: #7c6f64;
+  --console-accent: #b57614;
+  --console-secondary: #458588;
+  --console-live: #cc241d;
+  --console-transparent: #fbf1c700;
+  --console-rule-subtle: #ebdbb2;
+  --console-rule: #d5c4a1;
+  --console-rule-strong: #bdae93;
+  --console-rule-accent: #b57614;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --console-bg: #282828;
+    --console-panel: #32302f;
+    --console-ink: #ebdbb2;
+    --console-dim: #bdae93;
+    --console-accent: #fabd2f;
+    --console-secondary: #83a598;
+    --console-live: #fb4934;
+    --console-transparent: #28282800;
+    --console-rule-subtle: #3c3836;
+    --console-rule: #504945;
+    --console-rule-strong: #665c54;
+    --console-rule-accent: #fabd2f;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 24px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

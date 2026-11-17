@@ -1,0 +1,214 @@
+---
+import Base from "@/layouts/Base.astro";
+import ConsoleWorkspace from "@/components/ConsoleWorkspace.astro";
+import ProjectsIndexSidebar from "@/components/ProjectsIndexSidebar.astro";
+import ProjectRow from "@/components/ProjectRow.astro";
+import { getProjectsCollection } from "@/projects";
+import { getTranslator, type SupportedLang } from "@/i18n";
+import { getProjectsPath } from "@/utils/routes";
+import { css } from "@/style/css";
+import { ChevronDownIcon } from "lucide-solid";
+
+export interface Props {
+  locale: SupportedLang;
+}
+
+const { locale } = Astro.props;
+const t = getTranslator(locale);
+const projects = await getProjectsCollection(locale);
+const requestedType = Astro.url.searchParams.get("type");
+const selectedType =
+  requestedType === "web" || requestedType === "mobile" ? requestedType : "";
+const filteredProjects = selectedType
+  ? projects.filter((project) => project.data.type === selectedType)
+  : projects;
+const counts = {
+  web: projects.filter((project) => project.data.type === "web").length,
+  mobile: projects.filter((project) => project.data.type === "mobile").length,
+};
+const technologies = [
+  ...new Set(projects.flatMap((project) => project.data.tech)),
+].toSorted();
+const years = projects.map((project) =>
+  project.data.publishingDate.getFullYear(),
+);
+const range = years.length
+  ? `${Math.min(...years)} — ${Math.max(...years)}`
+  : "—";
+const basePath = getProjectsPath(locale);
+
+const mainStyle = css({
+  width: "100%",
+  maxWidth: "indexWidth",
+  mx: "auto",
+  px: { base: "6", md: "10" },
+  py: { base: "8", md: "10", lg: "12" },
+});
+const eyebrowStyle = css({
+  textStyle: "label",
+  color: "accent",
+  fontSize: "9px",
+});
+const titleStyle = css({
+  color: "ink",
+  fontSize: { base: "30px", md: "40px" },
+  lineHeight: "1.15",
+  fontWeight: "bold",
+  letterSpacing: "-0.035em",
+  mt: "4",
+});
+const descriptionStyle = css({
+  color: "dim",
+  fontSize: { base: "13px", md: "15px" },
+  lineHeight: "1.7",
+  maxWidth: "680px",
+  mt: "5",
+});
+const filterBarStyle = css({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  flexWrap: "wrap",
+  gap: "4",
+  mt: "8",
+  py: "4",
+  borderTopWidth: "1px",
+  borderBottomWidth: "1px",
+  borderColor: "rule",
+});
+const formStyle = css({
+  display: "flex",
+  alignItems: "center",
+  flexWrap: "wrap",
+  gap: "3",
+});
+const selectWrapStyle = css({
+  position: "relative",
+  display: "inline-flex",
+  alignItems: "center",
+});
+const selectStyle = css({
+  minHeight: "44px",
+  minWidth: "190px",
+  appearance: "none",
+  bg: "panel",
+  color: "ink",
+  borderWidth: "1px",
+  borderColor: "ruleStrong",
+  borderRadius: "none",
+  pl: "3",
+  pr: "10",
+  fontSize: "11px",
+});
+const buttonStyle = css({
+  minHeight: "44px",
+  px: "4",
+  bg: "accent",
+  color: "bg",
+  border: "0",
+  borderRadius: "none",
+  textStyle: "label",
+  fontSize: "9px",
+});
+const resultStyle = css({ textStyle: "label", color: "dim", fontSize: "9px" });
+const resetStyle = css({
+  display: "inline-flex",
+  alignItems: "center",
+  minHeight: "44px",
+  color: "accent",
+  fontSize: "10px",
+  _hover: { textDecoration: "underline" },
+});
+---
+
+<Base
+  title={t("projects:indexTitle")}
+  description={t("projects:indexDescription")}
+  canonicalPath={basePath}
+  alternatePaths={{ fr: getProjectsPath("fr"), en: getProjectsPath("en") }}
+  section="projects"
+  currentFile={`~/${t("projects:pathLabel")}/index`}
+  frUrl={getProjectsPath("fr")}
+  enUrl={getProjectsPath("en")}
+>
+  <ConsoleWorkspace>
+    <ProjectsIndexSidebar
+      slot="sidebar"
+      {selectedType}
+      total={projects.length}
+      {range}
+      {counts}
+      {technologies}
+    />
+    <div class={mainStyle}>
+      <header>
+        <p class={eyebrowStyle}>{t("projects:indexEyebrow")}</p>
+        <h1 class={titleStyle}>{t("projects:indexTitle")}</h1>
+        <p class={descriptionStyle}>{t("projects:indexDescription")}</p>
+      </header>
+      <div class={filterBarStyle}>
+        <form method="get" action={basePath} class={formStyle}>
+          <label for="type-filter" class={resultStyle}>
+            {t("projects:types")}
+          </label>
+          <span class={selectWrapStyle}>
+            <select id="type-filter" name="type" class={selectStyle}>
+              <option value="">{t("projects:all")}</option>
+              <option value="web" selected={selectedType === "web"}>
+                {t("projects:web")}
+              </option>
+              <option value="mobile" selected={selectedType === "mobile"}>
+                {t("projects:mobile")}
+              </option>
+            </select>
+            <ChevronDownIcon
+              class={css({
+                position: "absolute",
+                right: "3",
+                pointerEvents: "none",
+                color: "dim",
+              })}
+              size={14}
+            />
+          </span>
+          <button type="submit" class={buttonStyle}>
+            {t("projects:filter")}
+          </button>
+        </form>
+        <div class={formStyle}>
+          <span class={resultStyle}>
+            {filteredProjects.length} {t("projects:projectsNoun").toUpperCase()}{" "}
+            · {filteredProjects.length} {t("projects:online")}
+          </span>
+          {selectedType && (
+            <a href={basePath} class={resetStyle}>
+              {t("projects:reset")}
+            </a>
+          )}
+        </div>
+      </div>
+      <p class={resultStyle}>{t("projects:sourceLabel")}</p>
+      {filteredProjects.length === 0 ? (
+        <p class={css({ color: "dim", textStyle: "body", py: "12" })}>
+          {t("projects:empty")}
+        </p>
+      ) : (
+        <ul>
+          {filteredProjects.map((entry, index) => (
+            <ProjectRow
+              detailed
+              index={index + 1}
+              title={entry.data.name}
+              tech={entry.data.tech}
+              date={entry.data.publishingDate}
+              href={entry.data.url}
+              description={entry.data.description}
+              thumbnail={entry.data.thumbnail}
+              type={entry.data.type}
+            />
+          ))}
+        </ul>
+      )}
+    </div>
+  </ConsoleWorkspace>
+</Base>

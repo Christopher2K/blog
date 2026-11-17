@@ -1,0 +1,22 @@
+{
+  "title": "Projets indé",
+  "indexTitle": "Projets indé",
+  "indexEyebrow": "PROJETS / TOUS LES PROJETS",
+  "indexDescription": "Des outils conçus pour résoudre des problèmes concrets, développés en dehors de mon travail et disponibles en ligne.",
+  "sidebarIndex": "PROJETS / INDEX",
+  "projectsNoun": "projets",
+  "online": "EN LIGNE",
+  "sourceLabel": "CODE & EXPÉRIMENTATION",
+  "types": "Types",
+  "technologies": "Technologies",
+  "all": "Tous les projets",
+  "web": "Application web",
+  "mobile": "Application mobile",
+  "webShort": "APPLICATION WEB",
+  "mobileShort": "APPLICATION MOBILE",
+  "sidebarNote": "Conçus et développés à Toronto.",
+  "filter": "Filtrer",
+  "reset": "Réinitialiser",
+  "empty": "Aucun projet ne correspond à ce filtre.",
+  "pathLabel": "projets"
+}

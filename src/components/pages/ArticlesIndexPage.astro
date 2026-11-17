@@ -1,0 +1,306 @@
+---
+import Base from "@/layouts/Base.astro";
+import ConsoleWorkspace from "@/components/ConsoleWorkspace.astro";
+import ArticlesIndexSidebar from "@/components/ArticlesIndexSidebar.astro";
+import ArticleRow from "@/components/ArticleRow.astro";
+import { getBlogCollection } from "@/article";
+import { getTranslator, type SupportedLang } from "@/i18n";
+import { getBlogPath } from "@/utils/routes";
+import { css } from "@/style/css";
+import { ChevronDownIcon } from "lucide-solid";
+
+export interface Props {
+  locale: SupportedLang;
+}
+
+const { locale } = Astro.props;
+const t = getTranslator(locale);
+const articles = await getBlogCollection(locale);
+const years = [
+  ...new Set(
+    articles.map((article) =>
+      String(article.data.publishingDate.getFullYear()),
+    ),
+  ),
+].map((value) => ({
+  value,
+  count: articles.filter(
+    (article) => String(article.data.publishingDate.getFullYear()) === value,
+  ).length,
+}));
+const tags = [
+  ...new Set(articles.flatMap((article) => article.data.tags)),
+].toSorted();
+const yearParam = Astro.url.searchParams.get("year") ?? "";
+const tagParam = Astro.url.searchParams.get("tag") ?? "";
+const selectedYear = years.some((year) => year.value === yearParam)
+  ? yearParam
+  : "";
+const selectedTag = tags.includes(tagParam) ? tagParam : "";
+const filteredArticles = articles.filter(
+  (article) =>
+    (!selectedYear ||
+      String(article.data.publishingDate.getFullYear()) === selectedYear) &&
+    (!selectedTag || article.data.tags.includes(selectedTag)),
+);
+const filteredYears = [
+  ...new Set(
+    filteredArticles.map((article) =>
+      String(article.data.publishingDate.getFullYear()),
+    ),
+  ),
+];
+const range = years.length
+  ? `${years.at(-1)?.value} — ${years[0]?.value}`
+  : "—";
+const basePath = getBlogPath(locale);
+
+const mainStyle = css({
+  width: "100%",
+  maxWidth: "indexWidth",
+  mx: "auto",
+  px: { base: "6", md: "10" },
+  py: { base: "8", md: "10", lg: "12" },
+});
+const eyebrowStyle = css({
+  textStyle: "label",
+  color: "accent",
+  fontSize: "9px",
+});
+const titleStyle = css({
+  color: "ink",
+  fontSize: { base: "30px", md: "40px" },
+  lineHeight: "1.15",
+  fontWeight: "bold",
+  letterSpacing: "-0.035em",
+  mt: "4",
+});
+const descriptionStyle = css({
+  color: "dim",
+  fontSize: { base: "13px", md: "15px" },
+  lineHeight: "1.7",
+  maxWidth: "680px",
+  mt: "5",
+});
+const filterBarStyle = css({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  flexWrap: "wrap",
+  gap: "4",
+  mt: "8",
+  py: "4",
+  borderTopWidth: "1px",
+  borderBottomWidth: "1px",
+  borderColor: "rule",
+});
+const formStyle = css({
+  display: "flex",
+  alignItems: "center",
+  flexWrap: "wrap",
+  gap: "3",
+});
+const filterGroupStyle = css({
+  display: "flex",
+  alignItems: "center",
+  gap: "3",
+});
+const compactFilterGroupStyle = css({
+  display: { base: "flex", lg: "none" },
+  alignItems: "center",
+  gap: "3",
+});
+const selectWrapStyle = css({
+  position: "relative",
+  display: "inline-flex",
+  alignItems: "center",
+});
+const selectStyle = css({
+  minHeight: "44px",
+  minWidth: "180px",
+  appearance: "none",
+  bg: "panel",
+  color: "ink",
+  borderWidth: "1px",
+  borderColor: "ruleStrong",
+  borderRadius: "none",
+  pl: "3",
+  pr: "10",
+  fontSize: "11px",
+});
+const buttonStyle = css({
+  minHeight: "44px",
+  px: "4",
+  bg: "accent",
+  color: "bg",
+  border: "0",
+  borderRadius: "none",
+  textStyle: "label",
+  fontSize: "9px",
+});
+const resultStyle = css({ textStyle: "label", color: "dim", fontSize: "9px" });
+const resetStyle = css({
+  display: "inline-flex",
+  alignItems: "center",
+  minHeight: "44px",
+  color: "accent",
+  fontSize: "10px",
+  _hover: { textDecoration: "underline" },
+});
+const yearHeadingStyle = css({
+  display: "flex",
+  alignItems: "baseline",
+  justifyContent: "space-between",
+  gap: "4",
+  color: "ink",
+  fontSize: "24px",
+  fontWeight: "bold",
+  mt: "8",
+  pb: "3",
+  borderBottomWidth: "1px",
+  borderColor: "ruleStrong",
+});
+---
+
+<Base
+  title={t("blog:indexTitle")}
+  description={t("blog:indexDescription")}
+  canonicalPath={basePath}
+  alternatePaths={{ fr: getBlogPath("fr"), en: getBlogPath("en") }}
+  section="blog"
+  currentFile={`~/${t("blog:pathLabel")}/index`}
+  frUrl={getBlogPath("fr")}
+  enUrl={getBlogPath("en")}
+>
+  <ConsoleWorkspace>
+    <ArticlesIndexSidebar
+      slot="sidebar"
+      {years}
+      {tags}
+      {selectedYear}
+      {selectedTag}
+      total={articles.length}
+      {range}
+    />
+    <div class={mainStyle}>
+      <header>
+        <p class={eyebrowStyle}>{t("blog:indexEyebrow")}</p>
+        <h1 class={titleStyle}>{t("blog:indexTitle")}</h1>
+        <p class={descriptionStyle}>{t("blog:indexDescription")}</p>
+      </header>
+      <div class={filterBarStyle}>
+        <form method="get" action={basePath} class={formStyle}>
+          <div class={filterGroupStyle}>
+            <label for="year-filter" class={resultStyle}>
+              {t("blog:years")}
+            </label>
+            <span class={selectWrapStyle}>
+              <select id="year-filter" name="year" class={selectStyle}>
+                <option value="">{t("blog:allYears")}</option>
+                {years.map((year) => (
+                  <option
+                    value={year.value}
+                    selected={selectedYear === year.value}
+                  >
+                    {year.value} ({year.count})
+                  </option>
+                ))}
+              </select>
+              <ChevronDownIcon
+                class={css({
+                  position: "absolute",
+                  right: "3",
+                  pointerEvents: "none",
+                  color: "dim",
+                })}
+                size={14}
+              />
+            </span>
+          </div>
+          <div class={compactFilterGroupStyle}>
+            <label for="tag-filter" class={resultStyle}>
+              {t("blog:topics")}
+            </label>
+            <span class={selectWrapStyle}>
+              <select id="tag-filter" name="tag" class={selectStyle}>
+                <option value="">{t("blog:allTopics")}</option>
+                {tags.map((tag) => (
+                  <option value={tag} selected={selectedTag === tag}>
+                    {tag}
+                  </option>
+                ))}
+              </select>
+              <ChevronDownIcon
+                class={css({
+                  position: "absolute",
+                  right: "3",
+                  pointerEvents: "none",
+                  color: "dim",
+                })}
+                size={14}
+              />
+            </span>
+          </div>
+          <button type="submit" class={buttonStyle}>
+            {t("blog:filter")}
+          </button>
+        </form>
+        <div class={formStyle}>
+          <span class={resultStyle}>
+            {filteredArticles.length} {t("blog:results")}
+          </span>
+          {(selectedYear || selectedTag) && (
+            <a href={basePath} class={resetStyle}>
+              {t("blog:reset")}
+            </a>
+          )}
+        </div>
+      </div>
+      {selectedTag && (
+        <p class={css({ color: "secondary", fontSize: "11px", mt: "4" })}>
+          {t("blog:topics")}: {selectedTag}
+        </p>
+      )}
+      {filteredArticles.length === 0 ? (
+        <p class={css({ color: "dim", textStyle: "body", py: "12" })}>
+          {t("blog:empty")}
+        </p>
+      ) : (
+        filteredYears.map((year) => (
+          <section aria-labelledby={`year-${year}`}>
+            <h2 id={`year-${year}`} class={yearHeadingStyle}>
+              <span>{year}</span>
+              <span class={resultStyle}>
+                {
+                  filteredArticles.filter(
+                    (article) =>
+                      String(article.data.publishingDate.getFullYear()) ===
+                      year,
+                  ).length
+                }{" "}
+                {t("home:articlesUnit")}
+              </span>
+            </h2>
+            <ul>
+              {filteredArticles
+                .filter(
+                  (article) =>
+                    String(article.data.publishingDate.getFullYear()) === year,
+                )
+                .map((entry) => (
+                  <ArticleRow
+                    detailed
+                    title={entry.data.title}
+                    description={entry.data.description}
+                    date={entry.data.publishingDate}
+                    tags={entry.data.tags}
+                    href={entry.path}
+                  />
+                ))}
+            </ul>
+          </section>
+        ))
+      )}
+    </div>
+  </ConsoleWorkspace>
+</Base>

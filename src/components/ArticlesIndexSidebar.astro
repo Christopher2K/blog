@@ -1,0 +1,147 @@
+---
+import { ArrowLeftIcon } from "lucide-solid";
+import { getLocale, getTranslator } from "@/i18n";
+import { getBlogPath, getHomePath, getRssPath } from "@/utils/routes";
+import { css } from "@/style/css";
+
+export interface Props {
+  years: { value: string; count: number }[];
+  tags: string[];
+  selectedYear: string;
+  selectedTag: string;
+  total: number;
+  range: string;
+}
+
+const { years, tags, selectedYear, selectedTag, total, range } = Astro.props;
+const locale = getLocale(Astro.locals.locale);
+const t = getTranslator(locale);
+const base = getBlogPath(locale);
+function filterUrl(year: string, tag: string) {
+  const params = new URLSearchParams();
+  if (year) params.set("year", year);
+  if (tag) params.set("tag", tag);
+  const query = params.toString();
+  return query ? `${base}?${query}` : base;
+}
+
+const sidebarStyle = css({
+  display: { base: "none", lg: "block" },
+  px: "6",
+  py: "8",
+  fontSize: "11px",
+});
+const backStyle = css({
+  display: "inline-flex",
+  alignItems: "center",
+  gap: "2",
+  minHeight: "44px",
+  color: "dim",
+  _hover: { color: "accent" },
+});
+const sectionStyle = css({
+  mt: "8",
+  pt: "6",
+  borderTopWidth: "1px",
+  borderColor: "rule",
+});
+const headingStyle = css({
+  color: "ink",
+  fontSize: "12px",
+  fontWeight: "bold",
+  mb: "3",
+});
+const filterLinkStyle = css({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  gap: "3",
+  minHeight: "36px",
+  px: "3",
+  color: "dim",
+  borderLeftWidth: "2px",
+  borderColor: "transparent",
+  _hover: { color: "ink", bg: "ruleSubtle" },
+});
+const activeStyle = css({
+  color: "ink",
+  bg: "ruleSubtle",
+  borderColor: "ruleAccent",
+});
+---
+
+<div class={sidebarStyle}>
+  <a href={getHomePath(locale)} class={backStyle}>
+    <ArrowLeftIcon size={14} />
+    {t("blog:backHome")}
+  </a>
+  <section class={sectionStyle}>
+    <p class={css({ textStyle: "label", color: "dim" })}>
+      {t("blog:sidebarIndex")}
+    </p>
+    <p
+      class={css({
+        color: "ink",
+        fontSize: "24px",
+        fontWeight: "bold",
+        mt: "3",
+      })}
+    >
+      {String(total).padStart(2, "0")} {t("blog:articlesNoun")}
+    </p>
+    <p class={css({ color: "dim", fontSize: "10px", mt: "2" })}>{range}</p>
+  </section>
+  <nav class={sectionStyle} aria-labelledby="years-sidebar">
+    <h2 id="years-sidebar" class={headingStyle}>
+      {t("blog:years")}
+    </h2>
+    <a
+      href={filterUrl("", selectedTag)}
+      class={`${filterLinkStyle} ${!selectedYear ? activeStyle : ""}`}
+    >
+      <span>{t("blog:allYears")}</span>
+    </a>
+    {years.map((year) => (
+      <a
+        href={filterUrl(year.value, selectedTag)}
+        class={`${filterLinkStyle} ${selectedYear === year.value ? activeStyle : ""}`}
+        aria-current={selectedYear === year.value ? "true" : undefined}
+      >
+        <span>{year.value}</span>
+        <span class={css({ color: "secondary", fontSize: "9px" })}>
+          {String(year.count).padStart(2, "0")}
+        </span>
+      </a>
+    ))}
+  </nav>
+  <nav class={sectionStyle} aria-labelledby="topics-sidebar">
+    <h2 id="topics-sidebar" class={headingStyle}>
+      {t("blog:topics")}
+    </h2>
+    <a
+      href={filterUrl(selectedYear, "")}
+      class={`${filterLinkStyle} ${!selectedTag ? activeStyle : ""}`}
+    >
+      <span>{t("blog:allTopics")}</span>
+    </a>
+    {tags.map((tag) => (
+      <a
+        href={filterUrl(selectedYear, tag)}
+        class={`${filterLinkStyle} ${selectedTag === tag ? activeStyle : ""}`}
+        aria-current={selectedTag === tag ? "true" : undefined}
+      >
+        <span>{tag}</span>
+      </a>
+    ))}
+  </nav>
+  <div
+    class={`${sectionStyle} ${css({ color: "dim", fontSize: "9px", lineHeight: "1.8" })}`}
+  >
+    <p>
+      <a href={getRssPath(locale)} class={css({ color: "secondary" })}>
+        rss.xml
+      </a>
+    </p>
+    <p>utf-8 · {locale} · LF</p>
+  </div>
+</div>

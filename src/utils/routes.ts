@@ -4,6 +4,14 @@ export function getHomePath(_locale: SupportedLang) {
   return "/";
 }
 
+export function getBlogPath(_locale: SupportedLang) {
+  return "/blog";
+}
+
+export function getProjectsPath(_locale: SupportedLang) {
+  return "/projects";
+}
+
 export function getArticlePath(_locale: SupportedLang, slug: string) {
   return `/blog/${slug}`;
 }

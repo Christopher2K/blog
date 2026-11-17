@@ -12,7 +12,10 @@ export default defineConfig({
   integrations: [
     solidJs(),
     expressiveCode({
-      theme: "catppuccin-mocha",
+      themes: ["gruvbox-dark-medium", "gruvbox-light-medium"],
+      styleOverrides: {
+        borderRadius: "2px",
+      },
     }),
     mdx(),
   ],

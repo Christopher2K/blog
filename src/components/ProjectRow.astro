@@ -1,72 +1,174 @@
 ---
+import { Image } from "astro:assets";
 import { ArrowUpRightIcon } from "lucide-solid";
 import { format } from "@/utils/date";
-import { getLocale } from "@/i18n";
+import { getLocale, getTranslator } from "@/i18n";
 import { css } from "@/style/css";
+import askLiveImage from "@/assets/projects/project-ask-live.png";
+import concentrationImage from "@/assets/projects/project-concentration.png";
 
 export interface Props {
   title: string;
   href: string;
   tech: string[];
   date: Date;
+  description: string;
+  thumbnail: string;
+  type: "web" | "mobile";
+  index?: number;
+  detailed?: boolean;
 }
-const { title, href, tech, date } = Astro.props;
+
+const {
+  title,
+  href,
+  tech,
+  date,
+  description,
+  thumbnail,
+  type,
+  index,
+  detailed = false,
+} = Astro.props;
 const locale = getLocale(Astro.locals.locale);
+const t = getTranslator(locale);
+const thumbnails = {
+  "/projects/project-ask-live.png": askLiveImage,
+  "/projects/project-concentration.png": concentrationImage,
+};
+const image = thumbnails[thumbnail as keyof typeof thumbnails] ?? askLiveImage;
+const domain = new URL(href).hostname;
 
 const rowStyle = css({
+  display: "grid",
+  gridTemplateColumns: {
+    base: "minmax(0, 1fr)",
+    lg: detailed ? "minmax(0, 1fr) 300px" : "48px minmax(0, 1fr) 240px",
+    md: detailed ? "minmax(0, 1fr) 240px" : undefined,
+  },
+  gap: { base: "5", md: "8" },
+  alignItems: "center",
+  py: { base: "6", md: "8" },
+  borderBottomWidth: "1px",
+  borderColor: "ruleSubtle",
+});
+
+const contentStyle = css({ minWidth: "0" });
+const metaStyle = css({
   display: "flex",
   alignItems: "center",
-  gap: "6",
-  w: "full",
-  px: "2",
-  py: "5",
-  borderBottom: "1px solid",
-  borderColor: "border",
-  transition: "background-color 0.15s ease",
-  _hover: {
-    bg: "surface",
-    "& .project-title": {
-      color: "accentHover",
-    },
-  },
+  flexWrap: "wrap",
+  gap: "3",
+  color: "dim",
+  textStyle: "label",
+  fontSize: "9px",
 });
-
-const yearStyle = css({
-  fontFamily: "body",
-  fontSize: "xs",
-  color: "inkMuted",
-  w: "24",
-  flexShrink: "0",
-});
-
 const titleStyle = css({
-  textStyle: { base: "heading4", md: "heading3" },
   color: "ink",
-  flex: "1",
-  transition: "color 0.15s ease",
+  fontSize: detailed
+    ? { base: "24px", md: "26px" }
+    : { base: "20px", md: "21px" },
+  lineHeight: "1.25",
+  fontWeight: "bold",
+  mt: "3",
+  _groupHover: { color: "accent" },
 });
-
+const descriptionStyle = css({
+  color: "dim",
+  fontSize: detailed ? "12px" : "11px",
+  lineHeight: "1.7",
+  mt: "3",
+  maxWidth: "580px",
+});
 const techStyle = css({
-  display: { base: "none", md: "block" },
-  fontFamily: "body",
-  fontSize: "11px",
-  letterSpacing: "0.06em",
-  textTransform: "uppercase",
-  color: "inkMuted",
-  flexShrink: "0",
+  color: "secondary",
+  fontSize: detailed ? "10px" : "9px",
+  lineHeight: "1.6",
+  mt: "4",
 });
-
-const iconStyle = css({
-  color: "accentHover",
-  flexShrink: "0",
+const imageStyle = css({
+  width: "100%",
+  height: {
+    base: "160px",
+    md: detailed ? "135px" : "135px",
+    lg: detailed ? "168px" : "135px",
+  },
+  objectFit: "cover",
+  borderRadius: "md",
+  borderWidth: "1px",
+  borderColor: "rule",
+});
+const domainStyle = css({
+  display: "inline-flex",
+  alignItems: "center",
+  gap: "2",
+  color: "accent",
+  fontSize: "11px",
+  mt: "4",
+  minHeight: "36px",
+  _hover: { textDecoration: "underline", textUnderlineOffset: "3px" },
 });
 ---
 
-<li>
-  <a href={href} target="_blank" rel="noopener noreferrer" class={rowStyle}>
-    <span class={yearStyle}>{format(date, locale, "yyyy")}</span>
-    <span class={`project-title ${titleStyle}`}>{title}</span>
-    <span class={techStyle}>{tech.join(" · ")}</span>
-    <ArrowUpRightIcon class={iconStyle} size={18} />
-  </a>
+<li class={css({ _hover: { "& .project-title": { color: "accent" } } })}>
+  <article class={rowStyle}>
+    {!detailed && (
+      <span
+        class={`${metaStyle} ${css({ display: { base: "none", lg: "block" } })}`}
+      >
+        {format(date, locale, "yyyy")}
+      </span>
+    )}
+    <div class={contentStyle}>
+      <div
+        class={`${metaStyle} ${detailed ? "" : css({ display: { base: "flex", lg: "none" } })}`}
+      >
+        {index !== undefined && (
+          <span class={css({ color: "secondary" })}>
+            {String(index).padStart(2, "0")}
+          </span>
+        )}
+        <time datetime={date.toISOString()}>
+          {format(date, locale, detailed ? "MMMM yyyy" : "yyyy")}
+        </time>
+        {detailed && (
+          <span class={css({ color: "secondary" })}>
+            {t(type === "web" ? "projects:webShort" : "projects:mobileShort")}
+          </span>
+        )}
+      </div>
+      <h3 class={`project-title ${titleStyle}`}>
+        <a href={href} target="_blank" rel="noopener noreferrer">
+          {detailed ? title : `${title.toLowerCase().replaceAll(" ", "-")}/`}
+        </a>
+      </h3>
+      <p class={descriptionStyle}>{description}</p>
+      <p class={techStyle}>{tech.join(" · ")}</p>
+      {detailed && (
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          class={domainStyle}
+        >
+          {domain}
+          <ArrowUpRightIcon size={14} aria-hidden="true" />
+        </a>
+      )}
+    </div>
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`${t("common:projects.ctaLabel")}: ${title}`}
+    >
+      <Image
+        src={image}
+        alt={`${title} — ${domain}`}
+        class={imageStyle}
+        widths={[320, 480, 640]}
+        sizes="(min-width: 1024px) 300px, 100vw"
+      />
+    </a>
+  </article>
 </li>

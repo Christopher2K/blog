@@ -1,6 +1,25 @@
 {
   "title": "Accueil",
-  "bio": "Plus de 8 ans que je travaille en tant que software engineer, plus de 3 ans que je stream du code sur Twitch, plus de 28 ans sur Terre... J'ai surement deux ou trois trucs à te partager je pense!",
-  "blogSectionTitle": "Blog",
-  "projectsSectionTitle": "Projets indé"
+  "bio": "// Software engineer — 8+ ans à construire pour le web et le mobile.\n// Streamer — 3+ ans de live coding sur Twitch.\n// J’écris ce que j’apprends, sans promesse de méthode miracle.",
+  "blogSectionTitle": "Journal",
+  "projectsSectionTitle": "Projets indé",
+  "readme": "cat README.md",
+  "breadcrumb": "ACCUEIL / README",
+  "yearsDev": "ANNÉES DE DEV",
+  "yearsLive": "ANNÉES DE LIVE",
+  "articles": "ARTICLES",
+  "projects": "PROJETS",
+  "articlesUnit": "ARTICLES",
+  "projectsUnit": "PROJETS SÉLECTIONNÉS",
+  "mostRecent": "DU PLUS RÉCENT",
+  "latest": "DERNIÈRE",
+  "allArticles": "Tous les articles",
+  "allProjects": "Tous les projets",
+  "date": "DATE",
+  "titleColumn": "TITRE",
+  "tags": "TAGS",
+  "open": "OUVRIR",
+  "liveLabel": "LIVE CODING SUR TWITCH",
+  "join": "REJOINDRE",
+  "joinStream": "REJOINDRE LE STREAM"
 }

@@ -1,4 +1,26 @@
 {
   "publishedOn": "Published on {{ date }}",
-  "alternateLangLink": "🇫🇷 Article disponible en français"
+  "alternateLangLink": "Read in French",
+  "indexTitle": "All articles",
+  "indexEyebrow": "JOURNAL / ALL ARTICLES",
+  "indexDescription": "Notes on development, careers, tools, and everything I learn while building software.",
+  "sidebarIndex": "JOURNAL / INDEX",
+  "articlesNoun": "articles",
+  "years": "Years",
+  "topics": "Topics",
+  "allYears": "All years",
+  "allTopics": "All topics",
+  "results": "RESULTS",
+  "empty": "No articles match these filters.",
+  "backHome": "Home",
+  "backBlog": "Back to the journal",
+  "contents": "Contents",
+  "publishedLabel": "PUBLISHED ON",
+  "writtenBy": "WRITTEN BY",
+  "articleNoun": "ARTICLE",
+  "readNext": "Read next",
+  "filter": "Filter",
+  "reset": "Reset filters",
+  "pathLabel": "journal",
+  "language": "ENGLISH"
 }

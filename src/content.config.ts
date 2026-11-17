@@ -37,6 +37,7 @@ const projectsCollection = defineCollection({
     url: z.string(),
     publishingDate: z.string(),
     tech: z.array(z.string()),
+    type: z.enum(["web", "mobile"]),
   }),
 });
 

@@ -1,0 +1,168 @@
+---
+import { getLocale, getTranslator } from "@/i18n";
+import {
+  getBlogPath,
+  getHomePath,
+  getProjectsPath,
+  getRssPath,
+} from "@/utils/routes";
+import { github, twitch, youtube } from "@/utils/link";
+import { css } from "@/style/css";
+
+export interface Props {
+  articleCount: number;
+  projectCount: number;
+}
+
+const { articleCount, projectCount } = Astro.props;
+const locale = getLocale(Astro.locals.locale);
+const t = getTranslator(locale);
+const items = [
+  {
+    label: t("common:nav.home").toLowerCase(),
+    href: getHomePath(locale),
+    meta: "",
+    active: true,
+    branch: "├─",
+  },
+  {
+    label: t("common:nav.blog").toLowerCase(),
+    href: getBlogPath(locale),
+    meta: String(articleCount).padStart(2, "0"),
+    active: false,
+    branch: "├─",
+  },
+  {
+    label: t("common:nav.projects").toLowerCase(),
+    href: getProjectsPath(locale),
+    meta: String(projectCount).padStart(2, "0"),
+    active: false,
+    branch: "├─",
+  },
+  {
+    label: t("common:nav.videos").toLowerCase(),
+    href: youtube,
+    meta: "↗",
+    active: false,
+    branch: "├─",
+  },
+  {
+    label: t("common:nav.twitch").toLowerCase(),
+    href: twitch,
+    meta: "↗",
+    active: false,
+    branch: "└─",
+  },
+];
+
+const sidebarStyle = css({
+  display: { base: "none", lg: "flex" },
+  flexDirection: "column",
+  minHeight: "100%",
+  fontSize: "11px",
+});
+
+const identityStyle = css({
+  px: "6",
+  py: "6",
+  borderBottomWidth: "1px",
+  borderColor: "rule",
+});
+const sectionStyle = css({
+  px: "6",
+  py: "6",
+  borderBottomWidth: "1px",
+  borderColor: "rule",
+});
+const labelStyle = css({ textStyle: "label", color: "dim", mb: "4" });
+const rowStyle = css({
+  display: "grid",
+  gridTemplateColumns: "20px minmax(0, 1fr) auto",
+  alignItems: "center",
+  minHeight: "36px",
+  color: "dim",
+  borderLeftWidth: "2px",
+  borderColor: "transparent",
+  _hover: { color: "ink", bg: "ruleSubtle" },
+});
+const activeRowStyle = css({
+  color: "ink",
+  bg: "ruleSubtle",
+  borderColor: "ruleAccent",
+});
+const bottomStyle = css({
+  mt: "auto",
+  px: "6",
+  py: "5",
+  color: "dim",
+  fontSize: "9px",
+  lineHeight: "1.8",
+});
+---
+
+<div class={sidebarStyle}>
+  <div class={identityStyle}>
+    <p class={css({ fontSize: "14px", fontWeight: "bold", color: "ink" })}>
+      christopher
+    </p>
+    <p class={css({ color: "secondary", fontSize: "10px", mt: "1" })}>
+      @llcoolchris_
+    </p>
+  </div>
+  <nav class={sectionStyle} aria-label={t("common:nav.label")}>
+    <p class={`${labelStyle} ${css({ textTransform: "none" })}`}>
+      ~/christopher
+    </p>
+    <ul>
+      {items.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            class={`${rowStyle} ${item.active ? activeRowStyle : ""}`}
+            target={item.meta === "↗" ? "_blank" : undefined}
+            rel={item.meta === "↗" ? "noopener noreferrer" : undefined}
+            aria-current={item.active ? "page" : undefined}
+          >
+            <span aria-hidden="true">{item.branch}</span>
+            <span>{item.label}</span>
+            <span class={css({ color: "secondary", pr: "2" })}>
+              {item.meta}
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+  <section class={sectionStyle}>
+    <h2 class={labelStyle}>{t("common:console.currentContext")}</h2>
+    <p class={css({ color: "dim", lineHeight: "2", whiteSpace: "pre-line" })}>
+      {t("common:console.role")}
+      {"\n"}
+      {t("common:console.based")}
+      {"\n"}
+      {t("common:console.focus")}
+    </p>
+  </section>
+  <section class={sectionStyle}>
+    <h2 class={labelStyle}>{t("common:console.usefulCommands")}</h2>
+    <p>
+      <a href={getRssPath(locale)} class={css({ _hover: { color: "accent" } })}>
+        {t("common:console.rssCommand")}
+      </a>
+    </p>
+    <p class={css({ mt: "2" })}>
+      <a
+        href={github}
+        target="_blank"
+        rel="noopener noreferrer"
+        class={css({ _hover: { color: "accent" } })}
+      >
+        {t("common:console.githubCommand")}
+      </a>
+    </p>
+  </section>
+  <div class={bottomStyle}>
+    <p>utf-8 · {locale} · LF</p>
+    <p>{t("common:console.build")}</p>
+  </div>
+</div>

@@ -30,7 +30,11 @@ export const onRequest = defineMiddleware(async (context, next) => {
     return context.redirect(`/${search}`, 308);
   }
 
-  if (pathname.startsWith("/en/blog/")) {
+  if (
+    pathname === "/en/blog" ||
+    pathname === "/en/projects" ||
+    pathname.startsWith("/en/blog/")
+  ) {
     setLocaleCookie(context.cookies, "en");
     return context.redirect(`${pathname.slice(3)}${search}`, 308);
   }
@@ -43,6 +47,10 @@ export const onRequest = defineMiddleware(async (context, next) => {
   const response = await next();
   const isNegotiated =
     pathname === "/" ||
+    pathname === "/blog" ||
+    pathname === "/blog/" ||
+    pathname === "/projects" ||
+    pathname === "/projects/" ||
     pathname.startsWith("/blog/") ||
     (pathname === "/rss.xml" && !context.url.searchParams.has("lang"));
 

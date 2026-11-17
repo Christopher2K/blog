@@ -1,11 +1,13 @@
 {
   "nav": {
     "home": "Accueil",
-    "blog": "Blog",
+    "blog": "Journal",
     "projects": "Projets",
     "videos": "Vidéos",
-    "twitch": "Live coding",
-    "rss": "Abonne-toi au flux RSS"
+    "twitch": "Twitch",
+    "rss": "Abonne-toi au flux RSS",
+    "label": "Navigation principale",
+    "location": "toronto, ca"
   },
   "footer": {
     "twitter": "Mon profil Twitter",
@@ -13,8 +15,11 @@
     "github": "Mon compte Github",
     "twitch": "Ma chaine Twitch",
     "youtube": "Ma chaine Youtube",
-    "credits": "Tous droits réservés © Christopher N. Katoyi Kaba - 2024",
-    "rss": "Abonne-toi au flux RSS"
+    "credits": "© 2024 Christopher N. Katoyi Kaba",
+    "shortCredits": "© 2024 CNK",
+    "rss": "[rss]",
+    "source": "[github]",
+    "mode": "NORMAL"
   },
   "seo": {
     "titleTemplate": "{{ title }} | Christopher N. Katoyi Kaba",
@@ -22,6 +27,17 @@
     "defaultDescription": "Viens voir les articles de Christopher Katoyi Kaba quant au développement web, au développement indépendant, aux SAAS et à l'organisation.",
     "defaultOgTitle": "Le site où je raconte comment faire du logiciel de qualité",
     "defaultOgImageAlt": "{{ title }}, Photo de Christopher Katoyi Kaba, Ingénieur logiciel vivant à Toronto, dessin à la main d'un clavier splitté"
+  },
+  "skipToContent": "Aller au contenu",
+  "console": {
+    "currentContext": "// CURRENT CONTEXT",
+    "role": "role       software engineer",
+    "based": "based      toronto, canada",
+    "focus": "writing    web / mobile / career",
+    "usefulCommands": "// USEFUL COMMANDS",
+    "rssCommand": "$ cat rss.xml",
+    "githubCommand": "$ open github",
+    "build": "astro / typescript"
   },
   "projects": {
     "ctaLabel": "En savoir plus"

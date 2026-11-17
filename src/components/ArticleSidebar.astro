@@ -1,0 +1,144 @@
+---
+import { ArrowLeftIcon, ArrowUpRightIcon } from "lucide-solid";
+import { format } from "@/utils/date";
+import { getTranslator } from "@/i18n";
+import { getBlogPath } from "@/utils/routes";
+import type { BlogArticle } from "@/article";
+import { css } from "@/style/css";
+
+export interface Props {
+  entry: BlogArticle;
+  headings: { depth: number; slug: string; text: string }[];
+  position: number;
+  total: number;
+}
+
+const { entry, headings, position, total } = Astro.props;
+const lang = entry.locale;
+const t = getTranslator(lang);
+
+const sidebarStyle = css({
+  display: { base: "none", lg: "block" },
+  px: "6",
+  py: "8",
+  fontSize: "11px",
+});
+const backStyle = css({
+  display: "inline-flex",
+  alignItems: "center",
+  gap: "2",
+  minHeight: "44px",
+  color: "dim",
+  _hover: { color: "accent" },
+});
+const sectionStyle = css({
+  mt: "8",
+  pt: "6",
+  borderTopWidth: "1px",
+  borderColor: "rule",
+});
+const labelStyle = css({ textStyle: "label", color: "dim", mb: "3" });
+const tocStyle = css({ display: "flex", flexDirection: "column", gap: "1" });
+const tocLinkStyle = css({
+  display: "block",
+  py: "2",
+  color: "dim",
+  lineHeight: "1.5",
+  borderLeftWidth: "2px",
+  borderColor: "transparent",
+  pl: "3",
+  _hover: { color: "ink", borderColor: "ruleAccent" },
+});
+const translationStyle = css({
+  display: "inline-flex",
+  alignItems: "center",
+  gap: "2",
+  minHeight: "44px",
+  color: "accent",
+  border: "0",
+  bg: "transparent",
+  p: "0",
+  fontSize: "10px",
+  _hover: { textDecoration: "underline", textUnderlineOffset: "3px" },
+});
+---
+
+<div class={sidebarStyle}>
+  <a href={getBlogPath(lang)} class={backStyle}>
+    <ArrowLeftIcon size={14} />
+    {t("blog:backBlog")}
+  </a>
+  <section class={sectionStyle}>
+    <p class={labelStyle}>
+      {t("blog:articleNoun")} {String(position).padStart(2, "0")} /{" "}
+      {String(total).padStart(2, "0")}
+    </p>
+    <h2 class={labelStyle}>{t("blog:publishedLabel")}</h2>
+    <p class={css({ color: "ink", fontSize: "12px" })}>
+      {format(entry.data.publishingDate, lang)}
+    </p>
+    <h2 class={`${labelStyle} ${css({ mt: "6" })}`}>{t("blog:writtenBy")}</h2>
+    <p class={css({ color: "dim", lineHeight: "1.6" })}>
+      Christopher N. Katoyi Kaba
+    </p>
+  </section>
+  {headings.length > 0 && (
+    <nav class={sectionStyle} aria-labelledby="contents-sidebar">
+      <h2
+        id="contents-sidebar"
+        class={css({
+          color: "ink",
+          fontSize: "13px",
+          fontWeight: "bold",
+          mb: "3",
+        })}
+      >
+        {t("blog:contents")}
+      </h2>
+      <div class={tocStyle}>
+        {headings.map((heading) => (
+          <a href={`#${heading.slug}`} class={tocLinkStyle}>
+            {heading.text}
+          </a>
+        ))}
+      </div>
+    </nav>
+  )}
+  {entry.data.tags.length > 0 && (
+    <section class={sectionStyle}>
+      <h2 class={css({ color: "ink", fontSize: "11px", mb: "3" })}>
+        {t("blog:topics")}
+      </h2>
+      <p
+        class={css({
+          color: "secondary",
+          whiteSpace: "pre-line",
+          lineHeight: "1.8",
+        })}
+      >
+        {entry.data.tags.join("\n")}
+      </p>
+    </section>
+  )}
+  {entry.translation && (
+    <section class={sectionStyle}>
+      <form method="post" action="/locale">
+        <input type="hidden" name="locale" value={entry.translation.locale} />
+        <input type="hidden" name="returnTo" value={entry.translation.path} />
+        <button class={translationStyle} type="submit">
+          {t("blog:alternateLangLink")}
+          <ArrowUpRightIcon size={13} />
+        </button>
+      </form>
+    </section>
+  )}
+  <div
+    class={`${sectionStyle} ${css({ color: "dim", fontSize: "8px", lineHeight: "1.8" })}`}
+  >
+    <p>
+      ~/{t("blog:pathLabel")}/{entry.data.publishingDate.getFullYear()}/
+      {entry.data.slug}
+    </p>
+    <p>utf-8 · {lang} · LF</p>
+  </div>
+</div>
