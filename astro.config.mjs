@@ -8,6 +8,9 @@ import expressiveCode from "astro-expressive-code";
 export default defineConfig({
   site: "https://christopher.engineering",
   output: "server",
+  build: {
+    inlineStylesheets: "always",
+  },
   adapter: node({ mode: "standalone" }),
   integrations: [
     solidJs(),
