@@ -22,5 +22,10 @@
   "filter": "Filter",
   "reset": "Reset filters",
   "pathLabel": "journal",
-  "language": "ENGLISH"
+  "language": "ENGLISH",
+  "imageViewerTitle": "Image viewer",
+  "openImage": "Enlarge image",
+  "closeImageViewer": "Close image viewer",
+  "previousImage": "Previous image",
+  "nextImage": "Next image"
 }

@@ -8,6 +8,7 @@ import Base from "@/layouts/Base.astro";
 import Tag from "@/components/Tag.astro";
 import ArticleSidebar from "@/components/ArticleSidebar.astro";
 import ConsoleWorkspace from "@/components/ConsoleWorkspace.astro";
+import ImageViewer from "@/components/ImageViewer.astro";
 import {
   getArticleAlternatePaths,
   getBlogCollection,
@@ -161,6 +162,7 @@ const contentStyle = css({
   },
   "& pre": { maxWidth: "100%", overflowX: "auto" },
   "& img": {
+    display: "block",
     mx: "auto",
     my: "10",
     width: "100%",
@@ -168,6 +170,18 @@ const contentStyle = css({
     borderRadius: "md",
     borderWidth: "1px",
     borderColor: "rule",
+  },
+  "& [data-image-viewer-trigger]": {
+    display: "block",
+    width: "100%",
+    my: "10",
+    p: "0",
+    border: "0",
+    bg: "transparent",
+    color: "inherit",
+    textAlign: "left",
+    cursor: "zoom-in",
+    "& img": { m: "0" },
   },
   "& blockquote": {
     my: "8",
@@ -293,9 +307,10 @@ const nextStyle = css({
           </nav>
         </details>
       )}
-      <div class={contentStyle}>
+      <div class={contentStyle} data-article-content>
         <Content />
       </div>
+      <ImageViewer {lang} />
       {nextArticle && (
         <a href={nextArticle.path} class={nextStyle}>
           <span class={css({ textStyle: "label", color: "dim" })}>

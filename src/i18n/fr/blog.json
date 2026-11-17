@@ -22,5 +22,10 @@
   "filter": "Filtrer",
   "reset": "Réinitialiser",
   "pathLabel": "journal",
-  "language": "FRANÇAIS"
+  "language": "FRANÇAIS",
+  "imageViewerTitle": "Visionneuse d’images",
+  "openImage": "Agrandir l’image",
+  "closeImageViewer": "Fermer la visionneuse",
+  "previousImage": "Image précédente",
+  "nextImage": "Image suivante"
 }

@@ -1,0 +1,297 @@
+---
+import { css } from "@/style/css";
+import { getTranslator, type SupportedLang } from "@/i18n";
+import { ChevronLeftIcon, ChevronRightIcon, XIcon } from "lucide-solid";
+
+export interface Props {
+  lang: SupportedLang;
+}
+
+const { lang } = Astro.props;
+const t = getTranslator(lang);
+
+const dialogStyle = css({
+  position: "fixed",
+  inset: "0",
+  width: "100%",
+  maxWidth: "none",
+  height: "100dvh",
+  maxHeight: "none",
+  m: "0",
+  p: "0",
+  border: "0",
+  bg: "bg",
+  color: "ink",
+  overflow: "hidden",
+  "&::backdrop": { bg: "bg" },
+});
+const layoutStyle = css({
+  display: "grid",
+  gridTemplateRows: "auto minmax(0, 1fr) auto",
+  height: "100%",
+});
+const toolbarStyle = css({
+  display: "flex",
+  alignItems: "center",
+  gap: "4",
+  minHeight: "16",
+  px: { base: "4", md: "6" },
+  borderBottomWidth: "1px",
+  borderColor: "ruleStrong",
+  bg: "panel",
+});
+const titleStyle = css({
+  textStyle: "label",
+  color: "dim",
+  mr: "auto",
+});
+const counterStyle = css({
+  textStyle: "label",
+  color: "secondary",
+  whiteSpace: "nowrap",
+});
+const controlStyle = css({
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: "2",
+  minWidth: "44px",
+  minHeight: "44px",
+  px: "3",
+  borderWidth: "1px",
+  borderColor: "rule",
+  borderRadius: "sm",
+  bg: "transparent",
+  color: "ink",
+  textStyle: "label",
+  _hover: { color: "accent", bg: "panel" },
+  _disabled: { opacity: "0.4", cursor: "not-allowed" },
+});
+const closeButtonStyle = css({
+  p: "0",
+  flexShrink: "0",
+});
+const figureStyle = css({
+  display: "flex",
+  flexDirection: "column",
+  minHeight: "0",
+  m: "0",
+  overflow: "hidden",
+});
+const stageStyle = css({
+  display: "flex",
+  flex: "1",
+  alignItems: "center",
+  justifyContent: "center",
+  minHeight: "0",
+  p: { base: "4", md: "8" },
+  overflow: "hidden",
+});
+const imageStyle = css({
+  display: "block",
+  width: "auto",
+  height: "auto",
+  maxWidth: "100%",
+  maxHeight: "100%",
+  objectFit: "contain",
+  borderWidth: "1px",
+  borderColor: "rule",
+  borderRadius: "sm",
+});
+const captionStyle = css({
+  flexShrink: "0",
+  maxHeight: "30%",
+  px: "6",
+  pb: "4",
+  color: "dim",
+  textStyle: "small",
+  textAlign: "center",
+  overflowY: "auto",
+});
+const navigationStyle = css({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  gap: "4",
+  px: { base: "4", md: "6" },
+  py: "3",
+  borderTopWidth: "1px",
+  borderColor: "ruleStrong",
+  bg: "panel",
+  "&[hidden]": { display: "none" },
+});
+---
+
+<dialog
+  class={dialogStyle}
+  data-image-viewer
+  data-open-label={t("blog:openImage")}
+  aria-label={t("blog:imageViewerTitle")}
+>
+  <div class={layoutStyle}>
+    <div class={toolbarStyle}>
+      <span class={titleStyle}>{t("blog:imageViewerTitle")}</span>
+      <span
+        class={counterStyle}
+        data-viewer-counter
+        aria-live="polite"
+      ></span>
+      <button
+        class={`${controlStyle} ${closeButtonStyle}`}
+        type="button"
+        data-viewer-close
+        aria-label={t("blog:closeImageViewer")}
+      >
+        <XIcon size={20} aria-hidden="true" />
+      </button>
+    </div>
+    <figure class={figureStyle}>
+      <div class={stageStyle}>
+        <img class={imageStyle} data-viewer-image alt="" />
+      </div>
+      <figcaption class={captionStyle} data-viewer-caption hidden></figcaption>
+    </figure>
+    <nav
+      class={navigationStyle}
+      data-viewer-navigation
+      aria-label={t("blog:imageViewerTitle")}
+      hidden
+    >
+      <button
+        class={controlStyle}
+        type="button"
+        data-viewer-previous
+        aria-label={t("blog:previousImage")}
+      >
+        <ChevronLeftIcon size={18} aria-hidden="true" />
+        <span>{t("blog:previousImage")}</span>
+      </button>
+      <button
+        class={controlStyle}
+        type="button"
+        data-viewer-next
+        aria-label={t("blog:nextImage")}
+      >
+        <span>{t("blog:nextImage")}</span>
+        <ChevronRightIcon size={18} aria-hidden="true" />
+      </button>
+    </nav>
+  </div>
+</dialog>
+
+<script>
+  const viewer =
+    document.querySelector<HTMLDialogElement>("[data-image-viewer]");
+  const content = document.querySelector<HTMLElement>("[data-article-content]");
+
+  if (viewer && content) {
+    const viewerImage = viewer.querySelector<HTMLImageElement>(
+      "[data-viewer-image]",
+    );
+    const caption = viewer.querySelector<HTMLElement>("[data-viewer-caption]");
+    const counter = viewer.querySelector<HTMLElement>("[data-viewer-counter]");
+    const navigation = viewer.querySelector<HTMLElement>(
+      "[data-viewer-navigation]",
+    );
+    const previousButton = viewer.querySelector<HTMLButtonElement>(
+      "[data-viewer-previous]",
+    );
+    const nextButton = viewer.querySelector<HTMLButtonElement>(
+      "[data-viewer-next]",
+    );
+    const closeButton = viewer.querySelector<HTMLButtonElement>(
+      "[data-viewer-close]",
+    );
+
+    if (
+      viewerImage &&
+      caption &&
+      counter &&
+      navigation &&
+      previousButton &&
+      nextButton &&
+      closeButton
+    ) {
+      const images = Array.from(content.querySelectorAll("img")).filter(
+        (image) => !image.closest("a, button, [data-no-image-viewer]"),
+      );
+      let currentIndex = 0;
+      let activeTrigger: HTMLButtonElement | undefined;
+      let previousBodyOverflow = "";
+
+      const updateViewer = () => {
+        const source = images[currentIndex];
+        if (!source) return;
+
+        viewerImage.src = source.src;
+        viewerImage.alt = source.alt;
+        if (source.srcset) {
+          viewerImage.srcset = source.srcset;
+          viewerImage.sizes = "100vw";
+        } else {
+          viewerImage.removeAttribute("srcset");
+          viewerImage.removeAttribute("sizes");
+        }
+
+        const description = source.alt.trim();
+        caption.textContent = description;
+        caption.hidden = description.length === 0;
+        counter.textContent = `${currentIndex + 1} / ${images.length}`;
+        previousButton.disabled = currentIndex === 0;
+        nextButton.disabled = currentIndex === images.length - 1;
+      };
+
+      const openViewer = (index: number, trigger: HTMLButtonElement) => {
+        currentIndex = index;
+        activeTrigger = trigger;
+        updateViewer();
+        previousBodyOverflow = document.body.style.overflow;
+        document.body.style.overflow = "hidden";
+        viewer.showModal();
+        closeButton.focus({ preventScroll: true });
+      };
+
+      const changeImage = (offset: number) => {
+        const nextIndex = currentIndex + offset;
+        if (nextIndex < 0 || nextIndex >= images.length) return;
+        currentIndex = nextIndex;
+        updateViewer();
+      };
+
+      images.forEach((image, index) => {
+        const trigger = document.createElement("button");
+        const description = image.alt.trim();
+        trigger.type = "button";
+        trigger.dataset.imageViewerTrigger = "";
+        trigger.setAttribute(
+          "aria-label",
+          `${viewer.dataset.openLabel}: ${description || index + 1}`,
+        );
+        image.before(trigger);
+        trigger.append(image);
+        trigger.addEventListener("click", () => openViewer(index, trigger));
+      });
+
+      navigation.hidden = images.length < 2;
+      previousButton.addEventListener("click", () => changeImage(-1));
+      nextButton.addEventListener("click", () => changeImage(1));
+      closeButton.addEventListener("click", () => viewer.close());
+      viewer.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowLeft") {
+          event.preventDefault();
+          changeImage(-1);
+        } else if (event.key === "ArrowRight") {
+          event.preventDefault();
+          changeImage(1);
+        }
+      });
+      viewer.addEventListener("close", () => {
+        document.body.style.overflow = previousBodyOverflow;
+        viewerImage.removeAttribute("src");
+        viewerImage.removeAttribute("srcset");
+        viewerImage.removeAttribute("sizes");
+        activeTrigger?.focus({ preventScroll: true });
+      });
+    }
+  }
+</script>
