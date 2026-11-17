@@ -1,0 +1,16 @@
+{
+  "name": "Signet",
+  "description": "A self-hostable, multi-user bookmark sync system with web, mobile, and browser clients.",
+  "thumbnail": "/projects/project-signet.png",
+  "url": "https://github.com/Christopher2K/signet",
+  "publishingDate": "2026-11-08",
+  "tech": [
+    "typescript",
+    "react",
+    "react-native",
+    "elixir",
+    "phoenix",
+    "postgresql"
+  ],
+  "type": "web"
+}

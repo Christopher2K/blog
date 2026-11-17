@@ -1,0 +1,9 @@
+{
+  "name": "Proton Drive Sync",
+  "description": "An unofficial Linux desktop client for Proton Drive, with on-demand file hydration, two-way sync, and a bounded local cache.",
+  "thumbnail": "/projects/project-proton-drive-sync.png",
+  "url": "https://github.com/Christopher2K/proton-drive-sync-linux",
+  "publishingDate": "2026-10-29",
+  "tech": ["go", "typescript", "sqlite", "fuse"],
+  "type": "desktop"
+}

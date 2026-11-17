@@ -1,0 +1,9 @@
+{
+  "name": "Tooltrace",
+  "description": "Une application web fonctionnant localement qui transforme une photo d’outils en contours de bacs compatibles Gridfinity, avec export STL et PDF à l’échelle 1:1.",
+  "thumbnail": "/projects/project-3d-print-grid-helpers.png",
+  "url": "https://github.com/Christopher2K/3d-print-grid-helpers",
+  "publishingDate": "2026-10-19",
+  "tech": ["typescript", "react", "computer-vision", "otsu"],
+  "type": "web"
+}

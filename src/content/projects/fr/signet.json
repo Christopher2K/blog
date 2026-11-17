@@ -1,0 +1,16 @@
+{
+  "name": "Signet",
+  "description": "Un système auto-hébergeable et multi-utilisateur de synchronisation de favoris, avec des clients web, mobiles et navigateur.",
+  "thumbnail": "/projects/project-signet.png",
+  "url": "https://github.com/Christopher2K/signet",
+  "publishingDate": "2026-11-08",
+  "tech": [
+    "typescript",
+    "react",
+    "react-native",
+    "elixir",
+    "phoenix",
+    "postgresql"
+  ],
+  "type": "web"
+}

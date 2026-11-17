@@ -18,13 +18,18 @@ const t = getTranslator(locale);
 const projects = await getProjectsCollection(locale);
 const requestedType = Astro.url.searchParams.get("type");
 const selectedType =
-  requestedType === "web" || requestedType === "mobile" ? requestedType : "";
+  requestedType === "web" ||
+  requestedType === "mobile" ||
+  requestedType === "desktop"
+    ? requestedType
+    : "";
 const filteredProjects = selectedType
   ? projects.filter((project) => project.data.type === selectedType)
   : projects;
 const counts = {
   web: projects.filter((project) => project.data.type === "web").length,
   mobile: projects.filter((project) => project.data.type === "mobile").length,
+  desktop: projects.filter((project) => project.data.type === "desktop").length,
 };
 const technologies = [
   ...new Set(projects.flatMap((project) => project.data.tech)),
@@ -159,6 +164,9 @@ const resetStyle = css({
               </option>
               <option value="mobile" selected={selectedType === "mobile"}>
                 {t("projects:mobile")}
+              </option>
+              <option value="desktop" selected={selectedType === "desktop"}>
+                {t("projects:desktop")}
               </option>
             </select>
             <ChevronDownIcon

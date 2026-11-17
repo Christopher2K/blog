@@ -1,0 +1,9 @@
+{
+  "name": "Proton Drive Sync",
+  "description": "Un client Linux non officiel pour Proton Drive, avec récupération des fichiers à la demande, synchronisation bidirectionnelle et cache local limité.",
+  "thumbnail": "/projects/project-proton-drive-sync.png",
+  "url": "https://github.com/Christopher2K/proton-drive-sync-linux",
+  "publishingDate": "2026-10-29",
+  "tech": ["go", "typescript", "sqlite", "fuse"],
+  "type": "desktop"
+}

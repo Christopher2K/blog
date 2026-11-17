@@ -6,6 +6,9 @@ import { getLocale, getTranslator } from "@/i18n";
 import { css } from "@/style/css";
 import askLiveImage from "@/assets/projects/project-ask-live.png";
 import concentrationImage from "@/assets/projects/project-concentration.png";
+import protonDriveSyncImage from "@/assets/projects/project-proton-drive-sync.png";
+import tooltraceImage from "@/assets/projects/project-3d-print-grid-helpers.png";
+import signetImage from "@/assets/projects/project-signet.png";
 
 export interface Props {
   title: string;
@@ -14,7 +17,7 @@ export interface Props {
   date: Date;
   description: string;
   thumbnail: string;
-  type: "web" | "mobile";
+  type: "web" | "mobile" | "desktop";
   index?: number;
   detailed?: boolean;
 }
@@ -35,6 +38,9 @@ const t = getTranslator(locale);
 const thumbnails = {
   "/projects/project-ask-live.png": askLiveImage,
   "/projects/project-concentration.png": concentrationImage,
+  "/projects/project-proton-drive-sync.png": protonDriveSyncImage,
+  "/projects/project-3d-print-grid-helpers.png": tooltraceImage,
+  "/projects/project-signet.png": signetImage,
 };
 const image = thumbnails[thumbnail as keyof typeof thumbnails] ?? askLiveImage;
 const domain = new URL(href).hostname;
@@ -88,11 +94,8 @@ const techStyle = css({
 });
 const imageStyle = css({
   width: "100%",
-  height: {
-    base: "160px",
-    md: detailed ? "135px" : "135px",
-    lg: detailed ? "168px" : "135px",
-  },
+  aspectRatio: "1200 / 630",
+  height: "auto",
   objectFit: "cover",
   borderRadius: "md",
   borderWidth: "1px",
@@ -133,7 +136,7 @@ const domainStyle = css({
         </time>
         {detailed && (
           <span class={css({ color: "secondary" })}>
-            {t(type === "web" ? "projects:webShort" : "projects:mobileShort")}
+            {t(`projects:${type}Short`)}
           </span>
         )}
       </div>

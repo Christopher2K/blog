@@ -8,7 +8,7 @@ export interface Props {
   selectedType: string;
   total: number;
   range: string;
-  counts: { web: number; mobile: number };
+  counts: { web: number; mobile: number; desktop: number };
   technologies: string[];
 }
 
@@ -20,6 +20,7 @@ const types = [
   { value: "", label: t("projects:all"), count: total },
   { value: "web", label: t("projects:web"), count: counts.web },
   { value: "mobile", label: t("projects:mobile"), count: counts.mobile },
+  { value: "desktop", label: t("projects:desktop"), count: counts.desktop },
 ];
 
 const sidebarStyle = css({

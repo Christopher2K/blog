@@ -1,0 +1,9 @@
+{
+  "name": "Tooltrace",
+  "description": "A local-first web app that turns a photo of your tools into Gridfinity-compatible bin outlines, with STL and 1:1 PDF exports.",
+  "thumbnail": "/projects/project-3d-print-grid-helpers.png",
+  "url": "https://github.com/Christopher2K/3d-print-grid-helpers",
+  "publishingDate": "2026-10-19",
+  "tech": ["typescript", "react", "computer-vision", "otsu"],
+  "type": "web"
+}
