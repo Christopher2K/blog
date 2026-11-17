@@ -40,10 +40,9 @@ interface Props {
   ogType?: "website" | "article";
   canonicalPath?: string;
   alternatePaths?: Partial<Record<SupportedLang, string>>;
-  includeXDefault?: boolean;
 }
 
-const locale = getLocale(Astro.currentLocale);
+const locale = getLocale(Astro.locals.locale);
 const t = getTranslator(locale);
 const {
   title = t("common:seo.defaultTitle"),
@@ -52,7 +51,6 @@ const {
   ogType = "website",
   canonicalPath = Astro.url.pathname,
   alternatePaths,
-  includeXDefault = false,
 } = Astro.props;
 
 const ogTitle = forceUseDefaultOgTitle ? t("common:seo.defaultOgTitle") : title;
@@ -77,14 +75,6 @@ const alternateOgLocales = alternates.filter(
 {alternates.map((alternate) => (
   <link rel="alternate" hreflang={alternate.locale} href={alternate.url} />
 ))}
-{includeXDefault && alternatePaths?.fr && (
-  <link
-    rel="alternate"
-    hreflang="x-default"
-    href={new URL(alternatePaths.fr, canonicalUrl)}
-  />
-)}
-
 <meta name="robots" content="index, follow" />
 <meta name="description" content={description} />
 

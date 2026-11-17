@@ -6,7 +6,7 @@ import { getRssPath } from "@/utils/routes";
 import { css } from "@/style/css";
 import { vstack } from "@/style/patterns";
 
-const locale = getLocale(Astro.currentLocale);
+const locale = getLocale(Astro.locals.locale);
 const t = getTranslator(locale);
 
 const footerStyle = css({

@@ -43,23 +43,31 @@ const enUrl =
         })}
       </p>
       {entry.translation && (
-        <a
-          class={css({
-            textStyle: "label",
-            textDecoration: "underline",
-            textUnderlineOffset: "4px",
-            color: "accentHover",
-            mb: "4",
-            transition: "background-color 0.15s ease, color 0.15s ease",
-            _hover: {
-              color: "ink",
-              backgroundColor: "accentSoft",
-            },
-          })}
-          href={entry.translation.path}
-        >
-          {t("blog:alternateLangLink")}
-        </a>
+        <form method="post" action="/locale">
+          <input type="hidden" name="locale" value={entry.translation.locale} />
+          <input type="hidden" name="returnTo" value={entry.translation.path} />
+          <button
+            class={css({
+              textStyle: "label",
+              textDecoration: "underline",
+              textUnderlineOffset: "4px",
+              color: "accentHover",
+              mb: "4",
+              p: "0",
+              border: "0",
+              backgroundColor: "transparent",
+              cursor: "pointer",
+              transition: "background-color 0.15s ease, color 0.15s ease",
+              _hover: {
+                color: "ink",
+                backgroundColor: "accentSoft",
+              },
+            })}
+            type="submit"
+          >
+            {t("blog:alternateLangLink")}
+          </button>
+        </form>
       )}
       <p
         class={css({

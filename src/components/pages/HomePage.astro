@@ -20,18 +20,12 @@ const [blogCollection, projectsCollection] = await Promise.all([
   getBlogCollection(locale),
   getProjectsCollection(locale),
 ]);
-const alternatePaths: Record<SupportedLang, string> = {
-  fr: getHomePath("fr"),
-  en: getHomePath("en"),
-};
 ---
 
 <Base
   title={t("home:title")}
   forceUseDefaultOgTitle
   canonicalPath={getHomePath(locale)}
-  alternatePaths={alternatePaths}
-  includeXDefault
 >
   <Navbar frUrl={getHomePath("fr")} enUrl={getHomePath("en")} />
   <IndexHeader />

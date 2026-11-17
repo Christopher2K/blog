@@ -21,7 +21,6 @@ export interface Props {
   ogType?: "website" | "article";
   canonicalPath?: string;
   alternatePaths?: Partial<Record<SupportedLang, string>>;
-  includeXDefault?: boolean;
 }
 
 const {
@@ -31,9 +30,8 @@ const {
   ogType,
   canonicalPath,
   alternatePaths,
-  includeXDefault,
 } = Astro.props;
-const locale = getLocale(Astro.currentLocale);
+const locale = getLocale(Astro.locals.locale);
 const t = getTranslator(locale);
 ---
 
@@ -88,7 +86,6 @@ const t = getTranslator(locale);
       {ogType}
       {canonicalPath}
       {alternatePaths}
-      {includeXDefault}
     />
     <!-- Privacy-friendly analytics by Plausible -->
     <script

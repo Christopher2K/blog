@@ -5,7 +5,7 @@
   "scripts": {
     "prepare": "panda codegen && husky install",
     "dev": "astro dev",
-    "start": "astro dev",
+    "start": "node ./dist/server/entry.mjs",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
@@ -16,6 +16,7 @@
   "dependencies": {
     "@astrojs/check": "^0.9.12",
     "@astrojs/mdx": "^8.1.1",
+    "@astrojs/node": "^11.1.13",
     "@astrojs/rss": "^4.0.19",
     "@astrojs/solid-js": "^7.1.1",
     "astro": "^7.4.2",

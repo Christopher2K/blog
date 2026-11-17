@@ -79,6 +79,9 @@ const langLinkStyle = css({
   alignItems: "center",
   px: "2",
   py: "1",
+  border: "0",
+  backgroundColor: "transparent",
+  cursor: "pointer",
   borderRadius: "pill",
   transition: "background-color 0.15s ease",
   _hover: {
@@ -98,7 +101,7 @@ export interface Props {
 }
 
 const { frUrl, enUrl } = Astro.props;
-const locale = getLocale(Astro.currentLocale);
+const locale = getLocale(Astro.locals.locale);
 const t = getTranslator(locale);
 ---
 
@@ -138,12 +141,30 @@ const t = getTranslator(locale);
       </li>
     </ul>
     <div class={navLangStyle}>
-      <a class={langLinkStyle} title="Français" href={frUrl}>
-        🇫🇷
-      </a>
-      <a class={langLinkStyle} title="English" href={enUrl}>
-        🇬🇧
-      </a>
+      <form method="post" action="/locale">
+        <input type="hidden" name="locale" value="fr" />
+        <input type="hidden" name="returnTo" value={frUrl} />
+        <button
+          class={langLinkStyle}
+          type="submit"
+          title="Français"
+          aria-label="Français"
+        >
+          🇫🇷
+        </button>
+      </form>
+      <form method="post" action="/locale">
+        <input type="hidden" name="locale" value="en" />
+        <input type="hidden" name="returnTo" value={enUrl} />
+        <button
+          class={langLinkStyle}
+          type="submit"
+          title="English"
+          aria-label="English"
+        >
+          🇬🇧
+        </button>
+      </form>
     </div>
   </div>
 </nav>

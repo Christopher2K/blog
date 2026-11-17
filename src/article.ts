@@ -73,13 +73,34 @@ export async function getBlogCollection(
     });
 }
 
-export async function getArticleStaticPaths(lang: SupportedLang) {
-  const blogCollection = await getBlogCollection(lang);
+export type ArticleResolution =
+  | { type: "render"; entry: BlogArticle }
+  | { type: "redirect"; path: string }
+  | { type: "notFound" };
 
-  return blogCollection.map((entry) => ({
-    params: { slug: entry.data.slug },
-    props: { entry, lang },
-  }));
+export async function resolveArticle(
+  slug: string,
+  preferredLocale: SupportedLang,
+): Promise<ArticleResolution> {
+  const articles = (
+    await Promise.all(SUPPORTED_LANG.map((locale) => getBlogCollection(locale)))
+  ).flat();
+  const preferredArticle = articles.find(
+    (entry) => entry.locale === preferredLocale && entry.data.slug === slug,
+  );
+
+  if (preferredArticle) {
+    return { type: "render", entry: preferredArticle };
+  }
+
+  const availableArticle = articles.find((entry) => entry.data.slug === slug);
+  if (!availableArticle) return { type: "notFound" };
+
+  if (availableArticle.translation?.locale === preferredLocale) {
+    return { type: "redirect", path: availableArticle.translation.path };
+  }
+
+  return { type: "render", entry: availableArticle };
 }
 
 export function getArticleAlternatePaths(article: BlogArticle) {

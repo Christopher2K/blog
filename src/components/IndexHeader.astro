@@ -7,7 +7,7 @@ import Socials from "@/components/Socials.astro";
 import { css } from "@/style/css";
 import { vstack } from "@/style/patterns";
 
-const t = getTranslator(getLocale(Astro.currentLocale));
+const t = getTranslator(getLocale(Astro.locals.locale));
 
 const headerStyle = css({
   w: "full",

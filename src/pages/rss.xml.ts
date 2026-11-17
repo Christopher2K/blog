@@ -1,11 +1,18 @@
 import type { APIContext } from "astro";
 import rss from "@astrojs/rss";
-import { getLocale, getTranslator } from "@/i18n";
+import { getTranslator, isSupportedLang } from "@/i18n";
 import { getBlogCollection } from "@/article";
 import { getHomePath } from "@/utils/routes";
 
 export async function GET(context: APIContext) {
-  const locale = getLocale(context.currentLocale);
+  const requestedLocale = context.url.searchParams.get("lang");
+  if (requestedLocale !== null && !isSupportedLang(requestedLocale)) {
+    return new Response("Unsupported locale", { status: 400 });
+  }
+
+  const locale = isSupportedLang(requestedLocale)
+    ? requestedLocale
+    : context.locals.locale;
   const t = getTranslator(locale);
   const blogCollection = await getBlogCollection(locale);
 

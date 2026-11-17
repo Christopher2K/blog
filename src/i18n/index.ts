@@ -54,7 +54,7 @@ const resources: Record<SupportedLang, Resource> = {
 };
 
 export function isSupportedLang(
-  locale: string | undefined,
+  locale: string | null | undefined,
 ): locale is SupportedLang {
   return SUPPORTED_LANG.includes(locale as SupportedLang);
 }

@@ -11,7 +11,7 @@ export interface Props {
   date: Date;
 }
 const { title, href, tags, date } = Astro.props;
-const locale = getLocale(Astro.currentLocale);
+const locale = getLocale(Astro.locals.locale);
 
 const rowStyle = css({
   display: "flex",

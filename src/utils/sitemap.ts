@@ -9,7 +9,6 @@ import { getHomePath } from "@/utils/routes";
 type SitemapPage = {
   path: string;
   alternatePaths?: Partial<Record<SupportedLang, string>>;
-  includeXDefault?: boolean;
 };
 
 function escapeXml(value: string) {
@@ -34,12 +33,6 @@ function renderPage(page: SitemapPage, site: URL) {
       : [];
   });
 
-  if (page.includeXDefault && page.alternatePaths?.fr) {
-    alternates.push(
-      `    <xhtml:link rel="alternate" hreflang="x-default" href="${absoluteUrl(page.alternatePaths.fr, site)}" />`,
-    );
-  }
-
   return [
     "  <url>",
     `    <loc>${absoluteUrl(page.path, site)}</loc>`,
@@ -59,16 +52,8 @@ export async function generateSitemap(site: URL) {
   const articlesByLocale = await Promise.all(
     SUPPORTED_LANG.map((locale) => getBlogCollection(locale)),
   );
-  const homeAlternatePaths: Record<SupportedLang, string> = {
-    fr: getHomePath("fr"),
-    en: getHomePath("en"),
-  };
   const pages: SitemapPage[] = [
-    ...SUPPORTED_LANG.map((locale) => ({
-      path: getHomePath(locale),
-      alternatePaths: homeAlternatePaths,
-      includeXDefault: true,
-    })),
+    { path: getHomePath("fr") },
     ...articlesByLocale.flatMap((articles) =>
       articles.map(articleToSitemapPage),
     ),

@@ -4,7 +4,7 @@ import { css } from "@/style/css";
 import { hstack } from "@/style/patterns";
 import { linkedin, twitch, twitter, github, youtube } from "@/utils/link";
 
-const t = getTranslator(getLocale(Astro.currentLocale));
+const t = getTranslator(getLocale(Astro.locals.locale));
 
 type Icon = {
   href: string;

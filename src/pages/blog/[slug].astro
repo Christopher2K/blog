@@ -1,14 +1,22 @@
 ---
-import ArticlePage, {
-  type Props as ArticlePageProps,
-} from "@/components/pages/ArticlePage.astro";
-import { getArticleStaticPaths } from "@/article";
+import ArticlePage from "@/components/pages/ArticlePage.astro";
+import { resolveArticle } from "@/article";
 
-export function getStaticPaths() {
-  return getArticleStaticPaths("fr");
+const slug = Astro.params.slug;
+const resolution = slug
+  ? await resolveArticle(slug, Astro.locals.locale)
+  : { type: "notFound" as const };
+
+if (resolution.type === "redirect") {
+  return Astro.redirect(resolution.path, 307);
 }
 
-const { entry, lang } = Astro.props as ArticlePageProps;
+if (resolution.type === "notFound") {
+  return new Response("Article not found", { status: 404 });
+}
+
+const { entry } = resolution;
+Astro.locals.locale = entry.locale;
 ---
 
-<ArticlePage entry={entry} lang={lang} />
+<ArticlePage entry={entry} lang={entry.locale} />
