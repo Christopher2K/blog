@@ -9,9 +9,12 @@ export interface Props {
 
 const { articleCount, projectCount } = Astro.props;
 const t = getTranslator(getLocale(Astro.locals.locale));
+const currentYear = new Date().getFullYear();
 const facts = [
-  { value: "08", label: t("home:yearsDev") },
-  { value: "03", label: t("home:yearsLive") },
+  {
+    value: String(currentYear - 2015).padStart(2, "0"),
+    label: t("home:yearsDev"),
+  },
   { value: String(articleCount).padStart(2, "0"), label: t("home:articles") },
   { value: String(projectCount).padStart(2, "0"), label: t("home:projects") },
 ];
@@ -58,7 +61,7 @@ const bioStyle = css({
 
 const factsStyle = css({
   display: "grid",
-  gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
+  gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
   mt: { base: "8", lg: "10" },
   pt: "5",
   borderTopWidth: "1px",

@@ -187,7 +187,9 @@ const resetStyle = css({
           )}
         </div>
       </div>
-      <p class={resultStyle}>{t("projects:sourceLabel")}</p>
+      <p class={`${resultStyle} ${css({ mt: "6" })}`}>
+        {t("projects:sourceLabel")}
+      </p>
       {filteredProjects.length === 0 ? (
         <p class={css({ color: "dim", textStyle: "body", py: "12" })}>
           {t("projects:empty")}

@@ -820,45 +820,6 @@
                         },
                         {
                           "type": "frame",
-                          "id": "pwJ9B",
-                          "name": "Fact ANNÉES DE LIVE",
-                          "width": "fill_container",
-                          "stroke": "$console-rule",
-                          "strokeWidth": {
-                            "left": 1
-                          },
-                          "gap": "$space-3",
-                          "padding": [
-                            "$space-0",
-                            "$space-5"
-                          ],
-                          "alignItems": "end",
-                          "children": [
-                            {
-                              "type": "text",
-                              "id": "MC2Ku",
-                              "name": "Fact value",
-                              "fill": "$console-accent",
-                              "content": "03",
-                              "fontFamily": "$font-source-body",
-                              "fontSize": 24,
-                              "fontWeight": "bold"
-                            },
-                            {
-                              "type": "text",
-                              "id": "KLBpw",
-                              "name": "Fact label",
-                              "fill": "$console-dim",
-                              "content": "ANNÉES DE LIVE",
-                              "fontFamily": "$font-source-body",
-                              "fontSize": 9,
-                              "fontWeight": "normal",
-                              "letterSpacing": 0.5
-                            }
-                          ]
-                        },
-                        {
-                          "type": "frame",
                           "id": "v6c6BR",
                           "name": "Fact ARTICLES",
                           "width": "fill_container",
@@ -2834,45 +2795,6 @@
                         },
                         {
                           "type": "frame",
-                          "id": "smjmO",
-                          "name": "Fact ANNÉES DE LIVE",
-                          "width": "fill_container",
-                          "stroke": "$console-rule",
-                          "strokeWidth": {
-                            "left": 1
-                          },
-                          "gap": "$space-3",
-                          "padding": [
-                            "$space-0",
-                            "$space-5"
-                          ],
-                          "alignItems": "end",
-                          "children": [
-                            {
-                              "type": "text",
-                              "id": "s3MI6u",
-                              "name": "Fact value",
-                              "fill": "$console-accent",
-                              "content": "03",
-                              "fontFamily": "$font-source-body",
-                              "fontSize": 24,
-                              "fontWeight": "bold"
-                            },
-                            {
-                              "type": "text",
-                              "id": "r0x09",
-                              "name": "Fact label",
-                              "fill": "$console-dim",
-                              "content": "ANNÉES DE LIVE",
-                              "fontFamily": "$font-source-body",
-                              "fontSize": 9,
-                              "fontWeight": "normal",
-                              "letterSpacing": 0.5
-                            }
-                          ]
-                        },
-                        {
-                          "type": "frame",
                           "id": "giTaS",
                           "name": "Fact ARTICLES",
                           "width": "fill_container",
@@ -4342,48 +4264,6 @@
                         }
                       ]
                     },
-                    {
-                      "type": "frame",
-                      "id": "GnTJ7",
-                      "name": "Mobile fact ANNÉES DE LIVE",
-                      "width": "fill_container",
-                      "gap": "$space-2",
-                      "alignItems": "end",
-                      "children": [
-                        {
-                          "type": "text",
-                          "id": "r9mn8l",
-                          "name": "Mobile fact value",
-                          "fill": "$console-accent",
-                          "content": "03",
-                          "fontFamily": "$font-source-body",
-                          "fontSize": 22,
-                          "fontWeight": "bold"
-                        },
-                        {
-                          "type": "text",
-                          "id": "OQe7G",
-                          "name": "Mobile fact label",
-                          "fill": "$console-dim",
-                          "textGrowth": "fixed-width",
-                          "width": "fill_container",
-                          "content": "ANNÉES DE LIVE",
-                          "fontFamily": "$font-source-body",
-                          "fontSize": 7,
-                          "fontWeight": "normal",
-                          "letterSpacing": 0.35
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "frame",
-                  "id": "f3Oh0",
-                  "name": "Mobile facts row 1",
-                  "width": "fill_container",
-                  "gap": "$space-5",
-                  "children": [
                     {
                       "type": "frame",
                       "id": "RTY1o",
@@ -6023,48 +5903,6 @@
                         }
                       ]
                     },
-                    {
-                      "type": "frame",
-                      "id": "tfT7V",
-                      "name": "Mobile fact ANNÉES DE LIVE",
-                      "width": "fill_container",
-                      "gap": "$space-2",
-                      "alignItems": "end",
-                      "children": [
-                        {
-                          "type": "text",
-                          "id": "hoA7d",
-                          "name": "Mobile fact value",
-                          "fill": "$console-accent",
-                          "content": "03",
-                          "fontFamily": "$font-source-body",
-                          "fontSize": 22,
-                          "fontWeight": "bold"
-                        },
-                        {
-                          "type": "text",
-                          "id": "y7duU",
-                          "name": "Mobile fact label",
-                          "fill": "$console-dim",
-                          "textGrowth": "fixed-width",
-                          "width": "fill_container",
-                          "content": "ANNÉES DE LIVE",
-                          "fontFamily": "$font-source-body",
-                          "fontSize": 7,
-                          "fontWeight": "normal",
-                          "letterSpacing": 0.35
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "frame",
-                  "id": "BSGu0",
-                  "name": "Mobile facts row 1",
-                  "width": "fill_container",
-                  "gap": "$space-5",
-                  "children": [
                     {
                       "type": "frame",
                       "id": "X344F",
@@ -20826,37 +20664,6 @@
                 },
                 {
                   "type": "frame",
-                  "id": "HYB1I",
-                  "name": "Tablet home fact ANNÉES DE LIVE",
-                  "width": "fill_container",
-                  "layout": "vertical",
-                  "gap": "$space-2",
-                  "children": [
-                    {
-                      "type": "text",
-                      "id": "gPitQ",
-                      "name": "Tablet home fact value",
-                      "fill": "$console-ink",
-                      "content": "03",
-                      "fontFamily": "$font-source-body",
-                      "fontSize": 22,
-                      "fontWeight": "bold"
-                    },
-                    {
-                      "type": "text",
-                      "id": "Qmozv",
-                      "name": "Tablet home fact label",
-                      "fill": "$console-dim",
-                      "content": "ANNÉES DE LIVE",
-                      "fontFamily": "$font-source-body",
-                      "fontSize": 8,
-                      "fontWeight": "normal",
-                      "letterSpacing": 0.45
-                    }
-                  ]
-                },
-                {
-                  "type": "frame",
                   "id": "aa1rT",
                   "name": "Tablet home fact ARTICLES",
                   "width": "fill_container",
@@ -22223,37 +22030,6 @@
                       "name": "Tablet home fact label",
                       "fill": "$console-dim",
                       "content": "ANNÉES DE DEV",
-                      "fontFamily": "$font-source-body",
-                      "fontSize": 8,
-                      "fontWeight": "normal",
-                      "letterSpacing": 0.45
-                    }
-                  ]
-                },
-                {
-                  "type": "frame",
-                  "id": "xlKHj",
-                  "name": "Tablet home fact ANNÉES DE LIVE",
-                  "width": "fill_container",
-                  "layout": "vertical",
-                  "gap": "$space-2",
-                  "children": [
-                    {
-                      "type": "text",
-                      "id": "aE6Lt",
-                      "name": "Tablet home fact value",
-                      "fill": "$console-ink",
-                      "content": "03",
-                      "fontFamily": "$font-source-body",
-                      "fontSize": 22,
-                      "fontWeight": "bold"
-                    },
-                    {
-                      "type": "text",
-                      "id": "FVWCt",
-                      "name": "Tablet home fact label",
-                      "fill": "$console-dim",
-                      "content": "ANNÉES DE LIVE",
                       "fontFamily": "$font-source-body",
                       "fontSize": 8,
                       "fontWeight": "normal",

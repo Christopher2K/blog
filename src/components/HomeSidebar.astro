@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+import coolNerdAvatar from "@/assets/common/cool-nerd-icon.png";
 import { getLocale, getTranslator } from "@/i18n";
 import {
   getBlogPath,
@@ -63,9 +65,21 @@ const sidebarStyle = css({
 });
 
 const identityStyle = css({
+  display: "flex",
+  alignItems: "center",
+  gap: "4",
   px: "6",
   py: "6",
   borderBottomWidth: "1px",
+  borderColor: "rule",
+});
+const avatarStyle = css({
+  width: "52px",
+  height: "52px",
+  flexShrink: "0",
+  objectFit: "cover",
+  borderRadius: "md",
+  borderWidth: "1px",
   borderColor: "rule",
 });
 const sectionStyle = css({
@@ -102,12 +116,21 @@ const bottomStyle = css({
 
 <div class={sidebarStyle}>
   <div class={identityStyle}>
-    <p class={css({ fontSize: "14px", fontWeight: "bold", color: "ink" })}>
-      christopher
-    </p>
-    <p class={css({ color: "secondary", fontSize: "10px", mt: "1" })}>
-      @llcoolchris_
-    </p>
+    <Image
+      src={coolNerdAvatar}
+      alt=""
+      width={52}
+      height={52}
+      class={avatarStyle}
+    />
+    <div>
+      <p class={css({ fontSize: "14px", fontWeight: "bold", color: "ink" })}>
+        christopher
+      </p>
+      <p class={css({ color: "secondary", fontSize: "10px", mt: "1" })}>
+        @llcoolchris_
+      </p>
+    </div>
   </div>
   <nav class={sectionStyle} aria-label={t("common:nav.label")}>
     <p class={`${labelStyle} ${css({ textTransform: "none" })}`}>
