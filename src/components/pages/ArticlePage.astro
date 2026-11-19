@@ -199,7 +199,7 @@ const contentStyle = css({
   "& ol": { listStyle: "decimal" },
   "& li": { textStyle: "body", color: "ink", mb: "2" },
   "& p + ul, & p + ol": { mt: "0" },
-  "& p code, & li code": {
+  "& p code, & li code, & th code, & td code": {
     bg: "panel",
     color: "secondary",
     borderRadius: "sm",
@@ -215,7 +215,41 @@ const contentStyle = css({
     alignItems: "center",
   },
   "& hr": { borderColor: "rule", width: "100%", my: "10" },
-  "& table": { display: "block", maxWidth: "100%", overflowX: "auto" },
+  "& table": {
+    display: "block",
+    width: "100%",
+    maxWidth: "100%",
+    my: "8",
+    overflowX: "auto",
+    borderWidth: "1px",
+    borderColor: "rule",
+    borderCollapse: "collapse",
+    fontSize: { base: "12px", md: "14px" },
+    lineHeight: "1.6",
+  },
+  "& thead": { bg: "panel" },
+  "& th, & td": {
+    px: "4",
+    py: "3",
+    verticalAlign: "top",
+  },
+  "& th": {
+    color: "ink",
+    fontWeight: "bold",
+    textAlign: "left",
+    borderBottomWidth: "1px",
+    borderColor: "ruleStrong",
+    whiteSpace: "nowrap",
+  },
+  '& th[align="center"], & td[align="center"]': { textAlign: "center" },
+  '& th[align="right"], & td[align="right"]': { textAlign: "right" },
+  "& td": {
+    borderBottomWidth: "1px",
+    borderColor: "ruleSubtle",
+  },
+  "& tbody tr:last-child td": { borderBottom: "0" },
+  "& th p, & td p": { m: "0", fontSize: "inherit", lineHeight: "inherit" },
+  "& td ul, & td ol": { my: "0" },
 });
 
 const nextStyle = css({
